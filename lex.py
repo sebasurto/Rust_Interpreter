@@ -1,6 +1,11 @@
 import ply.lex as lex
 
-reserved = {'while': 'WHILE'
+reserved = {'while': 'WHILE', 'where':'WHERE','use':'USE','unsafe':'UNSAFE', 'union':'UNION','type':'TYPE',
+            'true':'TRUE','trair':'TRAIT','super':'SUPER','struct':'STRUCT','static':'STATIC','self':'SELF',
+            'Self':'sELF','return':'RETURN','ref':'REF','pub':'PUB','mut':'MUT','move':'MOVE','mod':'MOD','match':'MATCH',
+            'loop':'LOOP','let':'LET','in':'IN','impl':'IMPL', 'if':'IF','for':'FOR','fn':'FN','false':'FALSE',
+            'extern':'EXTERN','enum':'ENUM', 'else':'ELSE', 'dyn':'DYN','crate':'CRATE', 'continue':'CONTINUE',
+            'const':'CONST', 'break': 'BREAK', 'await':'AWAIT', 'async':'ASYNC', 'as':'AS'
 }
 
  #Sequencia de tokens, puede ser lista o tupla

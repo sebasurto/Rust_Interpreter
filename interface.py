@@ -1,4 +1,6 @@
 import tkinter as tk
+from lex import reserved
+
 
 def create_interface():
     window = tk.Tk()
@@ -29,6 +31,34 @@ def create_interface():
     text_your_code = tk.Text(window, state="normal", width=75, height=15)
     text_your_code.grid(row=2, column=0)
 
+    
+
+    #posiciones_reservadas = {}
+
+    for word in reserved.keys():
+        text_your_code.tag_configure(word, foreground="blue")
+
+    def resaltar_palabras_reservadas(event):
+        for word in reserved.keys():
+            posicion = "1.0"  # Inicio del texto
+            while True:
+                # Buscar la siguiente aparición de la palabra reservada
+                posicion = text_your_code.search(word, posicion, stopindex=tk.END, exact=True)
+                if not posicion:
+                    break
+                # Verificar que la palabra encontrada es una palabra completa
+                posicion_final = f"{posicion}+{len(word)}c"
+                if not posicion_final.endswith((" ", "\n", ".", ",", ";", ":", "!", "?", ")", "]", "}")):
+                    posicion = posicion_final
+                    continue
+                # Aplicar etiqueta de estilo a la palabra reservada encontrada
+                text_your_code.tag_add(word, posicion, posicion_final)
+                # Actualizar posición para buscar la siguiente aparición
+                posicion = posicion_final
+
+# Enlazar evento de teclado para resaltar las palabras reservadas
+    text_your_code.bind("<KeyRelease>", resaltar_palabras_reservadas)
+    
     text_sintaxis = tk.Text(window, state="disabled", width=75, height=15)
     text_sintaxis.grid(row=2, column=1)
 
