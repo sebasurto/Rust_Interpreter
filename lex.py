@@ -22,7 +22,12 @@ tokens = (
     'DIVIDE',
     'LPAREN',
     'RPAREN',
-  'ID',
+    'ID',
+    'LESS_THAN',
+    'GREATER_THAN',
+    'LESS_THAN_EQUAL',
+    'GREATER_THAN_EQUAL',
+    'CHAR',
 ) + tuple(reserved.values())
  
  #Exp Regulares para tokens de símbolos
@@ -37,7 +42,11 @@ t_INT = r'\d+'
 t_FLOAT = r'-?\d*\.\d+'
 t_EQUALS = '='
 t_EQUALSC = '=='
- 
+t_LESS_THAN = r'<'
+t_GREATER_THAN = r'>'
+t_LESS_THAN_EQUAL = r'<='
+t_GREATER_THAN_EQUAL = r'>='
+t_CHAR = r'\'[a-zA-Z]\''
  #Para contabilizar nro de líneas
 def t_newline(t):
   r'\n+'
@@ -60,5 +69,22 @@ def t_error(t):
  #Contruir analizador
 
 def _COMMENS(t):
-  r'\#.*'
+  r'//.*'
   pass
+
+def test_Sergio_Basurto():
+  lexer = lex.lex()
+  data = ''' 5 < 6
+            8 > 10
+            7 <= 9
+            8 >= 9
+            let c = 'Z'
+            //comentario
+
+        '''
+  lexer.input (data)
+  while True:
+    tok = lexer.token()
+    if not tok: 
+      break      #Rompe
+    print(tok)
