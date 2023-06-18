@@ -13,7 +13,7 @@ reserved = {
     'struct': 'STRUCT',
     'static': 'STATIC',
     'self': 'SELF',
-    'Self': 'SELF',
+    'Self': 'sELF', #en rust existen dos Self
     'return': 'RETURN',
     'ref': 'REF',
     'pub': 'PUB',
@@ -78,13 +78,19 @@ tokens = (
     'MODULO',
     'UNDERSCORE',
     'AT',
+    'INT',
+    'FLOAT',
+    'ID',
+    'COMMENS',
+    'NAME_FUNCTION',
+    'DOUBLE_QUOTE'
 ) + tuple(reserved.values())
 
 # Expresiones regulares para los tokens de símbolos
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
-t_DIVIDE = r'/'
+t_DIVIDE = r'\/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\['
@@ -113,19 +119,25 @@ t_NOT_EQUAL = r'!='
 t_MODULO = r'%'
 t_UNDERSCORE = r'_'
 t_AT = r'@'
-
-
+t_INT = r'\d+'
+t_FLOAT = r'-?\d\.\d*'
+t_DOUBLE_QUOTE = r'\"'
 # Para contabilizar nro de líneas
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-
 def t_ID(t):
     r'[a-zA-Z_]\w*'
     t.type = reserved.get(t.value.lower(), 'ID')
     return t
-
+def t_NAME_FUNCTION(t):
+    r'[a-zA-Z_]\w*\(\)'
+    t.type = reserved.get(t.value.lower(), 'NAME_FUNcTION')
+    return t
+def t_COMMENS(t):
+    r'\/\/.*'
+    pass
  # Ignorar lo que no sea un token en mi LP
 t_ignore = ' \t'
 
@@ -139,9 +151,7 @@ def t_error(t):
  # Contruir analizador
 
 
-def _COMMENS(t):
-    r'//.*'
-    pass
+
 
 
 def test_Sergio_Basurto():
@@ -150,8 +160,38 @@ def test_Sergio_Basurto():
             8 > 10
             7 <= 9
             8 >= 9
-            let c = 'Z'
-            //comentario
+            let i = 5.
+            let f = 56
+            let mut n = -7.
+            let n = -7.5
+            fn main() {
+                // Variables
+                let mut counter = 0;
+                let my_string = String::from("Hola, mundo!");
+                let my_float = 3.14;
+
+                // While loop
+                while counter < 5 {
+                    println!("Contador: {}", counter);
+                    counter += 1;
+                }
+
+                // For loop
+                for i in 0..5 {
+                    println!("Valor de i: {}", i);
+                }
+
+                // If statement
+                if my_string.len() > 10 {
+                    println!("La cadena es larga");
+                } else {
+                    println!("La cadena es corta");
+                }
+
+                // Mostrar valores
+                println!("Cadena: {}", my_string);
+                println!("Flotante: {}", my_float);
+            }
 
         '''
     lexer.input(data)
