@@ -1,0 +1,205 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPERSAND
+    AMPERSAND_AMPERSAND
+    AS
+    ASYNC
+    AT
+    AWAIT
+    BANG
+    BREAK
+    COLON
+    COMMENS
+    CONST
+    CONTINUE
+    CRATE
+    DIVIDE
+    DOT
+    DOUBLE_COLON
+    DOUBLE_QUOTE
+    DYN
+    ELSE
+    ENUM
+    EQUAL_EQUAL
+    EXTERN
+    FALSE
+    FAT_ARROW
+    FOR
+    GREATER_THAN
+    GREATER_THAN_EQUAL
+    IF
+    IMPL
+    IN
+    LBRACKET
+    LESS_THAN
+    LESS_THAN_EQUAL
+    LOOP
+    MATCH
+    MINUS
+    MOD
+    MODULO
+    MOVE
+    MUT
+    NAME_FUNCTION
+    NOT_EQUAL
+    PIPE
+    PIPE_PIPE
+    PLUS
+    PUB
+    RBRACKET
+    REF
+    RETURN
+    SELF
+    STATIC
+    STRUCT
+    SUPER
+    TIMES
+    TRAIT
+    TRUE
+    TYPE
+    UNDERSCORE
+    UNION
+    UNSAFE
+    USE
+    WHERE
+    WHILE
+    sELF
+
+Grammar
+
+Rule 0     S' -> wholeCode
+Rule 1     wholeCode -> function_main
+Rule 2     wholeCode -> function_main functions
+Rule 3     wholeCode -> functions
+Rule 4     function_main -> FN MAIN LPAREN RPAREN LBRACE function_body RBRACE
+Rule 5     function_main -> FN MAIN LPAREN RPAREN LBRACE RBRACE
+Rule 6     function_main -> FN MAIN LPAREN parameters RPAREN LBRACE function_body RBRACE
+Rule 7     function_main -> FN MAIN LPAREN parameters RPAREN LBRACE RBRACE
+Rule 8     functions -> function
+Rule 9     functions -> function functions
+Rule 10    function -> FN ID LPAREN RPAREN LBRACE function_body RBRACE
+Rule 11    function -> FN ID LPAREN RPAREN LBRACE RBRACE
+Rule 12    function -> FN ID LPAREN parameters RPAREN LBRACE function_body RBRACE
+Rule 13    function -> FN ID LPAREN parameters RPAREN LBRACE RBRACE
+Rule 14    function -> FN ID LPAREN parameters RPAREN ARROW ID LBRACE function_body RBRACE
+Rule 15    parameters -> ID
+Rule 16    parameters -> ID COMMA parameters
+Rule 17    function_body -> function_body_line
+Rule 18    function_body -> function_body_line function_body
+Rule 19    function_body_line -> expression SEMICOLON
+Rule 20    function_body_line -> statement
+Rule 21    statement -> assignation
+Rule 22    statement -> expression SEMICOLON
+Rule 23    statement -> SEMICOLON
+Rule 24    expression -> assignation
+Rule 25    expression -> value SEMICOLON
+Rule 26    assignation -> LET ID EQUAL value SEMICOLON
+Rule 27    assignation -> LET ID EQUAL value
+Rule 28    value -> INT
+Rule 29    value -> FLOAT
+Rule 30    value -> STRING
+Rule 31    value -> CHAR
+Rule 32    value -> BOOL
+Rule 33    value -> ID
+
+Terminals, with rules where they appear
+
+AMPERSAND            : 
+AMPERSAND_AMPERSAND  : 
+ARROW                : 14
+AS                   : 
+ASYNC                : 
+AT                   : 
+AWAIT                : 
+BANG                 : 
+BOOL                 : 32
+BREAK                : 
+CHAR                 : 31
+COLON                : 
+COMMA                : 16
+COMMENS              : 
+CONST                : 
+CONTINUE             : 
+CRATE                : 
+DIVIDE               : 
+DOT                  : 
+DOUBLE_COLON         : 
+DOUBLE_QUOTE         : 
+DYN                  : 
+ELSE                 : 
+ENUM                 : 
+EQUAL                : 26 27
+EQUAL_EQUAL          : 
+EXTERN               : 
+FALSE                : 
+FAT_ARROW            : 
+FLOAT                : 29
+FN                   : 4 5 6 7 10 11 12 13 14
+FOR                  : 
+GREATER_THAN         : 
+GREATER_THAN_EQUAL   : 
+ID                   : 10 11 12 13 14 14 15 16 26 27 33
+IF                   : 
+IMPL                 : 
+IN                   : 
+INT                  : 28
+LBRACE               : 4 5 6 7 10 11 12 13 14
+LBRACKET             : 
+LESS_THAN            : 
+LESS_THAN_EQUAL      : 
+LET                  : 26 27
+LOOP                 : 
+LPAREN               : 4 5 6 7 10 11 12 13 14
+MATCH                : 
+MINUS                : 
+MOD                  : 
+MODULO               : 
+MOVE                 : 
+MUT                  : 
+NAME_FUNCTION        : 
+NOT_EQUAL            : 
+PIPE                 : 
+PIPE_PIPE            : 
+PLUS                 : 
+PUB                  : 
+RBRACE               : 4 5 6 7 10 11 12 13 14
+RBRACKET             : 
+REF                  : 
+RETURN               : 
+RPAREN               : 4 5 6 7 10 11 12 13 14
+SELF                 : 
+SEMICOLON            : 19 22 23 25 26
+STATIC               : 
+STRING               : 30
+STRUCT               : 
+SUPER                : 
+TIMES                : 
+TRAIT                : 
+TRUE                 : 
+TYPE                 : 
+UNDERSCORE           : 
+UNION                : 
+UNSAFE               : 
+USE                  : 
+WHERE                : 
+WHILE                : 
+error                : 
+sELF                 : 
+
+Nonterminals, with rules where they appear
+
+MAIN                 : 4 5 6 7
+assignation          : 21 24
+expression           : 19 22
+function             : 8 9
+function_body        : 4 6 10 12 14 18
+function_body_line   : 17 18
+function_main        : 1 2
+functions            : 2 3 9
+parameters           : 6 7 12 13 14 16
+statement            : 20
+value                : 25 26 27
+wholeCode            : 0
+

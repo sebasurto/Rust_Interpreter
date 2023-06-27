@@ -1,46 +1,6 @@
 import ply.lex as lex
 #Ramon Macias y Sergio Basurto
-reserved = {
-    'while': 'WHILE',
-    'where': 'WHERE',
-    'use': 'USE',
-    'unsafe': 'UNSAFE',
-    'union': 'UNION',
-    'type': 'TYPE',
-    'true': 'TRUE',
-    'trair': 'TRAIT',
-    'super': 'SUPER',
-    'struct': 'STRUCT',
-    'static': 'STATIC',
-    'self': 'SELF',
-    'Self': 'sELF', #en rust existen dos Self
-    'return': 'RETURN',
-    'ref': 'REF',
-    'pub': 'PUB',
-    'mut': 'MUT',
-    'move': 'MOVE',
-    'mod': 'MOD',
-    'match': 'MATCH',
-    'loop': 'LOOP',
-    'let': 'LET',
-    'in': 'IN',
-    'impl': 'IMPL',
-    'if': 'IF',
-    'for': 'FOR',
-    'fn': 'FN',
-    'false': 'FALSE',
-    'extern': 'EXTERN',
-    'enum': 'ENUM',
-    'else': 'ELSE',
-    'dyn': 'DYN',
-    'crate': 'CRATE',
-    'continue': 'CONTINUE',
-    'const': 'CONST',
-    'break': 'BREAK',
-    'await': 'AWAIT',
-    'async': 'ASYNC',
-    'as': 'AS'
-}
+from reserved import reserved
 
 
 # Sequencia de tokens, puede ser lista o tupla
@@ -80,6 +40,9 @@ tokens = (
     'AT',
     'INT',
     'FLOAT',
+    'STRING',
+    'CHAR',
+    'BOOL',
     'ID',
     'COMMENS',
     'NAME_FUNCTION',
@@ -121,6 +84,9 @@ t_UNDERSCORE = r'_'
 t_AT = r'@'
 t_INT = r'\d+'
 t_FLOAT = r'-?\d\.\d*'
+t_STRING = r'\".*\"'
+t_CHAR = r'\'[a-zA-Z0-9]\''
+t_BOOL = r'true|false'
 t_DOUBLE_QUOTE = r'\"'
 # Para contabilizar nro de líneas
 def t_newline(t):
