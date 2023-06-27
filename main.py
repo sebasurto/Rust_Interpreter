@@ -1,7 +1,6 @@
 import interface as fc
 import ply.yacc as yacc
-from lex import tokens
-import lex
+from lexico import tokens
 
 
 # fc.create_interface ()
@@ -9,68 +8,99 @@ import lex
 # lex.test_Ramon_Macias()
 
 # Build the parser
-def p_wholeCode(p):
-    """
-    wholeCode : function_main
-    | function_main functions
-    | functions
-    """
-
-def p_function_main(p):
-    """function_main : FN MAIN LPAREN RPAREN LBRACE function_body RBRACE
-    | FN MAIN LPAREN RPAREN LBRACE RBRACE
-    | FN MAIN LPAREN parameters RPAREN LBRACE function_body RBRACE
-    | FN MAIN LPAREN parameters RPAREN LBRACE RBRACE
-    """
-
-def p_functions(p):
-    """
-    functions : function
-    | function functions
-    """
+def p_sentence(p):
+    """sentence : let_statement"""
 
 
-def p_function(p):
-    """
-    function : FN ID LPAREN RPAREN LBRACE function_body RBRACE
-    | FN ID LPAREN RPAREN LBRACE RBRACE
-    | FN ID LPAREN parameters RPAREN LBRACE function_body RBRACE
-    | FN ID LPAREN parameters RPAREN LBRACE RBRACE
-    | FN ID LPAREN parameters RPAREN ARROW ID LBRACE function_body RBRACE
-    """
+# Ramon Macias
 
-def p_parameters(p):
-    """
-    parameters : ID
-    | ID COMMA parameters
-    """
+def p_match_body_line(p):
+    """match_body_line : match_cases"""
 
-def p_function_body(p):
-    """
-    function_body : function_body_line
-    | function_body_line function_body
-    """
 
-def p_function_body_line(p):
-    """function_body_line : expression SEMICOLON
-    | statement"""
+def p_match_pattern(p):
+    """match_pattern : value
+    | value PIPE match_pattern"""
 
-def p_statement(p):
-    """
-    statement : assignation
-    | expression SEMICOLON
-    | SEMICOLON
-    """
+
+def p_match_body(p):
+    """match_body : match_body_line
+    | match_body_line match_body"""
+
+
+def p_edc_match(p):
+    """edc_match : MATCH ID LBRACE match_body RBRACE"""
+
+
+def p_match_cases(p):
+    """match_cases : match_case
+    | match_case match_cases"""
+
+
+def p_match_case(p):
+    """match_case : match_pattern FAT_ARROW LBRACE code_body RBRACE"""
+
+
+def p_match_case_default(p):
+    """match_case : DEFAULT_MATCH FAT_ARROW LBRACE code_body RBRACE"""
+
+
+def p_code_body(p):
+    """code_body : code_body_line 
+    | code_body_line code_body"""
+
+
+def p_code_body_line(p):
+    """code_body_line : expression SEMICOLON
+    | statement SEMICOLON
+    | SEMICOLON"""
+
 
 def p_expression(p):
-    """
-    expression : assignation
-    | value SEMICOLON
-    """
+    """expression : value
+    | expression PLUS expression
+    | expression MINUS expression
+    | expression TIMES expression
+    | expression DIVIDE expression
+    | expression MODULO expression
+    | expression EQUAL_EQUAL expression
+    | expression NOT_EQUAL expression
+    | expression GREATER_THAN expression
+    | expression GREATER_THAN_EQUAL expression
+    | expression LESS_THAN expression
+    | expression LESS_THAN_EQUAL expression
+    | expression PIPE_PIPE expression
+    | expression AMPERSAND_AMPERSAND expression
+    | expression PIPE expression
+    | expression AMPERSAND expression
+    | expression BANG expression
+    | expression EQUAL expression
+    | expression DOT ID
+    | expression LBRACKET expression RBRACKET
+    | expression LBRACE expression RBRACE
+    | expression COLON expression
+    | expression DOUBLE_COLON expression
+    | expression ARROW expression
+    | expression FAT_ARROW expression
+    | expression COMMA expression
+    | expression SEMICOLON expression
+    | expression AT expression
+    | expression UNDERSCORE expression
+    | expression DOUBLE_QUOTE expression
+    | expression CHAR expression"""
 
-def p_assignation(p):
-    """assignation : LET ID EQUAL value SEMICOLON
-    | LET ID EQUAL value"""
+def p_expression_function_call(p):
+    """expression : ID LPAREN RPAREN
+    | ID LPAREN parameters RPAREN"""
+
+
+def p_let_array_i32(p):
+    """array : LET ID EQUAL LBRACKET array_elements RBRACKET"""
+
+def p_array_elements_i32(p):
+    """array_elements : INT
+    | array_elements COMMA INT"""
+
 
 def p_value(p):
     """value : INT
@@ -78,8 +108,85 @@ def p_value(p):
     | STRING
     | CHAR
     | BOOL
-    | ID
-    """
+    | ID"""
+
+
+def p_statement(p):
+    """statement : let_statement
+    | let_mut_statement
+    | const_statement
+    | if_statement
+    | while_statement
+    | for_statement
+    | match_statement
+    | function_statement
+    | return_statement
+    | break_statement
+    | continue_statement"""
+
+
+def p_let_statement(p):
+    """let_statement : LET ID EQUAL expression"""
+
+
+def p_let_mut_statement(p):
+    """let_mut_statement : LET MUT ID EQUAL expression"""
+
+
+def p_const_statement(p):
+    """const_statement : CONST ID EQUAL expression"""
+
+
+# TODO: Missing correct and complete implementation
+def p_if_statement(p):
+    """if_statement : IF expression LBRACE code_body RBRACE"""
+
+
+# TODO: Missing correct and complete implementation
+def p_while_statement(p):
+    """while_statement : WHILE expression LBRACE code_body RBRACE"""
+
+
+# TODO: Missing correct and complete implementation
+def p_for_statement(p):
+    """for_statement : FOR ID IN expression LBRACE code_body RBRACE"""
+
+
+def p_match_statement(p):
+    """match_statement : edc_match"""
+
+
+def p_function_statement(p):
+    """function_statement : function
+    | function_main"""
+
+
+def p_function_main(p):
+    "function_main : FN MAIN LPAREN RPAREN LBRACE code_body RBRACE"
+
+
+def p_function(p):
+    """function : FN ID LPAREN RPAREN LBRACE code_body RBRACE
+    | FN ID LPAREN parameters RPAREN LBRACE code_body RBRACE
+    | FN ID LPAREN parameters RPAREN ARROW ID LBRACE code_body RBRACE"""
+
+
+def p_parameters(p):
+    """parameters : ID
+    | ID COMMA parameters"""
+
+
+def p_return_statement(p):
+    "return_statement : RETURN expression SEMICOLON"
+
+
+def p_break_statement(p):
+    "break_statement : BREAK SEMICOLON"
+
+
+def p_continue_statement(p):
+    "continue_statement : CONTINUE SEMICOLON"
+
 #Sergio Basurto 26/06/2023 tuple structure
 def p_tuple(p):
     """
@@ -141,7 +248,8 @@ while True:
         s = input('rust > ')
     except EOFError:
         break
-    if not s: continue
+    if not s:
+        continue
     result = sintactico.parse(s)
     if result is not None:
         print(result)

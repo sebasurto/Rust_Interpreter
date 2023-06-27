@@ -1,4 +1,5 @@
 reserved = {
+    'main': 'MAIN',
     'while': 'WHILE',
     'where': 'WHERE',
     'use': 'USE',
@@ -37,5 +38,6 @@ reserved = {
     'break': 'BREAK',
     'await': 'AWAIT',
     'async': 'ASYNC',
-    'as': 'AS'
+    'as': 'AS',
+    'case': 'CASE'
 }

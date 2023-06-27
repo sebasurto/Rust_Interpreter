@@ -1,0 +1,5 @@
+
+*.pyc
+*.pyc
+__pycache__/interface.cpython-310.pyc
+parser.out

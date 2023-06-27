@@ -46,7 +46,8 @@ tokens = (
     'ID',
     'COMMENS',
     'NAME_FUNCTION',
-    'DOUBLE_QUOTE'
+    'DOUBLE_QUOTE',
+    'DEFAULT_MATCH'
 ) + tuple(reserved.values())
 
 # Expresiones regulares para los tokens de símbolos
@@ -88,10 +89,12 @@ t_STRING = r'\".*\"'
 t_CHAR = r'\'[a-zA-Z0-9]\''
 t_BOOL = r'true|false'
 t_DOUBLE_QUOTE = r'\"'
+t_DEFAULT_MATCH = r'_'
 # Para contabilizar nro de líneas
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
 
 def t_ID(t):
     r'[a-zA-Z_]\w*'
