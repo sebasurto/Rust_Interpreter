@@ -80,7 +80,17 @@ def p_value(p):
     | BOOL
     | ID
     """
-
+#Sergio Basurto 26/06/2023 tuple structure
+def p_tuple(p):
+    """
+    tuple : LPAREN tuple_elements RPAREN
+    """
+#Sergio Basurto 26/06/2023 
+def p_tuple_elements(p):
+    """
+    tuple_elements : value
+                   | value COMMA tuple_elements
+    """
 
 def p_error(p):
     if p:
