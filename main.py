@@ -91,7 +91,41 @@ def p_tuple_elements(p):
     tuple_elements : value
                    | value COMMA tuple_elements
     """
+#Sergio Basurto estructura IF
+def p_comparison(p):
+    """
+    comparison : EQUAL_EQUAL'
+    | LESS_THAN
+    | GREATER_THAN
+    | LESS_THAN_EQUAL
+    | GREATER_THAN_EQUAL
+    | NOT_EQUAL
+    """
+def p_comparison_parameter (p):
+    """
+    comparison_parameter : value comparison value
+    """
+def p_if_statement(p):
+    """
+    if_statement : IF LPAREN comparison_parameter RPAREN block
+                 | IF LPAREN comparison_parameter RPAREN block else_if_statement
+    """
 
+def p_else_if_statement(p):
+    """
+    else_if_statement : ELSE if_statement
+                      | ELSE IF LPAREN comparison_parameter RPAREN block else_if_statement
+    """
+def p_block(p):
+    """
+    block : LBRACE statements RBRACE
+          | LBRACE RBRACE
+    """
+def p_statements(p):
+    """
+    statements : statement
+               | statement statements
+    """
 def p_error(p):
     if p:
         print("Error de sintaxis en token:", p.type)
