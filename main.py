@@ -94,7 +94,7 @@ def p_tuple_elements(p):
 #Sergio Basurto estructura IF
 def p_comparison(p):
     """
-    comparison : EQUAL_EQUAL'
+    comparison : EQUAL_EQUAL
     | LESS_THAN
     | GREATER_THAN
     | LESS_THAN_EQUAL
