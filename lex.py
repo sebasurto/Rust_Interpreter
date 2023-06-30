@@ -24,10 +24,10 @@ tokens = (
     'ARROW',
     'FAT_ARROW',
     'PIPE',
-    'PIPE_PIPE',
+    'OR',
     'AMPERSAND',
-    'AMPERSAND_AMPERSAND',
-    'BANG',
+    'AND',
+    'NOT',
     'EQUAL',
     'EQUAL_EQUAL',
     'LESS_THAN',
@@ -53,7 +53,7 @@ tokens = (
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
-t_DIVIDE = r'\/'
+t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\['
@@ -68,10 +68,10 @@ t_DOUBLE_COLON = r'::'
 t_ARROW = r'->'
 t_FAT_ARROW = r'=>'
 t_PIPE = r'\|'
-t_PIPE_PIPE = r'\|\|'
 t_AMPERSAND = r'&'
-t_AMPERSAND_AMPERSAND = r'&&'
-t_BANG = r'!'
+t_AND = r'&&'
+t_NOT = r'!'
+t_OR = r'\|\|'
 t_EQUAL = r'='
 t_EQUAL_EQUAL = r'=='
 t_LESS_THAN = r'<'
@@ -84,22 +84,26 @@ t_UNDERSCORE = r'_'
 t_AT = r'@'
 t_INT = r'\d+'
 t_FLOAT = r'-?\d\.\d*'
-t_STRING = r'\".*\"'
+t_STRING = r'\"[a-zA-Z0-9\s]*\"'
 t_CHAR = r'\'[a-zA-Z0-9]\''
-t_BOOL = r'true|false'
 t_DOUBLE_QUOTE = r'\"'
 # Para contabilizar nro de líneas
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+def t_BOOL (t):
+    r'true|false'
+    return t
+
 def t_ID(t):
-    r'[a-zA-Z_]\w*'
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value.lower(), 'ID')
     return t
+
 def t_NAME_FUNCTION(t):
     r'[a-zA-Z_]\w*\(\)'
-    t.type = reserved.get(t.value.lower(), 'NAME_FUNcTION')
+    t.type = reserved.get(t.value.lower(), 'NAME_FUNCTION')
     return t
 def t_COMMENS(t):
     r'\/\/.*'
@@ -118,7 +122,14 @@ def t_error(t):
 
 
 
-
+def test_lex(data):
+    lexer = lex.lex()
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break  # Rompe
+        print(tok)
 
 def test_Sergio_Basurto():
     lexer = lex.lex()

@@ -3,13 +3,13 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     AMPERSAND
-    AMPERSAND_AMPERSAND
+    ARROW
     AS
     ASYNC
     AT
     AWAIT
-    BANG
     BREAK
+    CASE
     COLON
     COMMENS
     CONST
@@ -22,20 +22,19 @@ Unused terminals:
     DYN
     ELSE
     ENUM
-    EQUAL_EQUAL
+    EQUAL
     EXTERN
-    FALSE
     FAT_ARROW
+    FN
     FOR
-    GREATER_THAN
-    GREATER_THAN_EQUAL
     IF
     IMPL
     IN
+    LBRACE
     LBRACKET
-    LESS_THAN
-    LESS_THAN_EQUAL
+    LET
     LOOP
+    MAIN
     MATCH
     MINUS
     MOD
@@ -43,11 +42,10 @@ Unused terminals:
     MOVE
     MUT
     NAME_FUNCTION
-    NOT_EQUAL
     PIPE
-    PIPE_PIPE
     PLUS
     PUB
+    RBRACE
     RBRACKET
     REF
     RETURN
@@ -57,7 +55,6 @@ Unused terminals:
     SUPER
     TIMES
     TRAIT
-    TRUE
     TYPE
     UNDERSCORE
     UNION
@@ -69,56 +66,54 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> wholeCode
-Rule 1     wholeCode -> function_main
-Rule 2     wholeCode -> function_main functions
-Rule 3     wholeCode -> functions
-Rule 4     function_main -> FN MAIN LPAREN RPAREN LBRACE function_body RBRACE
-Rule 5     function_main -> FN MAIN LPAREN RPAREN LBRACE RBRACE
-Rule 6     function_main -> FN MAIN LPAREN parameters RPAREN LBRACE function_body RBRACE
-Rule 7     function_main -> FN MAIN LPAREN parameters RPAREN LBRACE RBRACE
-Rule 8     functions -> function
-Rule 9     functions -> function functions
-Rule 10    function -> FN ID LPAREN RPAREN LBRACE function_body RBRACE
-Rule 11    function -> FN ID LPAREN RPAREN LBRACE RBRACE
-Rule 12    function -> FN ID LPAREN parameters RPAREN LBRACE function_body RBRACE
-Rule 13    function -> FN ID LPAREN parameters RPAREN LBRACE RBRACE
-Rule 14    function -> FN ID LPAREN parameters RPAREN ARROW ID LBRACE function_body RBRACE
-Rule 15    parameters -> ID
-Rule 16    parameters -> ID COMMA parameters
-Rule 17    function_body -> function_body_line
-Rule 18    function_body -> function_body_line function_body
-Rule 19    function_body_line -> expression SEMICOLON
-Rule 20    function_body_line -> statement
-Rule 21    statement -> assignation
-Rule 22    statement -> expression SEMICOLON
-Rule 23    statement -> SEMICOLON
-Rule 24    expression -> assignation
-Rule 25    expression -> value SEMICOLON
-Rule 26    assignation -> LET ID EQUAL value SEMICOLON
-Rule 27    assignation -> LET ID EQUAL value
-Rule 28    value -> INT
-Rule 29    value -> FLOAT
-Rule 30    value -> STRING
-Rule 31    value -> CHAR
-Rule 32    value -> BOOL
-Rule 33    value -> ID
+Rule 0     S' -> code_block
+Rule 1     code_block -> code_line
+Rule 2     code_block -> code_line code_block
+Rule 3     code_line -> code SEMICOLON
+Rule 4     code -> function
+Rule 5     code -> comparison_production
+Rule 6     code -> value
+Rule 7     code -> logic_value
+Rule 8     function -> ID LPAREN RPAREN
+Rule 9     function -> ID LPAREN value RPAREN
+Rule 10    function -> ID LPAREN arguments_production RPAREN
+Rule 11    arguments_production -> value
+Rule 12    arguments_production -> value COMMA arguments_production
+Rule 13    comparison_production -> comparison_value
+Rule 14    comparison_production -> comparison_value comparison comparison_production
+Rule 15    comparison_value -> value comparison value
+Rule 16    logic_value -> value logic_operator value
+Rule 17    comparison -> LESS_THAN
+Rule 18    comparison -> GREATER_THAN
+Rule 19    comparison -> LESS_THAN_EQUAL
+Rule 20    comparison -> GREATER_THAN_EQUAL
+Rule 21    comparison -> NOT_EQUAL
+Rule 22    comparison -> EQUAL_EQUAL
+Rule 23    value -> INT
+Rule 24    value -> FLOAT
+Rule 25    value -> STRING
+Rule 26    value -> CHAR
+Rule 27    value -> BOOL
+Rule 28    value -> ID
+Rule 29    logic_operator -> AND
+Rule 30    logic_operator -> OR
+Rule 31    logic_operator -> NOT
 
 Terminals, with rules where they appear
 
 AMPERSAND            : 
-AMPERSAND_AMPERSAND  : 
-ARROW                : 14
+AND                  : 29
+ARROW                : 
 AS                   : 
 ASYNC                : 
 AT                   : 
 AWAIT                : 
-BANG                 : 
-BOOL                 : 32
+BOOL                 : 27
 BREAK                : 
-CHAR                 : 31
+CASE                 : 
+CHAR                 : 26
 COLON                : 
-COMMA                : 16
+COMMA                : 12
 COMMENS              : 
 CONST                : 
 CONTINUE             : 
@@ -130,28 +125,28 @@ DOUBLE_QUOTE         :
 DYN                  : 
 ELSE                 : 
 ENUM                 : 
-EQUAL                : 26 27
-EQUAL_EQUAL          : 
+EQUAL                : 
+EQUAL_EQUAL          : 22
 EXTERN               : 
-FALSE                : 
 FAT_ARROW            : 
-FLOAT                : 29
-FN                   : 4 5 6 7 10 11 12 13 14
+FLOAT                : 24
+FN                   : 
 FOR                  : 
-GREATER_THAN         : 
-GREATER_THAN_EQUAL   : 
-ID                   : 10 11 12 13 14 14 15 16 26 27 33
+GREATER_THAN         : 18
+GREATER_THAN_EQUAL   : 20
+ID                   : 8 9 10 28
 IF                   : 
 IMPL                 : 
 IN                   : 
-INT                  : 28
-LBRACE               : 4 5 6 7 10 11 12 13 14
+INT                  : 23
+LBRACE               : 
 LBRACKET             : 
-LESS_THAN            : 
-LESS_THAN_EQUAL      : 
-LET                  : 26 27
+LESS_THAN            : 17
+LESS_THAN_EQUAL      : 19
+LET                  : 
 LOOP                 : 
-LPAREN               : 4 5 6 7 10 11 12 13 14
+LPAREN               : 8 9 10
+MAIN                 : 
 MATCH                : 
 MINUS                : 
 MOD                  : 
@@ -159,25 +154,25 @@ MODULO               :
 MOVE                 : 
 MUT                  : 
 NAME_FUNCTION        : 
-NOT_EQUAL            : 
+NOT                  : 31
+NOT_EQUAL            : 21
+OR                   : 30
 PIPE                 : 
-PIPE_PIPE            : 
 PLUS                 : 
 PUB                  : 
-RBRACE               : 4 5 6 7 10 11 12 13 14
+RBRACE               : 
 RBRACKET             : 
 REF                  : 
 RETURN               : 
-RPAREN               : 4 5 6 7 10 11 12 13 14
+RPAREN               : 8 9 10
 SELF                 : 
-SEMICOLON            : 19 22 23 25 26
+SEMICOLON            : 3
 STATIC               : 
-STRING               : 30
+STRING               : 25
 STRUCT               : 
 SUPER                : 
 TIMES                : 
 TRAIT                : 
-TRUE                 : 
 TYPE                 : 
 UNDERSCORE           : 
 UNION                : 
@@ -190,16 +185,651 @@ sELF                 :
 
 Nonterminals, with rules where they appear
 
-MAIN                 : 4 5 6 7
-assignation          : 21 24
-expression           : 19 22
-function             : 8 9
-function_body        : 4 6 10 12 14 18
-function_body_line   : 17 18
-function_main        : 1 2
-functions            : 2 3 9
-parameters           : 6 7 12 13 14 16
-statement            : 20
-value                : 25 26 27
-wholeCode            : 0
+arguments_production : 10 12
+code                 : 3
+code_block           : 2 0
+code_line            : 1 2
+comparison           : 14 15
+comparison_production : 5 14
+comparison_value     : 13 14
+function             : 4
+logic_operator       : 16
+logic_value          : 7
+value                : 6 9 11 12 15 15 16 16
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . code_block
+    (1) code_block -> . code_line
+    (2) code_block -> . code_line code_block
+    (3) code_line -> . code SEMICOLON
+    (4) code -> . function
+    (5) code -> . comparison_production
+    (6) code -> . value
+    (7) code -> . logic_value
+    (8) function -> . ID LPAREN RPAREN
+    (9) function -> . ID LPAREN value RPAREN
+    (10) function -> . ID LPAREN arguments_production RPAREN
+    (13) comparison_production -> . comparison_value
+    (14) comparison_production -> . comparison_value comparison comparison_production
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+    (16) logic_value -> . value logic_operator value
+    (15) comparison_value -> . value comparison value
+
+    ID              shift and go to state 8
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+
+    code_block                     shift and go to state 1
+    code_line                      shift and go to state 2
+    code                           shift and go to state 3
+    function                       shift and go to state 4
+    comparison_production          shift and go to state 5
+    value                          shift and go to state 6
+    logic_value                    shift and go to state 7
+    comparison_value               shift and go to state 9
+
+state 1
+
+    (0) S' -> code_block .
+
+
+
+state 2
+
+    (1) code_block -> code_line .
+    (2) code_block -> code_line . code_block
+    (1) code_block -> . code_line
+    (2) code_block -> . code_line code_block
+    (3) code_line -> . code SEMICOLON
+    (4) code -> . function
+    (5) code -> . comparison_production
+    (6) code -> . value
+    (7) code -> . logic_value
+    (8) function -> . ID LPAREN RPAREN
+    (9) function -> . ID LPAREN value RPAREN
+    (10) function -> . ID LPAREN arguments_production RPAREN
+    (13) comparison_production -> . comparison_value
+    (14) comparison_production -> . comparison_value comparison comparison_production
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+    (16) logic_value -> . value logic_operator value
+    (15) comparison_value -> . value comparison value
+
+    $end            reduce using rule 1 (code_block -> code_line .)
+    ID              shift and go to state 8
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+
+    code_line                      shift and go to state 2
+    code_block                     shift and go to state 15
+    code                           shift and go to state 3
+    function                       shift and go to state 4
+    comparison_production          shift and go to state 5
+    value                          shift and go to state 6
+    logic_value                    shift and go to state 7
+    comparison_value               shift and go to state 9
+
+state 3
+
+    (3) code_line -> code . SEMICOLON
+
+    SEMICOLON       shift and go to state 16
+
+
+state 4
+
+    (4) code -> function .
+
+    SEMICOLON       reduce using rule 4 (code -> function .)
+
+
+state 5
+
+    (5) code -> comparison_production .
+
+    SEMICOLON       reduce using rule 5 (code -> comparison_production .)
+
+
+state 6
+
+    (6) code -> value .
+    (16) logic_value -> value . logic_operator value
+    (15) comparison_value -> value . comparison value
+    (29) logic_operator -> . AND
+    (30) logic_operator -> . OR
+    (31) logic_operator -> . NOT
+    (17) comparison -> . LESS_THAN
+    (18) comparison -> . GREATER_THAN
+    (19) comparison -> . LESS_THAN_EQUAL
+    (20) comparison -> . GREATER_THAN_EQUAL
+    (21) comparison -> . NOT_EQUAL
+    (22) comparison -> . EQUAL_EQUAL
+
+    SEMICOLON       reduce using rule 6 (code -> value .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    NOT             shift and go to state 21
+    LESS_THAN       shift and go to state 22
+    GREATER_THAN    shift and go to state 23
+    LESS_THAN_EQUAL shift and go to state 24
+    GREATER_THAN_EQUAL shift and go to state 25
+    NOT_EQUAL       shift and go to state 26
+    EQUAL_EQUAL     shift and go to state 27
+
+    logic_operator                 shift and go to state 17
+    comparison                     shift and go to state 18
+
+state 7
+
+    (7) code -> logic_value .
+
+    SEMICOLON       reduce using rule 7 (code -> logic_value .)
+
+
+state 8
+
+    (8) function -> ID . LPAREN RPAREN
+    (9) function -> ID . LPAREN value RPAREN
+    (10) function -> ID . LPAREN arguments_production RPAREN
+    (28) value -> ID .
+
+    LPAREN          shift and go to state 28
+    AND             reduce using rule 28 (value -> ID .)
+    OR              reduce using rule 28 (value -> ID .)
+    NOT             reduce using rule 28 (value -> ID .)
+    LESS_THAN       reduce using rule 28 (value -> ID .)
+    GREATER_THAN    reduce using rule 28 (value -> ID .)
+    LESS_THAN_EQUAL reduce using rule 28 (value -> ID .)
+    GREATER_THAN_EQUAL reduce using rule 28 (value -> ID .)
+    NOT_EQUAL       reduce using rule 28 (value -> ID .)
+    EQUAL_EQUAL     reduce using rule 28 (value -> ID .)
+    SEMICOLON       reduce using rule 28 (value -> ID .)
+
+
+state 9
+
+    (13) comparison_production -> comparison_value .
+    (14) comparison_production -> comparison_value . comparison comparison_production
+    (17) comparison -> . LESS_THAN
+    (18) comparison -> . GREATER_THAN
+    (19) comparison -> . LESS_THAN_EQUAL
+    (20) comparison -> . GREATER_THAN_EQUAL
+    (21) comparison -> . NOT_EQUAL
+    (22) comparison -> . EQUAL_EQUAL
+
+    SEMICOLON       reduce using rule 13 (comparison_production -> comparison_value .)
+    LESS_THAN       shift and go to state 22
+    GREATER_THAN    shift and go to state 23
+    LESS_THAN_EQUAL shift and go to state 24
+    GREATER_THAN_EQUAL shift and go to state 25
+    NOT_EQUAL       shift and go to state 26
+    EQUAL_EQUAL     shift and go to state 27
+
+    comparison                     shift and go to state 29
+
+state 10
+
+    (23) value -> INT .
+
+    AND             reduce using rule 23 (value -> INT .)
+    OR              reduce using rule 23 (value -> INT .)
+    NOT             reduce using rule 23 (value -> INT .)
+    LESS_THAN       reduce using rule 23 (value -> INT .)
+    GREATER_THAN    reduce using rule 23 (value -> INT .)
+    LESS_THAN_EQUAL reduce using rule 23 (value -> INT .)
+    GREATER_THAN_EQUAL reduce using rule 23 (value -> INT .)
+    NOT_EQUAL       reduce using rule 23 (value -> INT .)
+    EQUAL_EQUAL     reduce using rule 23 (value -> INT .)
+    SEMICOLON       reduce using rule 23 (value -> INT .)
+    RPAREN          reduce using rule 23 (value -> INT .)
+    COMMA           reduce using rule 23 (value -> INT .)
+
+
+state 11
+
+    (24) value -> FLOAT .
+
+    AND             reduce using rule 24 (value -> FLOAT .)
+    OR              reduce using rule 24 (value -> FLOAT .)
+    NOT             reduce using rule 24 (value -> FLOAT .)
+    LESS_THAN       reduce using rule 24 (value -> FLOAT .)
+    GREATER_THAN    reduce using rule 24 (value -> FLOAT .)
+    LESS_THAN_EQUAL reduce using rule 24 (value -> FLOAT .)
+    GREATER_THAN_EQUAL reduce using rule 24 (value -> FLOAT .)
+    NOT_EQUAL       reduce using rule 24 (value -> FLOAT .)
+    EQUAL_EQUAL     reduce using rule 24 (value -> FLOAT .)
+    SEMICOLON       reduce using rule 24 (value -> FLOAT .)
+    RPAREN          reduce using rule 24 (value -> FLOAT .)
+    COMMA           reduce using rule 24 (value -> FLOAT .)
+
+
+state 12
+
+    (25) value -> STRING .
+
+    AND             reduce using rule 25 (value -> STRING .)
+    OR              reduce using rule 25 (value -> STRING .)
+    NOT             reduce using rule 25 (value -> STRING .)
+    LESS_THAN       reduce using rule 25 (value -> STRING .)
+    GREATER_THAN    reduce using rule 25 (value -> STRING .)
+    LESS_THAN_EQUAL reduce using rule 25 (value -> STRING .)
+    GREATER_THAN_EQUAL reduce using rule 25 (value -> STRING .)
+    NOT_EQUAL       reduce using rule 25 (value -> STRING .)
+    EQUAL_EQUAL     reduce using rule 25 (value -> STRING .)
+    SEMICOLON       reduce using rule 25 (value -> STRING .)
+    RPAREN          reduce using rule 25 (value -> STRING .)
+    COMMA           reduce using rule 25 (value -> STRING .)
+
+
+state 13
+
+    (26) value -> CHAR .
+
+    AND             reduce using rule 26 (value -> CHAR .)
+    OR              reduce using rule 26 (value -> CHAR .)
+    NOT             reduce using rule 26 (value -> CHAR .)
+    LESS_THAN       reduce using rule 26 (value -> CHAR .)
+    GREATER_THAN    reduce using rule 26 (value -> CHAR .)
+    LESS_THAN_EQUAL reduce using rule 26 (value -> CHAR .)
+    GREATER_THAN_EQUAL reduce using rule 26 (value -> CHAR .)
+    NOT_EQUAL       reduce using rule 26 (value -> CHAR .)
+    EQUAL_EQUAL     reduce using rule 26 (value -> CHAR .)
+    SEMICOLON       reduce using rule 26 (value -> CHAR .)
+    RPAREN          reduce using rule 26 (value -> CHAR .)
+    COMMA           reduce using rule 26 (value -> CHAR .)
+
+
+state 14
+
+    (27) value -> BOOL .
+
+    AND             reduce using rule 27 (value -> BOOL .)
+    OR              reduce using rule 27 (value -> BOOL .)
+    NOT             reduce using rule 27 (value -> BOOL .)
+    LESS_THAN       reduce using rule 27 (value -> BOOL .)
+    GREATER_THAN    reduce using rule 27 (value -> BOOL .)
+    LESS_THAN_EQUAL reduce using rule 27 (value -> BOOL .)
+    GREATER_THAN_EQUAL reduce using rule 27 (value -> BOOL .)
+    NOT_EQUAL       reduce using rule 27 (value -> BOOL .)
+    EQUAL_EQUAL     reduce using rule 27 (value -> BOOL .)
+    SEMICOLON       reduce using rule 27 (value -> BOOL .)
+    RPAREN          reduce using rule 27 (value -> BOOL .)
+    COMMA           reduce using rule 27 (value -> BOOL .)
+
+
+state 15
+
+    (2) code_block -> code_line code_block .
+
+    $end            reduce using rule 2 (code_block -> code_line code_block .)
+
+
+state 16
+
+    (3) code_line -> code SEMICOLON .
+
+    ID              reduce using rule 3 (code_line -> code SEMICOLON .)
+    INT             reduce using rule 3 (code_line -> code SEMICOLON .)
+    FLOAT           reduce using rule 3 (code_line -> code SEMICOLON .)
+    STRING          reduce using rule 3 (code_line -> code SEMICOLON .)
+    CHAR            reduce using rule 3 (code_line -> code SEMICOLON .)
+    BOOL            reduce using rule 3 (code_line -> code SEMICOLON .)
+    $end            reduce using rule 3 (code_line -> code SEMICOLON .)
+
+
+state 17
+
+    (16) logic_value -> value logic_operator . value
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+    ID              shift and go to state 31
+
+    value                          shift and go to state 30
+
+state 18
+
+    (15) comparison_value -> value comparison . value
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+    ID              shift and go to state 31
+
+    value                          shift and go to state 32
+
+state 19
+
+    (29) logic_operator -> AND .
+
+    INT             reduce using rule 29 (logic_operator -> AND .)
+    FLOAT           reduce using rule 29 (logic_operator -> AND .)
+    STRING          reduce using rule 29 (logic_operator -> AND .)
+    CHAR            reduce using rule 29 (logic_operator -> AND .)
+    BOOL            reduce using rule 29 (logic_operator -> AND .)
+    ID              reduce using rule 29 (logic_operator -> AND .)
+
+
+state 20
+
+    (30) logic_operator -> OR .
+
+    INT             reduce using rule 30 (logic_operator -> OR .)
+    FLOAT           reduce using rule 30 (logic_operator -> OR .)
+    STRING          reduce using rule 30 (logic_operator -> OR .)
+    CHAR            reduce using rule 30 (logic_operator -> OR .)
+    BOOL            reduce using rule 30 (logic_operator -> OR .)
+    ID              reduce using rule 30 (logic_operator -> OR .)
+
+
+state 21
+
+    (31) logic_operator -> NOT .
+
+    INT             reduce using rule 31 (logic_operator -> NOT .)
+    FLOAT           reduce using rule 31 (logic_operator -> NOT .)
+    STRING          reduce using rule 31 (logic_operator -> NOT .)
+    CHAR            reduce using rule 31 (logic_operator -> NOT .)
+    BOOL            reduce using rule 31 (logic_operator -> NOT .)
+    ID              reduce using rule 31 (logic_operator -> NOT .)
+
+
+state 22
+
+    (17) comparison -> LESS_THAN .
+
+    INT             reduce using rule 17 (comparison -> LESS_THAN .)
+    FLOAT           reduce using rule 17 (comparison -> LESS_THAN .)
+    STRING          reduce using rule 17 (comparison -> LESS_THAN .)
+    CHAR            reduce using rule 17 (comparison -> LESS_THAN .)
+    BOOL            reduce using rule 17 (comparison -> LESS_THAN .)
+    ID              reduce using rule 17 (comparison -> LESS_THAN .)
+
+
+state 23
+
+    (18) comparison -> GREATER_THAN .
+
+    INT             reduce using rule 18 (comparison -> GREATER_THAN .)
+    FLOAT           reduce using rule 18 (comparison -> GREATER_THAN .)
+    STRING          reduce using rule 18 (comparison -> GREATER_THAN .)
+    CHAR            reduce using rule 18 (comparison -> GREATER_THAN .)
+    BOOL            reduce using rule 18 (comparison -> GREATER_THAN .)
+    ID              reduce using rule 18 (comparison -> GREATER_THAN .)
+
+
+state 24
+
+    (19) comparison -> LESS_THAN_EQUAL .
+
+    INT             reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+    FLOAT           reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+    STRING          reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+    CHAR            reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+    BOOL            reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+    ID              reduce using rule 19 (comparison -> LESS_THAN_EQUAL .)
+
+
+state 25
+
+    (20) comparison -> GREATER_THAN_EQUAL .
+
+    INT             reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+    FLOAT           reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+    STRING          reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+    CHAR            reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+    BOOL            reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+    ID              reduce using rule 20 (comparison -> GREATER_THAN_EQUAL .)
+
+
+state 26
+
+    (21) comparison -> NOT_EQUAL .
+
+    INT             reduce using rule 21 (comparison -> NOT_EQUAL .)
+    FLOAT           reduce using rule 21 (comparison -> NOT_EQUAL .)
+    STRING          reduce using rule 21 (comparison -> NOT_EQUAL .)
+    CHAR            reduce using rule 21 (comparison -> NOT_EQUAL .)
+    BOOL            reduce using rule 21 (comparison -> NOT_EQUAL .)
+    ID              reduce using rule 21 (comparison -> NOT_EQUAL .)
+
+
+state 27
+
+    (22) comparison -> EQUAL_EQUAL .
+
+    INT             reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+    FLOAT           reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+    STRING          reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+    CHAR            reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+    BOOL            reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+    ID              reduce using rule 22 (comparison -> EQUAL_EQUAL .)
+
+
+state 28
+
+    (8) function -> ID LPAREN . RPAREN
+    (9) function -> ID LPAREN . value RPAREN
+    (10) function -> ID LPAREN . arguments_production RPAREN
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+    (11) arguments_production -> . value
+    (12) arguments_production -> . value COMMA arguments_production
+
+    RPAREN          shift and go to state 33
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+    ID              shift and go to state 31
+
+    value                          shift and go to state 34
+    arguments_production           shift and go to state 35
+
+state 29
+
+    (14) comparison_production -> comparison_value comparison . comparison_production
+    (13) comparison_production -> . comparison_value
+    (14) comparison_production -> . comparison_value comparison comparison_production
+    (15) comparison_value -> . value comparison value
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+    ID              shift and go to state 31
+
+    comparison_value               shift and go to state 9
+    comparison_production          shift and go to state 36
+    value                          shift and go to state 37
+
+state 30
+
+    (16) logic_value -> value logic_operator value .
+
+    SEMICOLON       reduce using rule 16 (logic_value -> value logic_operator value .)
+
+
+state 31
+
+    (28) value -> ID .
+
+    SEMICOLON       reduce using rule 28 (value -> ID .)
+    LESS_THAN       reduce using rule 28 (value -> ID .)
+    GREATER_THAN    reduce using rule 28 (value -> ID .)
+    LESS_THAN_EQUAL reduce using rule 28 (value -> ID .)
+    GREATER_THAN_EQUAL reduce using rule 28 (value -> ID .)
+    NOT_EQUAL       reduce using rule 28 (value -> ID .)
+    EQUAL_EQUAL     reduce using rule 28 (value -> ID .)
+    RPAREN          reduce using rule 28 (value -> ID .)
+    COMMA           reduce using rule 28 (value -> ID .)
+
+
+state 32
+
+    (15) comparison_value -> value comparison value .
+
+    LESS_THAN       reduce using rule 15 (comparison_value -> value comparison value .)
+    GREATER_THAN    reduce using rule 15 (comparison_value -> value comparison value .)
+    LESS_THAN_EQUAL reduce using rule 15 (comparison_value -> value comparison value .)
+    GREATER_THAN_EQUAL reduce using rule 15 (comparison_value -> value comparison value .)
+    NOT_EQUAL       reduce using rule 15 (comparison_value -> value comparison value .)
+    EQUAL_EQUAL     reduce using rule 15 (comparison_value -> value comparison value .)
+    SEMICOLON       reduce using rule 15 (comparison_value -> value comparison value .)
+
+
+state 33
+
+    (8) function -> ID LPAREN RPAREN .
+
+    SEMICOLON       reduce using rule 8 (function -> ID LPAREN RPAREN .)
+
+
+state 34
+
+    (9) function -> ID LPAREN value . RPAREN
+    (11) arguments_production -> value .
+    (12) arguments_production -> value . COMMA arguments_production
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 38
+    COMMA           shift and go to state 39
+
+  ! RPAREN          [ reduce using rule 11 (arguments_production -> value .) ]
+
+
+state 35
+
+    (10) function -> ID LPAREN arguments_production . RPAREN
+
+    RPAREN          shift and go to state 40
+
+
+state 36
+
+    (14) comparison_production -> comparison_value comparison comparison_production .
+
+    SEMICOLON       reduce using rule 14 (comparison_production -> comparison_value comparison comparison_production .)
+
+
+state 37
+
+    (15) comparison_value -> value . comparison value
+    (17) comparison -> . LESS_THAN
+    (18) comparison -> . GREATER_THAN
+    (19) comparison -> . LESS_THAN_EQUAL
+    (20) comparison -> . GREATER_THAN_EQUAL
+    (21) comparison -> . NOT_EQUAL
+    (22) comparison -> . EQUAL_EQUAL
+
+    LESS_THAN       shift and go to state 22
+    GREATER_THAN    shift and go to state 23
+    LESS_THAN_EQUAL shift and go to state 24
+    GREATER_THAN_EQUAL shift and go to state 25
+    NOT_EQUAL       shift and go to state 26
+    EQUAL_EQUAL     shift and go to state 27
+
+    comparison                     shift and go to state 18
+
+state 38
+
+    (9) function -> ID LPAREN value RPAREN .
+
+    SEMICOLON       reduce using rule 9 (function -> ID LPAREN value RPAREN .)
+
+
+state 39
+
+    (12) arguments_production -> value COMMA . arguments_production
+    (11) arguments_production -> . value
+    (12) arguments_production -> . value COMMA arguments_production
+    (23) value -> . INT
+    (24) value -> . FLOAT
+    (25) value -> . STRING
+    (26) value -> . CHAR
+    (27) value -> . BOOL
+    (28) value -> . ID
+
+    INT             shift and go to state 10
+    FLOAT           shift and go to state 11
+    STRING          shift and go to state 12
+    CHAR            shift and go to state 13
+    BOOL            shift and go to state 14
+    ID              shift and go to state 31
+
+    value                          shift and go to state 41
+    arguments_production           shift and go to state 42
+
+state 40
+
+    (10) function -> ID LPAREN arguments_production RPAREN .
+
+    SEMICOLON       reduce using rule 10 (function -> ID LPAREN arguments_production RPAREN .)
+
+
+state 41
+
+    (11) arguments_production -> value .
+    (12) arguments_production -> value . COMMA arguments_production
+
+    RPAREN          reduce using rule 11 (arguments_production -> value .)
+    COMMA           shift and go to state 39
+
+
+state 42
+
+    (12) arguments_production -> value COMMA arguments_production .
+
+    RPAREN          reduce using rule 12 (arguments_production -> value COMMA arguments_production .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for RPAREN in state 34 resolved as shift
