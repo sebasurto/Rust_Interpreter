@@ -125,11 +125,15 @@ def t_error(t):
 def test_lex(data):
     lexer = lex.lex()
     lexer.input(data)
+    result = ""
     while True:
         tok = lexer.token()
         if not tok:
             break  # Rompe
         print(tok)
+        result = result + str(tok) +"\n"
+    return result
+        
 
 def test_Sergio_Basurto():
     lexer = lex.lex()

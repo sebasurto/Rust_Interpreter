@@ -4,7 +4,7 @@ import lex as lxc
 from lex import tokens
 import sintaxis as sntx
 
-# fc.create_interface ()
+fc.create_interface ()
 # lex.test_Sergio_Basurto()
 # lex.test_Ramon_Macias()
 
@@ -300,6 +300,11 @@ n = """
     8 >= 9;
     6 == 8;
     6 != 6;
+    if my_string.len() > 10 {
+                    println!("La cadena es larga");
+                } else {
+                    println!("La cadena es corta");
+                }
     """
     
 lxc.test_lex(n)

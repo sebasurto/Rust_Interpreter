@@ -13,11 +13,33 @@ precedence = (
 )
 
 
-#def p_body (p):
-   # """body : code
-    #        | code body
-  #  """
- #   print ("body")
+def p_body (p):
+    """body : code_block
+            | if_statement
+    """
+    print ("body")
+
+def p_if_statement(p):
+    """
+    if_statement : IF LPAREN comparison_value RPAREN block_function
+                 | IF LPAREN comparison_value RPAREN block_function else_if_statement
+                 | IF function comparison value block_function
+                 | IF function comparison value block_function else_if_statement
+    """
+
+def p_else_if_statement(p):
+    """
+    else_if_statement : ELSE block_function
+                      | ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+                      | ELSE IF function comparison value block_function else_if_statement
+    """
+
+def p_block_function(p):
+    """
+    block_function : LBRACE RBRACE 
+                   | LBRACE code_block RBRACE 
+
+    """
 def p_code_block(p):
     """
     code_block : code_line
@@ -43,6 +65,9 @@ def p_function (p):
     """function : ID LPAREN RPAREN 
                 | ID LPAREN value RPAREN
                 | ID LPAREN arguments_production RPAREN
+                | ID DOT ID LPAREN RPAREN
+                | ID DOT ID LPAREN value RPAREN 
+                | ID DOT ID LPAREN arguments_production RPAREN 
     """
     print("function")
 
@@ -119,3 +144,4 @@ def test_sintaxis (s):
     sintactico = yacc.yacc()
     result = sintactico.parse(s)
     print(result)
+    return result

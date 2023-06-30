@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftNOTleftORleftANDnonassocEQUAL_EQUALNOT_EQUALnonassocLESS_THANLESS_THAN_EQUALGREATER_THANGREATER_THAN_EQUALleftPLUSMINUSleftTIMESDIVIDEMODULOAMPERSAND AND ARROW AS ASYNC AT AWAIT BOOL BREAK CASE CHAR COLON COMMA COMMENS CONST CONTINUE CRATE DIVIDE DOT DOUBLE_COLON DOUBLE_QUOTE DYN ELSE ENUM EQUAL EQUAL_EQUAL EXTERN FAT_ARROW FLOAT FN FOR GREATER_THAN GREATER_THAN_EQUAL ID IF IMPL IN INT LBRACE LBRACKET LESS_THAN LESS_THAN_EQUAL LET LOOP LPAREN MAIN MATCH MINUS MOD MODULO MOVE MUT NAME_FUNCTION NOT NOT_EQUAL OR PIPE PLUS PUB RBRACE RBRACKET REF RETURN RPAREN SELF SEMICOLON STATIC STRING STRUCT SUPER TIMES TRAIT TYPE UNDERSCORE UNION UNSAFE USE WHERE WHILE sELF\n    code_block : code_line\n               | code_line code_block\n    \n    code_line : code SEMICOLON\n    code : function \n            | comparison_production \n            | value \n            | logic_value \n    function : ID LPAREN RPAREN \n                | ID LPAREN value RPAREN\n                | ID LPAREN arguments_production RPAREN\n    \n    arguments_production : value\n                         | value COMMA arguments_production\n    \n    comparison_production : comparison_value\n                          | comparison_value comparison comparison_production\n    comparison_value : value comparison valuelogic_value : value logic_operator value\n    comparison : LESS_THAN\n               | GREATER_THAN\n               | LESS_THAN_EQUAL\n               | GREATER_THAN_EQUAL\n               | NOT_EQUAL\n               | EQUAL_EQUAL\n    \n    value : INT\n          | FLOAT\n          | STRING\n          | CHAR\n          | BOOL\n          | ID\n    \n    logic_operator : AND\n                   | OR\n                   | NOT\n    '
+_lr_signature = 'leftNOTleftORleftANDnonassocEQUAL_EQUALNOT_EQUALnonassocLESS_THANLESS_THAN_EQUALGREATER_THANGREATER_THAN_EQUALleftPLUSMINUSleftTIMESDIVIDEMODULOAMPERSAND AND ARROW AS ASYNC AT AWAIT BOOL BREAK CASE CHAR COLON COMMA COMMENS CONST CONTINUE CRATE DIVIDE DOT DOUBLE_COLON DOUBLE_QUOTE DYN ELSE ENUM EQUAL EQUAL_EQUAL EXTERN FAT_ARROW FLOAT FN FOR GREATER_THAN GREATER_THAN_EQUAL ID IF IMPL IN INT LBRACE LBRACKET LESS_THAN LESS_THAN_EQUAL LET LOOP LPAREN MAIN MATCH MINUS MOD MODULO MOVE MUT NAME_FUNCTION NOT NOT_EQUAL OR PIPE PLUS PUB RBRACE RBRACKET REF RETURN RPAREN SELF SEMICOLON STATIC STRING STRUCT SUPER TIMES TRAIT TYPE UNDERSCORE UNION UNSAFE USE WHERE WHILE sELFbody : code_block\n            | if_statement\n    \n    if_statement : IF LPAREN comparison_value RPAREN block_function\n                 | IF LPAREN comparison_value RPAREN block_function else_if_statement\n                 | IF function comparison value block_function\n                 | IF function comparison value block_function else_if_statement\n    \n    else_if_statement : ELSE block_function\n                      | ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement\n                      | ELSE IF function comparison value block_function else_if_statement\n    \n    block_function : LBRACE RBRACE \n                   | LBRACE code_block RBRACE \n\n    \n    code_block : code_line\n               | code_line code_block\n    \n    code_line : code SEMICOLON\n    code : function \n            | comparison_production \n            | value \n            | logic_value \n    function : ID LPAREN RPAREN \n                | ID LPAREN value RPAREN\n                | ID LPAREN arguments_production RPAREN\n                | ID DOT ID LPAREN RPAREN\n                | ID DOT ID LPAREN value RPAREN \n                | ID DOT ID LPAREN arguments_production RPAREN \n    \n    arguments_production : value\n                         | value COMMA arguments_production\n    \n    comparison_production : comparison_value\n                          | comparison_value comparison comparison_production\n    comparison_value : value comparison valuelogic_value : value logic_operator value\n    comparison : LESS_THAN\n               | GREATER_THAN\n               | LESS_THAN_EQUAL\n               | GREATER_THAN_EQUAL\n               | NOT_EQUAL\n               | EQUAL_EQUAL\n    \n    value : INT\n          | FLOAT\n          | STRING\n          | CHAR\n          | BOOL\n          | ID\n    \n    logic_operator : AND\n                   | OR\n                   | NOT\n    '
     
-_lr_action_items = {'ID':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[8,8,-3,31,31,-29,-30,-31,-17,-18,-19,-20,-21,-22,31,31,31,]),'INT':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[10,10,-3,10,10,-29,-30,-31,-17,-18,-19,-20,-21,-22,10,10,10,]),'FLOAT':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[11,11,-3,11,11,-29,-30,-31,-17,-18,-19,-20,-21,-22,11,11,11,]),'STRING':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[12,12,-3,12,12,-29,-30,-31,-17,-18,-19,-20,-21,-22,12,12,12,]),'CHAR':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[13,13,-3,13,13,-29,-30,-31,-17,-18,-19,-20,-21,-22,13,13,13,]),'BOOL':([0,2,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,],[14,14,-3,14,14,-29,-30,-31,-17,-18,-19,-20,-21,-22,14,14,14,]),'$end':([1,2,15,16,],[0,-1,-2,-3,]),'SEMICOLON':([3,4,5,6,7,8,9,10,11,12,13,14,30,31,32,33,36,38,40,],[16,-4,-5,-6,-7,-28,-13,-23,-24,-25,-26,-27,-16,-28,-15,-8,-14,-9,-10,]),'AND':([6,8,10,11,12,13,14,],[19,-28,-23,-24,-25,-26,-27,]),'OR':([6,8,10,11,12,13,14,],[20,-28,-23,-24,-25,-26,-27,]),'NOT':([6,8,10,11,12,13,14,],[21,-28,-23,-24,-25,-26,-27,]),'LESS_THAN':([6,8,9,10,11,12,13,14,31,32,37,],[22,-28,22,-23,-24,-25,-26,-27,-28,-15,22,]),'GREATER_THAN':([6,8,9,10,11,12,13,14,31,32,37,],[23,-28,23,-23,-24,-25,-26,-27,-28,-15,23,]),'LESS_THAN_EQUAL':([6,8,9,10,11,12,13,14,31,32,37,],[24,-28,24,-23,-24,-25,-26,-27,-28,-15,24,]),'GREATER_THAN_EQUAL':([6,8,9,10,11,12,13,14,31,32,37,],[25,-28,25,-23,-24,-25,-26,-27,-28,-15,25,]),'NOT_EQUAL':([6,8,9,10,11,12,13,14,31,32,37,],[26,-28,26,-23,-24,-25,-26,-27,-28,-15,26,]),'EQUAL_EQUAL':([6,8,9,10,11,12,13,14,31,32,37,],[27,-28,27,-23,-24,-25,-26,-27,-28,-15,27,]),'LPAREN':([8,],[28,]),'RPAREN':([10,11,12,13,14,28,31,34,35,41,42,],[-23,-24,-25,-26,-27,33,-28,38,40,-11,-12,]),'COMMA':([10,11,12,13,14,31,34,41,],[-23,-24,-25,-26,-27,-28,39,39,]),}
+_lr_action_items = {'IF':([0,63,],[5,70,]),'ID':([0,4,5,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,40,51,53,55,70,72,75,],[12,12,21,39,39,-31,-32,-33,-34,-35,-36,39,39,-43,-44,-45,-14,39,47,39,39,39,12,21,39,39,]),'INT':([0,4,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,51,53,55,72,75,],[13,13,13,13,-31,-32,-33,-34,-35,-36,13,13,-43,-44,-45,-14,13,13,13,13,13,13,13,]),'FLOAT':([0,4,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,51,53,55,72,75,],[14,14,14,14,-31,-32,-33,-34,-35,-36,14,14,-43,-44,-45,-14,14,14,14,14,14,14,14,]),'STRING':([0,4,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,51,53,55,72,75,],[15,15,15,15,-31,-32,-33,-34,-35,-36,15,15,-43,-44,-45,-14,15,15,15,15,15,15,15,]),'CHAR':([0,4,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,51,53,55,72,75,],[16,16,16,16,-31,-32,-33,-34,-35,-36,16,16,-43,-44,-45,-14,16,16,16,16,16,16,16,]),'BOOL':([0,4,19,22,23,24,25,26,27,28,29,30,31,32,33,34,35,40,51,53,55,72,75,],[17,17,17,17,-31,-32,-33,-34,-35,-36,17,17,-43,-44,-45,-14,17,17,17,17,17,17,17,]),'$end':([1,2,3,4,18,34,54,56,62,64,66,69,71,80,81,],[0,-1,-2,-12,-13,-14,-3,-5,-4,-10,-6,-7,-11,-8,-9,]),'RBRACE':([4,18,34,55,65,],[-12,-13,-14,64,71,]),'LPAREN':([5,12,21,47,70,],[19,35,35,53,72,]),'SEMICOLON':([6,7,8,9,10,11,12,13,14,15,16,17,39,41,42,43,44,50,52,59,67,68,],[-27,-15,-17,34,-16,-18,-42,-37,-38,-39,-40,-41,-42,-28,-30,-29,-19,-20,-21,-22,-23,-24,]),'LESS_THAN':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[23,23,-42,-37,-38,-39,-40,-41,23,23,-42,-29,-19,-20,-21,-22,-23,-24,23,]),'GREATER_THAN':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[24,24,-42,-37,-38,-39,-40,-41,24,24,-42,-29,-19,-20,-21,-22,-23,-24,24,]),'LESS_THAN_EQUAL':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[25,25,-42,-37,-38,-39,-40,-41,25,25,-42,-29,-19,-20,-21,-22,-23,-24,25,]),'GREATER_THAN_EQUAL':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[26,26,-42,-37,-38,-39,-40,-41,26,26,-42,-29,-19,-20,-21,-22,-23,-24,26,]),'NOT_EQUAL':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[27,27,-42,-37,-38,-39,-40,-41,27,27,-42,-29,-19,-20,-21,-22,-23,-24,27,]),'EQUAL_EQUAL':([6,8,12,13,14,15,16,17,20,38,39,43,44,50,52,59,67,68,73,],[28,28,-42,-37,-38,-39,-40,-41,28,28,-42,-29,-19,-20,-21,-22,-23,-24,28,]),'AND':([8,12,13,14,15,16,17,],[31,-42,-37,-38,-39,-40,-41,]),'OR':([8,12,13,14,15,16,17,],[32,-42,-37,-38,-39,-40,-41,]),'NOT':([8,12,13,14,15,16,17,],[33,-42,-37,-38,-39,-40,-41,]),'DOT':([12,21,],[36,36,]),'RPAREN':([13,14,15,16,17,35,37,39,43,45,46,53,57,58,60,61,74,],[-37,-38,-39,-40,-41,44,48,-42,-29,50,52,59,-25,-26,67,68,76,]),'COMMA':([13,14,15,16,17,39,45,57,60,],[-37,-38,-39,-40,-41,-42,51,51,51,]),'LBRACE':([13,14,15,16,17,39,48,49,63,76,77,],[-37,-38,-39,-40,-41,-42,55,55,55,55,55,]),'ELSE':([54,56,64,71,78,79,],[63,63,-10,-11,63,63,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'code_block':([0,2,],[1,15,]),'code_line':([0,2,],[2,2,]),'code':([0,2,],[3,3,]),'function':([0,2,],[4,4,]),'comparison_production':([0,2,29,],[5,5,36,]),'value':([0,2,17,18,28,29,39,],[6,6,30,32,34,37,41,]),'logic_value':([0,2,],[7,7,]),'comparison_value':([0,2,29,],[9,9,9,]),'logic_operator':([6,],[17,]),'comparison':([6,9,37,],[18,29,18,]),'arguments_production':([28,39,],[35,42,]),}
+_lr_goto_items = {'body':([0,],[1,]),'code_block':([0,4,55,],[2,18,65,]),'if_statement':([0,],[3,]),'code_line':([0,4,55,],[4,4,4,]),'comparison_value':([0,4,19,22,55,72,],[6,6,37,6,6,74,]),'function':([0,4,5,55,70,],[7,7,20,7,73,]),'value':([0,4,19,22,29,30,35,40,51,53,55,72,75,],[8,8,38,38,42,43,45,49,57,60,8,38,77,]),'code':([0,4,55,],[9,9,9,]),'comparison_production':([0,4,22,55,],[10,10,41,10,]),'logic_value':([0,4,55,],[11,11,11,]),'comparison':([6,8,20,38,73,],[22,30,40,30,75,]),'logic_operator':([8,],[29,]),'arguments_production':([35,51,53,],[46,58,61,]),'block_function':([48,49,63,76,77,],[54,56,69,78,79,]),'else_if_statement':([54,56,78,79,],[62,66,80,81,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,36 +26,50 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> code_block","S'",1,None,None,None),
-  ('code_block -> code_line','code_block',1,'p_code_block','sintaxis.py',23),
-  ('code_block -> code_line code_block','code_block',2,'p_code_block','sintaxis.py',24),
-  ('code_line -> code SEMICOLON','code_line',2,'p_code_line','sintaxis.py',30),
-  ('code -> function','code',1,'p_code','sintaxis.py',35),
-  ('code -> comparison_production','code',1,'p_code','sintaxis.py',36),
-  ('code -> value','code',1,'p_code','sintaxis.py',37),
-  ('code -> logic_value','code',1,'p_code','sintaxis.py',38),
-  ('function -> ID LPAREN RPAREN','function',3,'p_function','sintaxis.py',43),
-  ('function -> ID LPAREN value RPAREN','function',4,'p_function','sintaxis.py',44),
-  ('function -> ID LPAREN arguments_production RPAREN','function',4,'p_function','sintaxis.py',45),
-  ('arguments_production -> value','arguments_production',1,'p_arguments_production','sintaxis.py',51),
-  ('arguments_production -> value COMMA arguments_production','arguments_production',3,'p_arguments_production','sintaxis.py',52),
-  ('comparison_production -> comparison_value','comparison_production',1,'p_comparison_production','sintaxis.py',59),
-  ('comparison_production -> comparison_value comparison comparison_production','comparison_production',3,'p_comparison_production','sintaxis.py',60),
-  ('comparison_value -> value comparison value','comparison_value',3,'p_comparison_value','sintaxis.py',65),
-  ('logic_value -> value logic_operator value','logic_value',3,'p_logic_value','sintaxis.py',69),
-  ('comparison -> LESS_THAN','comparison',1,'p_comparison','sintaxis.py',74),
-  ('comparison -> GREATER_THAN','comparison',1,'p_comparison','sintaxis.py',75),
-  ('comparison -> LESS_THAN_EQUAL','comparison',1,'p_comparison','sintaxis.py',76),
-  ('comparison -> GREATER_THAN_EQUAL','comparison',1,'p_comparison','sintaxis.py',77),
-  ('comparison -> NOT_EQUAL','comparison',1,'p_comparison','sintaxis.py',78),
-  ('comparison -> EQUAL_EQUAL','comparison',1,'p_comparison','sintaxis.py',79),
-  ('value -> INT','value',1,'p_value','sintaxis.py',85),
-  ('value -> FLOAT','value',1,'p_value','sintaxis.py',86),
-  ('value -> STRING','value',1,'p_value','sintaxis.py',87),
-  ('value -> CHAR','value',1,'p_value','sintaxis.py',88),
-  ('value -> BOOL','value',1,'p_value','sintaxis.py',89),
-  ('value -> ID','value',1,'p_value','sintaxis.py',90),
-  ('logic_operator -> AND','logic_operator',1,'p_logic_operator','sintaxis.py',96),
-  ('logic_operator -> OR','logic_operator',1,'p_logic_operator','sintaxis.py',97),
-  ('logic_operator -> NOT','logic_operator',1,'p_logic_operator','sintaxis.py',98),
+  ("S' -> body","S'",1,None,None,None),
+  ('body -> code_block','body',1,'p_body','sintaxis.py',17),
+  ('body -> if_statement','body',1,'p_body','sintaxis.py',18),
+  ('if_statement -> IF LPAREN comparison_value RPAREN block_function','if_statement',5,'p_if_statement','sintaxis.py',24),
+  ('if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement','if_statement',6,'p_if_statement','sintaxis.py',25),
+  ('if_statement -> IF function comparison value block_function','if_statement',5,'p_if_statement','sintaxis.py',26),
+  ('if_statement -> IF function comparison value block_function else_if_statement','if_statement',6,'p_if_statement','sintaxis.py',27),
+  ('else_if_statement -> ELSE block_function','else_if_statement',2,'p_else_if_statement','sintaxis.py',32),
+  ('else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement','else_if_statement',7,'p_else_if_statement','sintaxis.py',33),
+  ('else_if_statement -> ELSE IF function comparison value block_function else_if_statement','else_if_statement',7,'p_else_if_statement','sintaxis.py',34),
+  ('block_function -> LBRACE RBRACE','block_function',2,'p_block_function','sintaxis.py',39),
+  ('block_function -> LBRACE code_block RBRACE','block_function',3,'p_block_function','sintaxis.py',40),
+  ('code_block -> code_line','code_block',1,'p_code_block','sintaxis.py',45),
+  ('code_block -> code_line code_block','code_block',2,'p_code_block','sintaxis.py',46),
+  ('code_line -> code SEMICOLON','code_line',2,'p_code_line','sintaxis.py',52),
+  ('code -> function','code',1,'p_code','sintaxis.py',57),
+  ('code -> comparison_production','code',1,'p_code','sintaxis.py',58),
+  ('code -> value','code',1,'p_code','sintaxis.py',59),
+  ('code -> logic_value','code',1,'p_code','sintaxis.py',60),
+  ('function -> ID LPAREN RPAREN','function',3,'p_function','sintaxis.py',65),
+  ('function -> ID LPAREN value RPAREN','function',4,'p_function','sintaxis.py',66),
+  ('function -> ID LPAREN arguments_production RPAREN','function',4,'p_function','sintaxis.py',67),
+  ('function -> ID DOT ID LPAREN RPAREN','function',5,'p_function','sintaxis.py',68),
+  ('function -> ID DOT ID LPAREN value RPAREN','function',6,'p_function','sintaxis.py',69),
+  ('function -> ID DOT ID LPAREN arguments_production RPAREN','function',6,'p_function','sintaxis.py',70),
+  ('arguments_production -> value','arguments_production',1,'p_arguments_production','sintaxis.py',76),
+  ('arguments_production -> value COMMA arguments_production','arguments_production',3,'p_arguments_production','sintaxis.py',77),
+  ('comparison_production -> comparison_value','comparison_production',1,'p_comparison_production','sintaxis.py',84),
+  ('comparison_production -> comparison_value comparison comparison_production','comparison_production',3,'p_comparison_production','sintaxis.py',85),
+  ('comparison_value -> value comparison value','comparison_value',3,'p_comparison_value','sintaxis.py',90),
+  ('logic_value -> value logic_operator value','logic_value',3,'p_logic_value','sintaxis.py',94),
+  ('comparison -> LESS_THAN','comparison',1,'p_comparison','sintaxis.py',99),
+  ('comparison -> GREATER_THAN','comparison',1,'p_comparison','sintaxis.py',100),
+  ('comparison -> LESS_THAN_EQUAL','comparison',1,'p_comparison','sintaxis.py',101),
+  ('comparison -> GREATER_THAN_EQUAL','comparison',1,'p_comparison','sintaxis.py',102),
+  ('comparison -> NOT_EQUAL','comparison',1,'p_comparison','sintaxis.py',103),
+  ('comparison -> EQUAL_EQUAL','comparison',1,'p_comparison','sintaxis.py',104),
+  ('value -> INT','value',1,'p_value','sintaxis.py',110),
+  ('value -> FLOAT','value',1,'p_value','sintaxis.py',111),
+  ('value -> STRING','value',1,'p_value','sintaxis.py',112),
+  ('value -> CHAR','value',1,'p_value','sintaxis.py',113),
+  ('value -> BOOL','value',1,'p_value','sintaxis.py',114),
+  ('value -> ID','value',1,'p_value','sintaxis.py',115),
+  ('logic_operator -> AND','logic_operator',1,'p_logic_operator','sintaxis.py',121),
+  ('logic_operator -> OR','logic_operator',1,'p_logic_operator','sintaxis.py',122),
+  ('logic_operator -> NOT','logic_operator',1,'p_logic_operator','sintaxis.py',123),
 ]
