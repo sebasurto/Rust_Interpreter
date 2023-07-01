@@ -71,7 +71,7 @@ def create_interface():
                     break
                 # Verificar que la palabra encontrada es una palabra completa
                 posicion_final = f"{posicion}+{len(word)}c"
-                if not posicion_final.endswith((" ", "\n", ".", ",", ";", ":", "!", "?", ")", "]", "}")):
+                if not text_your_code.get(posicion_final).isspace:
                     posicion = posicion_final
                     continue
                 # Aplicar etiqueta de estilo a la palabra reservada encontrada
