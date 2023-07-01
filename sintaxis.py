@@ -11,7 +11,7 @@ precedence = (
     ('left', 'TIMES', 'DIVIDE', 'MODULO'),
     #('right', 'UMINUS'),
 )
-
+errores=[]
 
 def p_body (p):
     """body : code_block
@@ -128,6 +128,7 @@ def p_error(p):
     syntax_errors = []
     syntax_errors.append("Error de sintaxis en la posición {}: Token inesperado '{}'".format(p.lexpos, p.value))
     # Continuar analizando la entrada
+    errores.append("Error de sintaxis en la posición {}: Token inesperado '{}'".format(p.lexpos, p.value))
     if syntax_errors:
         print("Se encontraron los siguientes errores de sintaxis:")
     for error in syntax_errors:
@@ -139,9 +140,6 @@ def p_error(p):
         # sintactico.errok()
     else:
         print("Syntax error at EOF")
-
 def test_sintaxis (s):
     sintactico = yacc.yacc()
     result = sintactico.parse(s)
-    print(result)
-    return result

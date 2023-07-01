@@ -8,16 +8,22 @@ def create_interface():
     def print_text ():
         texto = text_your_code.get("1.0", tk.END)
         lexic = lxc.test_lex(texto)
+        sntx.errores = []
         sintax = sntx.test_sintaxis(texto)
         # Limpiar el contenido actual
-        text_sintaxis.config(state=tk.NORMAL)
-        text_sintaxis.delete("1.0", tk.END) 
-        text_sintaxis.insert(tk.END, f"Sintaxis:\n {sintax}\n")
-        text_sintaxis.config(state=tk.DISABLED)
+        error_text=""
+        for error in sntx.errores:
+            error_text = error_text + error +"\n"
+        text_sintax.config(state=tk.NORMAL)
+        text_sintax.delete("1.0", tk.END) 
+        text_sintax.insert(tk.END, f"Sintaxis:\n{error_text}\n")
+        text_sintax.config(state=tk.DISABLED)
+
         text_lex.config(state=tk.NORMAL)
         text_lex.delete("1.0", tk.END) 
-        text_lex.insert(tk.END, f"Lexic:\n {lexic}\n")
+        text_lex.insert(tk.END, f"Lexic:\n{lexic}\n")
         text_lex.config(state=tk.DISABLED)
+
     window = tk.Tk()
     window.title("Rust Interpreter")
     window.iconbitmap("media\\rust_ico.ico")
@@ -40,8 +46,8 @@ def create_interface():
     label_your_code = tk.Label(window, text="YOUR CODE", justify="center",font=("Arial", 11, "bold"), relief="solid")
     label_your_code.grid (row=1, column=0,sticky="nsew")
 
-    label_sintaxis = tk.Label(window, text="SINTAXIS", justify="center",font=("Arial", 11, "bold"), relief="solid")
-    label_sintaxis.grid (row=1, column=1, sticky="nsew")
+    label_Lex = tk.Label(window, text="Lex", justify="center",font=("Arial", 11, "bold"), relief="solid")
+    label_Lex.grid (row=1, column=1, sticky="nsew")
     # Sección de los cuadros de texto
 
     
@@ -76,17 +82,17 @@ def create_interface():
 # Enlazar evento de teclado para resaltar las palabras reservadas
     text_your_code.bind("<KeyRelease>", resaltar_palabras_reservadas)
     
-    text_sintaxis = tk.Text(window, state="disabled", width=75, height=15)
-    text_sintaxis.grid(row=2, column=1)
+    text_lex = tk.Text(window, state="disabled", width=75, height=15)
+    text_lex.grid(row=2, column=1)
 
     buttom_run = tk.Button (window, text="RUN", justify="left", command=print_text)
     buttom_run.grid(row=3, column=0, columnspan=2, padx=20)
 
-    label_output = tk.Label(window, text="LEX: ", justify="left", bg="lightblue",font=("Arial", 11, "bold"))
-    label_output.grid (row=3, column=0, sticky="w")
+    label_sintax = tk.Label(window, text="Sintax: ", justify="left", bg="lightblue",font=("Arial", 11, "bold"))
+    label_sintax.grid (row=3, column=0, sticky="w")
     # Sección del último cuadro de texto deshabilitado
-    text_lex = tk.Text(window, state="disabled", width=150, height=8)
-    text_lex.grid(row=4, columnspan=3)
+    text_sintax = tk.Text(window, state="disabled", width=150, height=8)
+    text_sintax.grid(row=4, columnspan=3)
 
     # Ejecutar la interfaz
     window.mainloop()
