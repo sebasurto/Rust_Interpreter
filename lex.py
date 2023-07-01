@@ -35,7 +35,7 @@ tokens = (
     'LESS_THAN_EQUAL',
     'GREATER_THAN_EQUAL',
     'NOT_EQUAL',
-    'MODULO',
+    'MODULE',
     'UNDERSCORE',
     'AT',
     'INT',
@@ -51,9 +51,9 @@ tokens = (
 
 # Expresiones regulares para los tokens de símbolos
 t_PLUS = r'\+'
-t_MINUS = r'-'
+t_MINUS = r'\-'
 t_TIMES = r'\*'
-t_DIVIDE = r'/'
+t_DIVIDE = r'\/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\['
@@ -79,10 +79,10 @@ t_GREATER_THAN = r'>'
 t_LESS_THAN_EQUAL = r'<='
 t_GREATER_THAN_EQUAL = r'>='
 t_NOT_EQUAL = r'!='
-t_MODULO = r'%'
+t_MODULE = r'%'
 t_UNDERSCORE = r'_'
 t_AT = r'@'
-t_INT = r'\d+'
+t_INT = r'-?\d+'
 t_FLOAT = r'-?\d\.\d*'
 t_STRING = r'\"[a-zA-Z0-9\s]*\"'
 t_CHAR = r'\'[a-zA-Z0-9]\''

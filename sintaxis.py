@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 from lex import tokens
-
+import lex
 precedence = (
     ('left', 'NOT'),
     ('left', 'OR'),
@@ -8,7 +8,7 @@ precedence = (
     ('nonassoc', 'EQUAL_EQUAL', 'NOT_EQUAL'),
     ('nonassoc', 'LESS_THAN', 'LESS_THAN_EQUAL', 'GREATER_THAN', 'GREATER_THAN_EQUAL'),
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIVIDE', 'MODULO'),
+    ('left', 'TIMES', 'DIVIDE', 'MODULE'),
     #('right', 'UMINUS'),
 )
 errores=[]
@@ -54,22 +54,33 @@ def p_code_line(p):
     print("code_line")
 
 def p_code(p):
-    """code : function 
-            | comparison_production 
-            | value 
-            | logic_value 
+    """code : function
+            | comparison_production
+            | value
+            | logic_value
+            | statement
     """
     print("code")
 
 def p_function (p):
-    """function : ID LPAREN RPAREN 
+    """function : ID LPAREN RPAREN
                 | ID LPAREN value RPAREN
                 | ID LPAREN arguments_production RPAREN
                 | ID DOT ID LPAREN RPAREN
-                | ID DOT ID LPAREN value RPAREN 
-                | ID DOT ID LPAREN arguments_production RPAREN 
+                | ID DOT ID LPAREN value RPAREN
+                | ID DOT ID LPAREN arguments_production RPAREN
     """
     print("function")
+
+def p_statement (p):
+    """
+    statement : LET ID EQUAL value
+              | LET MUT ID EQUAL value
+              | CONST ID EQUAL value
+              | ID EQUAL ID
+              | ID EQUAL aritmetic_operation_production
+    """
+    print ("statement")
 
 def p_arguments_production (p):
     """
@@ -94,6 +105,23 @@ def p_logic_value (p):
     "logic_value : value logic_operator value"
     print ("logic_value")
 
+def p_aritmetic_operation_production (p):
+    """
+    aritmetic_operation_production : aritmetic_operation
+                                   | value aritmetic_operator aritmetic_operation
+    """
+
+def p_aritmetic_operation (p):
+    "aritmetic_operation : value aritmetic_operator value"
+
+def p_aritmetic_operator (p):
+    """
+    aritmetic_operator : PLUS
+                       | MINUS
+                       | TIMES
+                       | DIVIDE
+                       | MODULE
+    """
 def p_comparison(p):
     """
     comparison : LESS_THAN

@@ -46,6 +46,13 @@ s = '''
             }
 '''
 n = """
+    a = 5+6;
+    b= -7-5;
+    c = 7/8;
+    d = 6%7;
+    e= 5*6;
+    let mut n = 5;
+    let jn = 7;
     max ();
     5 > 6;
     println ( "hola mundo" );
@@ -73,12 +80,12 @@ n = """
     8 >= 9;
     6 == 8;
     6 != 6;
-    if my_string.len() > 10 {
-                    println("La cadena es larga");
+    if my_string . len ( ) > 10 {
+                    println ( "La cadena es larga" ) ;
                 } else {
-                    println("La cadena es corta");
+                    println ( "La cadena es corta" ) ;
                 }
     """
     
-lxc.test_lex(n)
-sntx.test_sintaxis(n)
+#lxc.test_lex(n)
+#sntx.test_sintaxis(n)
