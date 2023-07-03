@@ -16,7 +16,13 @@ def create_interface():
             error_text = error_text + error +"\n"
         text_sintax.config(state=tk.NORMAL)
         text_sintax.delete("1.0", tk.END) 
-        text_sintax.insert(tk.END, f"Sintaxis:\n{error_text}\n")
+        if not sntx.errores:
+            text_sintax.config(foreground="green")
+            text_sintax.insert(tk.END, f"Todo ok")
+        else:
+            text_sintax.config(foreground="red")
+            text_sintax.insert(tk.END, f"Sintaxis:\n{error_text}\n")
+
         text_sintax.config(state=tk.DISABLED)
 
         text_lex.config(state=tk.NORMAL)
@@ -46,7 +52,7 @@ def create_interface():
     label_your_code = tk.Label(window, text="YOUR CODE", justify="center",font=("Arial", 11, "bold"), relief="solid")
     label_your_code.grid (row=1, column=0,sticky="nsew")
 
-    label_Lex = tk.Label(window, text="Lex", justify="center",font=("Arial", 11, "bold"), relief="solid")
+    label_Lex = tk.Label(window, text="LEX", justify="center",font=("Arial", 11, "bold"), relief="solid")
     label_Lex.grid (row=1, column=1, sticky="nsew")
     # Sección de los cuadros de texto
 
@@ -60,9 +66,19 @@ def create_interface():
 
     for word in reserved.keys():
         text_your_code.tag_configure(word, foreground="blue")
-
+    simbols = ["(",")", "{","}","[","]"]
+    for simbol in simbols:
+        text_your_code.tag_configure(simbol, foreground="purple")
+    text_your_code.tag_configure("\"", foreground="#CE9178")
+    text_your_code.tag_configure("'", foreground="#CE9178")
+    
     def resaltar_palabras_reservadas(event):
-        for word in reserved.keys():
+        simbols = ["(",")", "{","}","[","]","\"", "'"]
+        reserve =[]
+        for word in reserved.keys ():
+            reserve.append(word)
+        reserve_and_simbols = reserve + simbols
+        for word in reserve_and_simbols:
             posicion = "1.0"  # Inicio del texto
             while True:
                 # Buscar la siguiente aparición de la palabra reservada
@@ -82,16 +98,16 @@ def create_interface():
 # Enlazar evento de teclado para resaltar las palabras reservadas
     text_your_code.bind("<KeyRelease>", resaltar_palabras_reservadas)
     
-    text_lex = tk.Text(window, state="disabled", width=75, height=15)
+    text_lex = tk.Text(window, state="disabled", width=75, height=15, foreground="green")
     text_lex.grid(row=2, column=1)
 
     buttom_run = tk.Button (window, text="RUN", justify="left", command=print_text)
     buttom_run.grid(row=3, column=0, columnspan=2, padx=20)
 
-    label_sintax = tk.Label(window, text="Sintax: ", justify="left", bg="lightblue",font=("Arial", 11, "bold"))
+    label_sintax = tk.Label(window, text="SYNTAX: ", justify="center", bg="lightblue",font=("Arial", 11, "bold"))
     label_sintax.grid (row=3, column=0, sticky="w")
     # Sección del último cuadro de texto deshabilitado
-    text_sintax = tk.Text(window, state="disabled", width=150, height=8)
+    text_sintax = tk.Text(window, state="disabled", width=150, height=8, foreground="red",relief="solid")
     text_sintax.grid(row=4, columnspan=3)
 
     # Ejecutar la interfaz

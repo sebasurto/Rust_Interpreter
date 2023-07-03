@@ -8,6 +8,7 @@ from reserved import reserved
 tokens = (
     'PLUS',
     'MINUS',
+    'MINUS_OPERATOR',
     'TIMES',
     'DIVIDE',
     'LPAREN',
@@ -52,6 +53,7 @@ tokens = (
 # Expresiones regulares para los tokens de símbolos
 t_PLUS = r'\+'
 t_MINUS = r'\-'
+t_MINUS_OPERATOR = r'\-\-'
 t_TIMES = r'\*'
 t_DIVIDE = r'\/'
 t_LPAREN = r'\('

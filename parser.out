@@ -28,6 +28,7 @@ Unused terminals:
     LOOP
     MAIN
     MATCH
+    MINUS
     MOD
     MOVE
     NAME_FUNCTION
@@ -52,140 +53,151 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> body
-Rule 1     body -> code_block
-Rule 2     body -> if_statement
-Rule 3     if_statement -> IF LPAREN comparison_value RPAREN block_function
-Rule 4     if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement
-Rule 5     if_statement -> IF function comparison value block_function
-Rule 6     if_statement -> IF function comparison value block_function else_if_statement
-Rule 7     else_if_statement -> ELSE block_function
-Rule 8     else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
-Rule 9     else_if_statement -> ELSE IF function comparison value block_function else_if_statement
-Rule 10    block_function -> LBRACE RBRACE
-Rule 11    block_function -> LBRACE code_block RBRACE
-Rule 12    code_block -> code_line
-Rule 13    code_block -> code_line code_block
-Rule 14    code_line -> code SEMICOLON
-Rule 15    code -> function
-Rule 16    code -> comparison_production
-Rule 17    code -> value
-Rule 18    code -> logic_value
-Rule 19    code -> statement
-Rule 20    function -> ID LPAREN RPAREN
-Rule 21    function -> ID LPAREN value RPAREN
-Rule 22    function -> ID LPAREN arguments_production RPAREN
-Rule 23    function -> ID DOT ID LPAREN RPAREN
-Rule 24    function -> ID DOT ID LPAREN value RPAREN
-Rule 25    function -> ID DOT ID LPAREN arguments_production RPAREN
-Rule 26    statement -> LET ID EQUAL value
-Rule 27    statement -> LET MUT ID EQUAL value
-Rule 28    statement -> CONST ID EQUAL value
-Rule 29    statement -> ID EQUAL ID
-Rule 30    statement -> ID EQUAL aritmetic_operation_production
-Rule 31    arguments_production -> value
-Rule 32    arguments_production -> value COMMA arguments_production
-Rule 33    comparison_production -> comparison_value
-Rule 34    comparison_production -> comparison_value comparison comparison_production
-Rule 35    comparison_value -> value comparison value
-Rule 36    logic_value -> value logic_operator value
-Rule 37    aritmetic_operation_production -> aritmetic_operation
-Rule 38    aritmetic_operation_production -> value aritmetic_operator aritmetic_operation
-Rule 39    aritmetic_operation -> value aritmetic_operator value
-Rule 40    aritmetic_operator -> PLUS
-Rule 41    aritmetic_operator -> MINUS
-Rule 42    aritmetic_operator -> TIMES
-Rule 43    aritmetic_operator -> DIVIDE
-Rule 44    aritmetic_operator -> MODULE
-Rule 45    comparison -> LESS_THAN
-Rule 46    comparison -> GREATER_THAN
-Rule 47    comparison -> LESS_THAN_EQUAL
-Rule 48    comparison -> GREATER_THAN_EQUAL
-Rule 49    comparison -> NOT_EQUAL
-Rule 50    comparison -> EQUAL_EQUAL
-Rule 51    value -> INT
-Rule 52    value -> FLOAT
-Rule 53    value -> STRING
-Rule 54    value -> CHAR
-Rule 55    value -> BOOL
-Rule 56    value -> ID
-Rule 57    logic_operator -> AND
-Rule 58    logic_operator -> OR
-Rule 59    logic_operator -> NOT
+Rule 0     S' -> principal
+Rule 1     principal -> body
+Rule 2     principal -> body principal
+Rule 3     body -> code_block
+Rule 4     body -> control_structure
+Rule 5     control_structure -> if_statement
+Rule 6     if_statement -> IF LPAREN comparison_value RPAREN block_function
+Rule 7     if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement
+Rule 8     if_statement -> IF function comparison value block_function
+Rule 9     if_statement -> IF function comparison value block_function else_if_statement
+Rule 10    if_statement -> IF LET EQUAL value block_function
+Rule 11    if_statement -> IF LET EQUAL value else_if_statement
+Rule 12    else_if_statement -> ELSE block_function
+Rule 13    else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+Rule 14    else_if_statement -> ELSE IF function comparison value block_function else_if_statement
+Rule 15    block_function -> LBRACE RBRACE
+Rule 16    block_function -> LBRACE code_block RBRACE
+Rule 17    code_block -> code_line
+Rule 18    code_block -> code_line code_block
+Rule 19    code_line -> code SEMICOLON
+Rule 20    code -> function
+Rule 21    code -> comparison_production
+Rule 22    code -> value
+Rule 23    code -> logic_value
+Rule 24    code -> statement
+Rule 25    function -> ID LPAREN RPAREN
+Rule 26    function -> ID LPAREN value RPAREN
+Rule 27    function -> ID LPAREN arguments_production RPAREN
+Rule 28    function -> ID DOT ID LPAREN RPAREN
+Rule 29    function -> ID DOT ID LPAREN value RPAREN
+Rule 30    function -> ID DOT ID LPAREN arguments_production RPAREN
+Rule 31    statement -> LET ID EQUAL value
+Rule 32    statement -> LET MUT ID EQUAL value
+Rule 33    statement -> CONST ID EQUAL value
+Rule 34    statement -> ID EQUAL ID
+Rule 35    statement -> ID EQUAL aritmetic_operation_production
+Rule 36    statement -> LET ID EQUAL data_structures
+Rule 37    statement -> ID EQUAL data_structures
+Rule 38    statement -> LET MUT ID EQUAL data_structures
+Rule 39    data_structures -> tuple
+Rule 40    tuple -> LPAREN arguments_production RPAREN
+Rule 41    arguments_production -> value
+Rule 42    arguments_production -> value COMMA arguments_production
+Rule 43    comparison_production -> comparison_value
+Rule 44    comparison_production -> comparison_value comparison comparison_production
+Rule 45    comparison_value -> value comparison value
+Rule 46    logic_value -> value logic_operator value
+Rule 47    aritmetic_operation_production -> aritmetic_operation
+Rule 48    aritmetic_operation_production -> value aritmetic_operator aritmetic_operation
+Rule 49    aritmetic_operation -> value aritmetic_operator value
+Rule 50    aritmetic_operator -> PLUS
+Rule 51    aritmetic_operator -> MINUS_OPERATOR
+Rule 52    aritmetic_operator -> TIMES
+Rule 53    aritmetic_operator -> DIVIDE
+Rule 54    aritmetic_operator -> MODULE
+Rule 55    comparison -> LESS_THAN
+Rule 56    comparison -> GREATER_THAN
+Rule 57    comparison -> LESS_THAN_EQUAL
+Rule 58    comparison -> GREATER_THAN_EQUAL
+Rule 59    comparison -> NOT_EQUAL
+Rule 60    comparison -> EQUAL_EQUAL
+Rule 61    value -> INT
+Rule 62    value -> FLOAT
+Rule 63    value -> STRING
+Rule 64    value -> CHAR
+Rule 65    value -> BOOL
+Rule 66    value -> ID
+Rule 67    logic_operator -> AND
+Rule 68    logic_operator -> OR
+Rule 69    logic_operator -> NOT
 
 Terminals, with rules where they appear
 
 AMPERSAND            : 
-AND                  : 57
+AND                  : 67
 ARROW                : 
 AS                   : 
 ASYNC                : 
 AT                   : 
 AWAIT                : 
-BOOL                 : 55
+BOOL                 : 65
 BREAK                : 
 CASE                 : 
-CHAR                 : 54
+CHAR                 : 64
 COLON                : 
-COMMA                : 32
+COMMA                : 42
 COMMENS              : 
-CONST                : 28
+CONST                : 33
 CONTINUE             : 
 CRATE                : 
-DIVIDE               : 43
-DOT                  : 23 24 25
+DIVIDE               : 53
+DOT                  : 28 29 30
 DOUBLE_COLON         : 
 DOUBLE_QUOTE         : 
 DYN                  : 
-ELSE                 : 7 8 9
+ELSE                 : 12 13 14
 ENUM                 : 
-EQUAL                : 26 27 28 29 30
-EQUAL_EQUAL          : 50
+EQUAL                : 10 11 31 32 33 34 35 36 37 38
+EQUAL_EQUAL          : 60
 EXTERN               : 
 FAT_ARROW            : 
-FLOAT                : 52
+FLOAT                : 62
 FN                   : 
 FOR                  : 
-GREATER_THAN         : 46
-GREATER_THAN_EQUAL   : 48
-ID                   : 20 21 22 23 23 24 24 25 25 26 27 28 29 29 30 56
-IF                   : 3 4 5 6 8 9
+GREATER_THAN         : 56
+GREATER_THAN_EQUAL   : 58
+ID                   : 25 26 27 28 28 29 29 30 30 31 32 33 34 34 35 36 37 38 66
+IF                   : 6 7 8 9 10 11 13 14
 IMPL                 : 
 IN                   : 
-INT                  : 51
-LBRACE               : 10 11
+INT                  : 61
+LBRACE               : 15 16
 LBRACKET             : 
-LESS_THAN            : 45
-LESS_THAN_EQUAL      : 47
-LET                  : 26 27
+LESS_THAN            : 55
+LESS_THAN_EQUAL      : 57
+LET                  : 10 11 31 32 36 38
 LOOP                 : 
-LPAREN               : 3 4 8 20 21 22 23 24 25
+LPAREN               : 6 7 13 25 26 27 28 29 30 40
 MAIN                 : 
 MATCH                : 
-MINUS                : 41
+MINUS                : 
+MINUS_OPERATOR       : 51
 MOD                  : 
-MODULE               : 44
+MODULE               : 54
 MOVE                 : 
-MUT                  : 27
+MUT                  : 32 38
 NAME_FUNCTION        : 
-NOT                  : 59
-NOT_EQUAL            : 49
-OR                   : 58
+NOT                  : 69
+NOT_EQUAL            : 59
+OR                   : 68
 PIPE                 : 
-PLUS                 : 40
+PLUS                 : 50
 PUB                  : 
-RBRACE               : 10 11
+RBRACE               : 15 16
 RBRACKET             : 
 REF                  : 
 RETURN               : 
-RPAREN               : 3 4 8 20 21 22 23 24 25
+RPAREN               : 6 7 13 25 26 27 28 29 30 40
 SELF                 : 
-SEMICOLON            : 14
+SEMICOLON            : 19
 STATIC               : 
-STRING               : 53
+STRING               : 63
 STRUCT               : 
 SUPER                : 
-TIMES                : 42
+TIMES                : 52
 TRAIT                : 
 TYPE                 : 
 UNDERSCORE           : 
@@ -199,1607 +211,2031 @@ sELF                 :
 
 Nonterminals, with rules where they appear
 
-arguments_production : 22 25 32
-aritmetic_operation  : 37 38
-aritmetic_operation_production : 30
-aritmetic_operator   : 38 39
-block_function       : 3 4 5 6 7 8 9
-body                 : 0
-code                 : 14
-code_block           : 1 11 13
-code_line            : 12 13
-comparison           : 5 6 9 34 35
-comparison_production : 16 34
-comparison_value     : 3 4 8 33 34
-else_if_statement    : 4 6 8 9
-function             : 5 6 9 15
-if_statement         : 2
-logic_operator       : 36
-logic_value          : 18
-statement            : 19
-value                : 5 6 9 17 21 24 26 27 28 31 32 35 35 36 36 38 39 39
+arguments_production : 27 30 40 42
+aritmetic_operation  : 47 48
+aritmetic_operation_production : 35
+aritmetic_operator   : 48 49
+block_function       : 6 7 8 9 10 12 13 14
+body                 : 1 2
+code                 : 19
+code_block           : 3 16 18
+code_line            : 17 18
+comparison           : 8 9 14 44 45
+comparison_production : 21 44
+comparison_value     : 6 7 13 43 44
+control_structure    : 4
+data_structures      : 36 37 38
+else_if_statement    : 7 9 11 13 14
+function             : 8 9 14 20
+if_statement         : 5
+logic_operator       : 46
+logic_value          : 23
+principal            : 2 0
+statement            : 24
+tuple                : 39
+value                : 8 9 10 11 14 22 26 29 31 32 33 41 42 45 45 46 46 48 49 49
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . body
-    (1) body -> . code_block
-    (2) body -> . if_statement
-    (12) code_block -> . code_line
-    (13) code_block -> . code_line code_block
-    (3) if_statement -> . IF LPAREN comparison_value RPAREN block_function
-    (4) if_statement -> . IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (5) if_statement -> . IF function comparison value block_function
-    (6) if_statement -> . IF function comparison value block_function else_if_statement
-    (14) code_line -> . code SEMICOLON
-    (15) code -> . function
-    (16) code -> . comparison_production
-    (17) code -> . value
-    (18) code -> . logic_value
-    (19) code -> . statement
-    (20) function -> . ID LPAREN RPAREN
-    (21) function -> . ID LPAREN value RPAREN
-    (22) function -> . ID LPAREN arguments_production RPAREN
-    (23) function -> . ID DOT ID LPAREN RPAREN
-    (24) function -> . ID DOT ID LPAREN value RPAREN
-    (25) function -> . ID DOT ID LPAREN arguments_production RPAREN
-    (33) comparison_production -> . comparison_value
-    (34) comparison_production -> . comparison_value comparison comparison_production
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-    (36) logic_value -> . value logic_operator value
-    (26) statement -> . LET ID EQUAL value
-    (27) statement -> . LET MUT ID EQUAL value
-    (28) statement -> . CONST ID EQUAL value
-    (29) statement -> . ID EQUAL ID
-    (30) statement -> . ID EQUAL aritmetic_operation_production
-    (35) comparison_value -> . value comparison value
+    (0) S' -> . principal
+    (1) principal -> . body
+    (2) principal -> . body principal
+    (3) body -> . code_block
+    (4) body -> . control_structure
+    (17) code_block -> . code_line
+    (18) code_block -> . code_line code_block
+    (5) control_structure -> . if_statement
+    (19) code_line -> . code SEMICOLON
+    (6) if_statement -> . IF LPAREN comparison_value RPAREN block_function
+    (7) if_statement -> . IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (8) if_statement -> . IF function comparison value block_function
+    (9) if_statement -> . IF function comparison value block_function else_if_statement
+    (10) if_statement -> . IF LET EQUAL value block_function
+    (11) if_statement -> . IF LET EQUAL value else_if_statement
+    (20) code -> . function
+    (21) code -> . comparison_production
+    (22) code -> . value
+    (23) code -> . logic_value
+    (24) code -> . statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (43) comparison_production -> . comparison_value
+    (44) comparison_production -> . comparison_value comparison comparison_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (46) logic_value -> . value logic_operator value
+    (31) statement -> . LET ID EQUAL value
+    (32) statement -> . LET MUT ID EQUAL value
+    (33) statement -> . CONST ID EQUAL value
+    (34) statement -> . ID EQUAL ID
+    (35) statement -> . ID EQUAL aritmetic_operation_production
+    (36) statement -> . LET ID EQUAL data_structures
+    (37) statement -> . ID EQUAL data_structures
+    (38) statement -> . LET MUT ID EQUAL data_structures
+    (45) comparison_value -> . value comparison value
 
-    IF              shift and go to state 5
-    ID              shift and go to state 13
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    LET             shift and go to state 19
-    CONST           shift and go to state 20
+    IF              shift and go to state 8
+    ID              shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    LET             shift and go to state 12
+    CONST           shift and go to state 22
 
-    body                           shift and go to state 1
-    code_block                     shift and go to state 2
-    if_statement                   shift and go to state 3
-    code_line                      shift and go to state 4
-    comparison_value               shift and go to state 6
-    function                       shift and go to state 7
-    value                          shift and go to state 8
-    code                           shift and go to state 9
-    comparison_production          shift and go to state 10
-    logic_value                    shift and go to state 11
-    statement                      shift and go to state 12
+    principal                      shift and go to state 1
+    body                           shift and go to state 2
+    code_block                     shift and go to state 3
+    control_structure              shift and go to state 4
+    code_line                      shift and go to state 5
+    if_statement                   shift and go to state 6
+    code                           shift and go to state 7
+    comparison_value               shift and go to state 9
+    function                       shift and go to state 10
+    value                          shift and go to state 11
+    comparison_production          shift and go to state 13
+    logic_value                    shift and go to state 14
+    statement                      shift and go to state 15
 
 state 1
 
-    (0) S' -> body .
+    (0) S' -> principal .
 
 
 
 state 2
 
-    (1) body -> code_block .
+    (1) principal -> body .
+    (2) principal -> body . principal
+    (1) principal -> . body
+    (2) principal -> . body principal
+    (3) body -> . code_block
+    (4) body -> . control_structure
+    (17) code_block -> . code_line
+    (18) code_block -> . code_line code_block
+    (5) control_structure -> . if_statement
+    (19) code_line -> . code SEMICOLON
+    (6) if_statement -> . IF LPAREN comparison_value RPAREN block_function
+    (7) if_statement -> . IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (8) if_statement -> . IF function comparison value block_function
+    (9) if_statement -> . IF function comparison value block_function else_if_statement
+    (10) if_statement -> . IF LET EQUAL value block_function
+    (11) if_statement -> . IF LET EQUAL value else_if_statement
+    (20) code -> . function
+    (21) code -> . comparison_production
+    (22) code -> . value
+    (23) code -> . logic_value
+    (24) code -> . statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (43) comparison_production -> . comparison_value
+    (44) comparison_production -> . comparison_value comparison comparison_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (46) logic_value -> . value logic_operator value
+    (31) statement -> . LET ID EQUAL value
+    (32) statement -> . LET MUT ID EQUAL value
+    (33) statement -> . CONST ID EQUAL value
+    (34) statement -> . ID EQUAL ID
+    (35) statement -> . ID EQUAL aritmetic_operation_production
+    (36) statement -> . LET ID EQUAL data_structures
+    (37) statement -> . ID EQUAL data_structures
+    (38) statement -> . LET MUT ID EQUAL data_structures
+    (45) comparison_value -> . value comparison value
 
-    $end            reduce using rule 1 (body -> code_block .)
+    $end            reduce using rule 1 (principal -> body .)
+    IF              shift and go to state 8
+    ID              shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    LET             shift and go to state 12
+    CONST           shift and go to state 22
 
+    body                           shift and go to state 2
+    principal                      shift and go to state 23
+    code_block                     shift and go to state 3
+    control_structure              shift and go to state 4
+    code_line                      shift and go to state 5
+    if_statement                   shift and go to state 6
+    code                           shift and go to state 7
+    comparison_value               shift and go to state 9
+    function                       shift and go to state 10
+    value                          shift and go to state 11
+    comparison_production          shift and go to state 13
+    logic_value                    shift and go to state 14
+    statement                      shift and go to state 15
 
 state 3
 
-    (2) body -> if_statement .
+    (3) body -> code_block .
 
-    $end            reduce using rule 2 (body -> if_statement .)
+    IF              reduce using rule 3 (body -> code_block .)
+    ID              reduce using rule 3 (body -> code_block .)
+    INT             reduce using rule 3 (body -> code_block .)
+    FLOAT           reduce using rule 3 (body -> code_block .)
+    STRING          reduce using rule 3 (body -> code_block .)
+    CHAR            reduce using rule 3 (body -> code_block .)
+    BOOL            reduce using rule 3 (body -> code_block .)
+    LET             reduce using rule 3 (body -> code_block .)
+    CONST           reduce using rule 3 (body -> code_block .)
+    $end            reduce using rule 3 (body -> code_block .)
 
 
 state 4
 
-    (12) code_block -> code_line .
-    (13) code_block -> code_line . code_block
-    (12) code_block -> . code_line
-    (13) code_block -> . code_line code_block
-    (14) code_line -> . code SEMICOLON
-    (15) code -> . function
-    (16) code -> . comparison_production
-    (17) code -> . value
-    (18) code -> . logic_value
-    (19) code -> . statement
-    (20) function -> . ID LPAREN RPAREN
-    (21) function -> . ID LPAREN value RPAREN
-    (22) function -> . ID LPAREN arguments_production RPAREN
-    (23) function -> . ID DOT ID LPAREN RPAREN
-    (24) function -> . ID DOT ID LPAREN value RPAREN
-    (25) function -> . ID DOT ID LPAREN arguments_production RPAREN
-    (33) comparison_production -> . comparison_value
-    (34) comparison_production -> . comparison_value comparison comparison_production
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-    (36) logic_value -> . value logic_operator value
-    (26) statement -> . LET ID EQUAL value
-    (27) statement -> . LET MUT ID EQUAL value
-    (28) statement -> . CONST ID EQUAL value
-    (29) statement -> . ID EQUAL ID
-    (30) statement -> . ID EQUAL aritmetic_operation_production
-    (35) comparison_value -> . value comparison value
+    (4) body -> control_structure .
 
-    $end            reduce using rule 12 (code_block -> code_line .)
-    RBRACE          reduce using rule 12 (code_block -> code_line .)
-    ID              shift and go to state 13
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    LET             shift and go to state 19
-    CONST           shift and go to state 20
+    IF              reduce using rule 4 (body -> control_structure .)
+    ID              reduce using rule 4 (body -> control_structure .)
+    INT             reduce using rule 4 (body -> control_structure .)
+    FLOAT           reduce using rule 4 (body -> control_structure .)
+    STRING          reduce using rule 4 (body -> control_structure .)
+    CHAR            reduce using rule 4 (body -> control_structure .)
+    BOOL            reduce using rule 4 (body -> control_structure .)
+    LET             reduce using rule 4 (body -> control_structure .)
+    CONST           reduce using rule 4 (body -> control_structure .)
+    $end            reduce using rule 4 (body -> control_structure .)
 
-    code_line                      shift and go to state 4
-    code_block                     shift and go to state 21
-    code                           shift and go to state 9
-    function                       shift and go to state 7
-    comparison_production          shift and go to state 10
-    value                          shift and go to state 8
-    logic_value                    shift and go to state 11
-    statement                      shift and go to state 12
-    comparison_value               shift and go to state 6
 
 state 5
 
-    (3) if_statement -> IF . LPAREN comparison_value RPAREN block_function
-    (4) if_statement -> IF . LPAREN comparison_value RPAREN block_function else_if_statement
-    (5) if_statement -> IF . function comparison value block_function
-    (6) if_statement -> IF . function comparison value block_function else_if_statement
-    (20) function -> . ID LPAREN RPAREN
-    (21) function -> . ID LPAREN value RPAREN
-    (22) function -> . ID LPAREN arguments_production RPAREN
-    (23) function -> . ID DOT ID LPAREN RPAREN
-    (24) function -> . ID DOT ID LPAREN value RPAREN
-    (25) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (17) code_block -> code_line .
+    (18) code_block -> code_line . code_block
+    (17) code_block -> . code_line
+    (18) code_block -> . code_line code_block
+    (19) code_line -> . code SEMICOLON
+    (20) code -> . function
+    (21) code -> . comparison_production
+    (22) code -> . value
+    (23) code -> . logic_value
+    (24) code -> . statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (43) comparison_production -> . comparison_value
+    (44) comparison_production -> . comparison_value comparison comparison_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (46) logic_value -> . value logic_operator value
+    (31) statement -> . LET ID EQUAL value
+    (32) statement -> . LET MUT ID EQUAL value
+    (33) statement -> . CONST ID EQUAL value
+    (34) statement -> . ID EQUAL ID
+    (35) statement -> . ID EQUAL aritmetic_operation_production
+    (36) statement -> . LET ID EQUAL data_structures
+    (37) statement -> . ID EQUAL data_structures
+    (38) statement -> . LET MUT ID EQUAL data_structures
+    (45) comparison_value -> . value comparison value
 
-    LPAREN          shift and go to state 22
-    ID              shift and go to state 24
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for CHAR resolved as shift
+  ! shift/reduce conflict for BOOL resolved as shift
+  ! shift/reduce conflict for LET resolved as shift
+  ! shift/reduce conflict for CONST resolved as shift
+    IF              reduce using rule 17 (code_block -> code_line .)
+    $end            reduce using rule 17 (code_block -> code_line .)
+    RBRACE          reduce using rule 17 (code_block -> code_line .)
+    ID              shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    LET             shift and go to state 12
+    CONST           shift and go to state 22
 
-    function                       shift and go to state 23
+  ! ID              [ reduce using rule 17 (code_block -> code_line .) ]
+  ! INT             [ reduce using rule 17 (code_block -> code_line .) ]
+  ! FLOAT           [ reduce using rule 17 (code_block -> code_line .) ]
+  ! STRING          [ reduce using rule 17 (code_block -> code_line .) ]
+  ! CHAR            [ reduce using rule 17 (code_block -> code_line .) ]
+  ! BOOL            [ reduce using rule 17 (code_block -> code_line .) ]
+  ! LET             [ reduce using rule 17 (code_block -> code_line .) ]
+  ! CONST           [ reduce using rule 17 (code_block -> code_line .) ]
+
+    code_line                      shift and go to state 5
+    code_block                     shift and go to state 24
+    code                           shift and go to state 7
+    function                       shift and go to state 10
+    comparison_production          shift and go to state 13
+    value                          shift and go to state 11
+    logic_value                    shift and go to state 14
+    statement                      shift and go to state 15
+    comparison_value               shift and go to state 9
 
 state 6
 
-    (33) comparison_production -> comparison_value .
-    (34) comparison_production -> comparison_value . comparison comparison_production
-    (45) comparison -> . LESS_THAN
-    (46) comparison -> . GREATER_THAN
-    (47) comparison -> . LESS_THAN_EQUAL
-    (48) comparison -> . GREATER_THAN_EQUAL
-    (49) comparison -> . NOT_EQUAL
-    (50) comparison -> . EQUAL_EQUAL
+    (5) control_structure -> if_statement .
 
-    SEMICOLON       reduce using rule 33 (comparison_production -> comparison_value .)
-    LESS_THAN       shift and go to state 26
-    GREATER_THAN    shift and go to state 27
-    LESS_THAN_EQUAL shift and go to state 28
-    GREATER_THAN_EQUAL shift and go to state 29
-    NOT_EQUAL       shift and go to state 30
-    EQUAL_EQUAL     shift and go to state 31
+    IF              reduce using rule 5 (control_structure -> if_statement .)
+    ID              reduce using rule 5 (control_structure -> if_statement .)
+    INT             reduce using rule 5 (control_structure -> if_statement .)
+    FLOAT           reduce using rule 5 (control_structure -> if_statement .)
+    STRING          reduce using rule 5 (control_structure -> if_statement .)
+    CHAR            reduce using rule 5 (control_structure -> if_statement .)
+    BOOL            reduce using rule 5 (control_structure -> if_statement .)
+    LET             reduce using rule 5 (control_structure -> if_statement .)
+    CONST           reduce using rule 5 (control_structure -> if_statement .)
+    $end            reduce using rule 5 (control_structure -> if_statement .)
 
-    comparison                     shift and go to state 25
 
 state 7
 
-    (15) code -> function .
+    (19) code_line -> code . SEMICOLON
 
-    SEMICOLON       reduce using rule 15 (code -> function .)
+    SEMICOLON       shift and go to state 25
 
 
 state 8
 
-    (17) code -> value .
-    (36) logic_value -> value . logic_operator value
-    (35) comparison_value -> value . comparison value
-    (57) logic_operator -> . AND
-    (58) logic_operator -> . OR
-    (59) logic_operator -> . NOT
-    (45) comparison -> . LESS_THAN
-    (46) comparison -> . GREATER_THAN
-    (47) comparison -> . LESS_THAN_EQUAL
-    (48) comparison -> . GREATER_THAN_EQUAL
-    (49) comparison -> . NOT_EQUAL
-    (50) comparison -> . EQUAL_EQUAL
+    (6) if_statement -> IF . LPAREN comparison_value RPAREN block_function
+    (7) if_statement -> IF . LPAREN comparison_value RPAREN block_function else_if_statement
+    (8) if_statement -> IF . function comparison value block_function
+    (9) if_statement -> IF . function comparison value block_function else_if_statement
+    (10) if_statement -> IF . LET EQUAL value block_function
+    (11) if_statement -> IF . LET EQUAL value else_if_statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
 
-    SEMICOLON       reduce using rule 17 (code -> value .)
-    AND             shift and go to state 34
-    OR              shift and go to state 35
-    NOT             shift and go to state 36
-    LESS_THAN       shift and go to state 26
-    GREATER_THAN    shift and go to state 27
-    LESS_THAN_EQUAL shift and go to state 28
-    GREATER_THAN_EQUAL shift and go to state 29
-    NOT_EQUAL       shift and go to state 30
-    EQUAL_EQUAL     shift and go to state 31
+    LPAREN          shift and go to state 26
+    LET             shift and go to state 28
+    ID              shift and go to state 29
 
-    logic_operator                 shift and go to state 32
-    comparison                     shift and go to state 33
+    function                       shift and go to state 27
 
 state 9
 
-    (14) code_line -> code . SEMICOLON
+    (43) comparison_production -> comparison_value .
+    (44) comparison_production -> comparison_value . comparison comparison_production
+    (55) comparison -> . LESS_THAN
+    (56) comparison -> . GREATER_THAN
+    (57) comparison -> . LESS_THAN_EQUAL
+    (58) comparison -> . GREATER_THAN_EQUAL
+    (59) comparison -> . NOT_EQUAL
+    (60) comparison -> . EQUAL_EQUAL
 
-    SEMICOLON       shift and go to state 37
+    SEMICOLON       reduce using rule 43 (comparison_production -> comparison_value .)
+    LESS_THAN       shift and go to state 31
+    GREATER_THAN    shift and go to state 32
+    LESS_THAN_EQUAL shift and go to state 33
+    GREATER_THAN_EQUAL shift and go to state 34
+    NOT_EQUAL       shift and go to state 35
+    EQUAL_EQUAL     shift and go to state 36
 
+    comparison                     shift and go to state 30
 
 state 10
 
-    (16) code -> comparison_production .
+    (20) code -> function .
 
-    SEMICOLON       reduce using rule 16 (code -> comparison_production .)
+    SEMICOLON       reduce using rule 20 (code -> function .)
 
 
 state 11
 
-    (18) code -> logic_value .
+    (22) code -> value .
+    (46) logic_value -> value . logic_operator value
+    (45) comparison_value -> value . comparison value
+    (67) logic_operator -> . AND
+    (68) logic_operator -> . OR
+    (69) logic_operator -> . NOT
+    (55) comparison -> . LESS_THAN
+    (56) comparison -> . GREATER_THAN
+    (57) comparison -> . LESS_THAN_EQUAL
+    (58) comparison -> . GREATER_THAN_EQUAL
+    (59) comparison -> . NOT_EQUAL
+    (60) comparison -> . EQUAL_EQUAL
 
-    SEMICOLON       reduce using rule 18 (code -> logic_value .)
+    SEMICOLON       reduce using rule 22 (code -> value .)
+    AND             shift and go to state 39
+    OR              shift and go to state 40
+    NOT             shift and go to state 41
+    LESS_THAN       shift and go to state 31
+    GREATER_THAN    shift and go to state 32
+    LESS_THAN_EQUAL shift and go to state 33
+    GREATER_THAN_EQUAL shift and go to state 34
+    NOT_EQUAL       shift and go to state 35
+    EQUAL_EQUAL     shift and go to state 36
 
+    logic_operator                 shift and go to state 37
+    comparison                     shift and go to state 38
 
 state 12
 
-    (19) code -> statement .
+    (31) statement -> LET . ID EQUAL value
+    (32) statement -> LET . MUT ID EQUAL value
+    (36) statement -> LET . ID EQUAL data_structures
+    (38) statement -> LET . MUT ID EQUAL data_structures
 
-    SEMICOLON       reduce using rule 19 (code -> statement .)
+    ID              shift and go to state 42
+    MUT             shift and go to state 43
 
 
 state 13
 
-    (20) function -> ID . LPAREN RPAREN
-    (21) function -> ID . LPAREN value RPAREN
-    (22) function -> ID . LPAREN arguments_production RPAREN
-    (23) function -> ID . DOT ID LPAREN RPAREN
-    (24) function -> ID . DOT ID LPAREN value RPAREN
-    (25) function -> ID . DOT ID LPAREN arguments_production RPAREN
-    (56) value -> ID .
-    (29) statement -> ID . EQUAL ID
-    (30) statement -> ID . EQUAL aritmetic_operation_production
+    (21) code -> comparison_production .
 
-    LPAREN          shift and go to state 38
-    DOT             shift and go to state 39
-    AND             reduce using rule 56 (value -> ID .)
-    OR              reduce using rule 56 (value -> ID .)
-    NOT             reduce using rule 56 (value -> ID .)
-    LESS_THAN       reduce using rule 56 (value -> ID .)
-    GREATER_THAN    reduce using rule 56 (value -> ID .)
-    LESS_THAN_EQUAL reduce using rule 56 (value -> ID .)
-    GREATER_THAN_EQUAL reduce using rule 56 (value -> ID .)
-    NOT_EQUAL       reduce using rule 56 (value -> ID .)
-    EQUAL_EQUAL     reduce using rule 56 (value -> ID .)
-    SEMICOLON       reduce using rule 56 (value -> ID .)
-    EQUAL           shift and go to state 40
+    SEMICOLON       reduce using rule 21 (code -> comparison_production .)
 
 
 state 14
 
-    (51) value -> INT .
+    (23) code -> logic_value .
 
-    AND             reduce using rule 51 (value -> INT .)
-    OR              reduce using rule 51 (value -> INT .)
-    NOT             reduce using rule 51 (value -> INT .)
-    LESS_THAN       reduce using rule 51 (value -> INT .)
-    GREATER_THAN    reduce using rule 51 (value -> INT .)
-    LESS_THAN_EQUAL reduce using rule 51 (value -> INT .)
-    GREATER_THAN_EQUAL reduce using rule 51 (value -> INT .)
-    NOT_EQUAL       reduce using rule 51 (value -> INT .)
-    EQUAL_EQUAL     reduce using rule 51 (value -> INT .)
-    SEMICOLON       reduce using rule 51 (value -> INT .)
-    RPAREN          reduce using rule 51 (value -> INT .)
-    COMMA           reduce using rule 51 (value -> INT .)
-    PLUS            reduce using rule 51 (value -> INT .)
-    MINUS           reduce using rule 51 (value -> INT .)
-    TIMES           reduce using rule 51 (value -> INT .)
-    DIVIDE          reduce using rule 51 (value -> INT .)
-    MODULE          reduce using rule 51 (value -> INT .)
-    LBRACE          reduce using rule 51 (value -> INT .)
+    SEMICOLON       reduce using rule 23 (code -> logic_value .)
 
 
 state 15
 
-    (52) value -> FLOAT .
+    (24) code -> statement .
 
-    AND             reduce using rule 52 (value -> FLOAT .)
-    OR              reduce using rule 52 (value -> FLOAT .)
-    NOT             reduce using rule 52 (value -> FLOAT .)
-    LESS_THAN       reduce using rule 52 (value -> FLOAT .)
-    GREATER_THAN    reduce using rule 52 (value -> FLOAT .)
-    LESS_THAN_EQUAL reduce using rule 52 (value -> FLOAT .)
-    GREATER_THAN_EQUAL reduce using rule 52 (value -> FLOAT .)
-    NOT_EQUAL       reduce using rule 52 (value -> FLOAT .)
-    EQUAL_EQUAL     reduce using rule 52 (value -> FLOAT .)
-    SEMICOLON       reduce using rule 52 (value -> FLOAT .)
-    RPAREN          reduce using rule 52 (value -> FLOAT .)
-    COMMA           reduce using rule 52 (value -> FLOAT .)
-    PLUS            reduce using rule 52 (value -> FLOAT .)
-    MINUS           reduce using rule 52 (value -> FLOAT .)
-    TIMES           reduce using rule 52 (value -> FLOAT .)
-    DIVIDE          reduce using rule 52 (value -> FLOAT .)
-    MODULE          reduce using rule 52 (value -> FLOAT .)
-    LBRACE          reduce using rule 52 (value -> FLOAT .)
+    SEMICOLON       reduce using rule 24 (code -> statement .)
 
 
 state 16
 
-    (53) value -> STRING .
+    (25) function -> ID . LPAREN RPAREN
+    (26) function -> ID . LPAREN value RPAREN
+    (27) function -> ID . LPAREN arguments_production RPAREN
+    (28) function -> ID . DOT ID LPAREN RPAREN
+    (29) function -> ID . DOT ID LPAREN value RPAREN
+    (30) function -> ID . DOT ID LPAREN arguments_production RPAREN
+    (66) value -> ID .
+    (34) statement -> ID . EQUAL ID
+    (35) statement -> ID . EQUAL aritmetic_operation_production
+    (37) statement -> ID . EQUAL data_structures
 
-    AND             reduce using rule 53 (value -> STRING .)
-    OR              reduce using rule 53 (value -> STRING .)
-    NOT             reduce using rule 53 (value -> STRING .)
-    LESS_THAN       reduce using rule 53 (value -> STRING .)
-    GREATER_THAN    reduce using rule 53 (value -> STRING .)
-    LESS_THAN_EQUAL reduce using rule 53 (value -> STRING .)
-    GREATER_THAN_EQUAL reduce using rule 53 (value -> STRING .)
-    NOT_EQUAL       reduce using rule 53 (value -> STRING .)
-    EQUAL_EQUAL     reduce using rule 53 (value -> STRING .)
-    SEMICOLON       reduce using rule 53 (value -> STRING .)
-    RPAREN          reduce using rule 53 (value -> STRING .)
-    COMMA           reduce using rule 53 (value -> STRING .)
-    PLUS            reduce using rule 53 (value -> STRING .)
-    MINUS           reduce using rule 53 (value -> STRING .)
-    TIMES           reduce using rule 53 (value -> STRING .)
-    DIVIDE          reduce using rule 53 (value -> STRING .)
-    MODULE          reduce using rule 53 (value -> STRING .)
-    LBRACE          reduce using rule 53 (value -> STRING .)
+    LPAREN          shift and go to state 44
+    DOT             shift and go to state 45
+    AND             reduce using rule 66 (value -> ID .)
+    OR              reduce using rule 66 (value -> ID .)
+    NOT             reduce using rule 66 (value -> ID .)
+    LESS_THAN       reduce using rule 66 (value -> ID .)
+    GREATER_THAN    reduce using rule 66 (value -> ID .)
+    LESS_THAN_EQUAL reduce using rule 66 (value -> ID .)
+    GREATER_THAN_EQUAL reduce using rule 66 (value -> ID .)
+    NOT_EQUAL       reduce using rule 66 (value -> ID .)
+    EQUAL_EQUAL     reduce using rule 66 (value -> ID .)
+    SEMICOLON       reduce using rule 66 (value -> ID .)
+    EQUAL           shift and go to state 46
 
 
 state 17
 
-    (54) value -> CHAR .
+    (61) value -> INT .
 
-    AND             reduce using rule 54 (value -> CHAR .)
-    OR              reduce using rule 54 (value -> CHAR .)
-    NOT             reduce using rule 54 (value -> CHAR .)
-    LESS_THAN       reduce using rule 54 (value -> CHAR .)
-    GREATER_THAN    reduce using rule 54 (value -> CHAR .)
-    LESS_THAN_EQUAL reduce using rule 54 (value -> CHAR .)
-    GREATER_THAN_EQUAL reduce using rule 54 (value -> CHAR .)
-    NOT_EQUAL       reduce using rule 54 (value -> CHAR .)
-    EQUAL_EQUAL     reduce using rule 54 (value -> CHAR .)
-    SEMICOLON       reduce using rule 54 (value -> CHAR .)
-    RPAREN          reduce using rule 54 (value -> CHAR .)
-    COMMA           reduce using rule 54 (value -> CHAR .)
-    PLUS            reduce using rule 54 (value -> CHAR .)
-    MINUS           reduce using rule 54 (value -> CHAR .)
-    TIMES           reduce using rule 54 (value -> CHAR .)
-    DIVIDE          reduce using rule 54 (value -> CHAR .)
-    MODULE          reduce using rule 54 (value -> CHAR .)
-    LBRACE          reduce using rule 54 (value -> CHAR .)
+    AND             reduce using rule 61 (value -> INT .)
+    OR              reduce using rule 61 (value -> INT .)
+    NOT             reduce using rule 61 (value -> INT .)
+    LESS_THAN       reduce using rule 61 (value -> INT .)
+    GREATER_THAN    reduce using rule 61 (value -> INT .)
+    LESS_THAN_EQUAL reduce using rule 61 (value -> INT .)
+    GREATER_THAN_EQUAL reduce using rule 61 (value -> INT .)
+    NOT_EQUAL       reduce using rule 61 (value -> INT .)
+    EQUAL_EQUAL     reduce using rule 61 (value -> INT .)
+    SEMICOLON       reduce using rule 61 (value -> INT .)
+    RPAREN          reduce using rule 61 (value -> INT .)
+    COMMA           reduce using rule 61 (value -> INT .)
+    PLUS            reduce using rule 61 (value -> INT .)
+    MINUS_OPERATOR  reduce using rule 61 (value -> INT .)
+    TIMES           reduce using rule 61 (value -> INT .)
+    DIVIDE          reduce using rule 61 (value -> INT .)
+    MODULE          reduce using rule 61 (value -> INT .)
+    LBRACE          reduce using rule 61 (value -> INT .)
+    ELSE            reduce using rule 61 (value -> INT .)
 
 
 state 18
 
-    (55) value -> BOOL .
+    (62) value -> FLOAT .
 
-    AND             reduce using rule 55 (value -> BOOL .)
-    OR              reduce using rule 55 (value -> BOOL .)
-    NOT             reduce using rule 55 (value -> BOOL .)
-    LESS_THAN       reduce using rule 55 (value -> BOOL .)
-    GREATER_THAN    reduce using rule 55 (value -> BOOL .)
-    LESS_THAN_EQUAL reduce using rule 55 (value -> BOOL .)
-    GREATER_THAN_EQUAL reduce using rule 55 (value -> BOOL .)
-    NOT_EQUAL       reduce using rule 55 (value -> BOOL .)
-    EQUAL_EQUAL     reduce using rule 55 (value -> BOOL .)
-    SEMICOLON       reduce using rule 55 (value -> BOOL .)
-    RPAREN          reduce using rule 55 (value -> BOOL .)
-    COMMA           reduce using rule 55 (value -> BOOL .)
-    PLUS            reduce using rule 55 (value -> BOOL .)
-    MINUS           reduce using rule 55 (value -> BOOL .)
-    TIMES           reduce using rule 55 (value -> BOOL .)
-    DIVIDE          reduce using rule 55 (value -> BOOL .)
-    MODULE          reduce using rule 55 (value -> BOOL .)
-    LBRACE          reduce using rule 55 (value -> BOOL .)
+    AND             reduce using rule 62 (value -> FLOAT .)
+    OR              reduce using rule 62 (value -> FLOAT .)
+    NOT             reduce using rule 62 (value -> FLOAT .)
+    LESS_THAN       reduce using rule 62 (value -> FLOAT .)
+    GREATER_THAN    reduce using rule 62 (value -> FLOAT .)
+    LESS_THAN_EQUAL reduce using rule 62 (value -> FLOAT .)
+    GREATER_THAN_EQUAL reduce using rule 62 (value -> FLOAT .)
+    NOT_EQUAL       reduce using rule 62 (value -> FLOAT .)
+    EQUAL_EQUAL     reduce using rule 62 (value -> FLOAT .)
+    SEMICOLON       reduce using rule 62 (value -> FLOAT .)
+    RPAREN          reduce using rule 62 (value -> FLOAT .)
+    COMMA           reduce using rule 62 (value -> FLOAT .)
+    PLUS            reduce using rule 62 (value -> FLOAT .)
+    MINUS_OPERATOR  reduce using rule 62 (value -> FLOAT .)
+    TIMES           reduce using rule 62 (value -> FLOAT .)
+    DIVIDE          reduce using rule 62 (value -> FLOAT .)
+    MODULE          reduce using rule 62 (value -> FLOAT .)
+    LBRACE          reduce using rule 62 (value -> FLOAT .)
+    ELSE            reduce using rule 62 (value -> FLOAT .)
 
 
 state 19
 
-    (26) statement -> LET . ID EQUAL value
-    (27) statement -> LET . MUT ID EQUAL value
+    (63) value -> STRING .
 
-    ID              shift and go to state 41
-    MUT             shift and go to state 42
+    AND             reduce using rule 63 (value -> STRING .)
+    OR              reduce using rule 63 (value -> STRING .)
+    NOT             reduce using rule 63 (value -> STRING .)
+    LESS_THAN       reduce using rule 63 (value -> STRING .)
+    GREATER_THAN    reduce using rule 63 (value -> STRING .)
+    LESS_THAN_EQUAL reduce using rule 63 (value -> STRING .)
+    GREATER_THAN_EQUAL reduce using rule 63 (value -> STRING .)
+    NOT_EQUAL       reduce using rule 63 (value -> STRING .)
+    EQUAL_EQUAL     reduce using rule 63 (value -> STRING .)
+    SEMICOLON       reduce using rule 63 (value -> STRING .)
+    RPAREN          reduce using rule 63 (value -> STRING .)
+    COMMA           reduce using rule 63 (value -> STRING .)
+    PLUS            reduce using rule 63 (value -> STRING .)
+    MINUS_OPERATOR  reduce using rule 63 (value -> STRING .)
+    TIMES           reduce using rule 63 (value -> STRING .)
+    DIVIDE          reduce using rule 63 (value -> STRING .)
+    MODULE          reduce using rule 63 (value -> STRING .)
+    LBRACE          reduce using rule 63 (value -> STRING .)
+    ELSE            reduce using rule 63 (value -> STRING .)
 
 
 state 20
 
-    (28) statement -> CONST . ID EQUAL value
+    (64) value -> CHAR .
 
-    ID              shift and go to state 43
+    AND             reduce using rule 64 (value -> CHAR .)
+    OR              reduce using rule 64 (value -> CHAR .)
+    NOT             reduce using rule 64 (value -> CHAR .)
+    LESS_THAN       reduce using rule 64 (value -> CHAR .)
+    GREATER_THAN    reduce using rule 64 (value -> CHAR .)
+    LESS_THAN_EQUAL reduce using rule 64 (value -> CHAR .)
+    GREATER_THAN_EQUAL reduce using rule 64 (value -> CHAR .)
+    NOT_EQUAL       reduce using rule 64 (value -> CHAR .)
+    EQUAL_EQUAL     reduce using rule 64 (value -> CHAR .)
+    SEMICOLON       reduce using rule 64 (value -> CHAR .)
+    RPAREN          reduce using rule 64 (value -> CHAR .)
+    COMMA           reduce using rule 64 (value -> CHAR .)
+    PLUS            reduce using rule 64 (value -> CHAR .)
+    MINUS_OPERATOR  reduce using rule 64 (value -> CHAR .)
+    TIMES           reduce using rule 64 (value -> CHAR .)
+    DIVIDE          reduce using rule 64 (value -> CHAR .)
+    MODULE          reduce using rule 64 (value -> CHAR .)
+    LBRACE          reduce using rule 64 (value -> CHAR .)
+    ELSE            reduce using rule 64 (value -> CHAR .)
 
 
 state 21
 
-    (13) code_block -> code_line code_block .
+    (65) value -> BOOL .
 
-    $end            reduce using rule 13 (code_block -> code_line code_block .)
-    RBRACE          reduce using rule 13 (code_block -> code_line code_block .)
+    AND             reduce using rule 65 (value -> BOOL .)
+    OR              reduce using rule 65 (value -> BOOL .)
+    NOT             reduce using rule 65 (value -> BOOL .)
+    LESS_THAN       reduce using rule 65 (value -> BOOL .)
+    GREATER_THAN    reduce using rule 65 (value -> BOOL .)
+    LESS_THAN_EQUAL reduce using rule 65 (value -> BOOL .)
+    GREATER_THAN_EQUAL reduce using rule 65 (value -> BOOL .)
+    NOT_EQUAL       reduce using rule 65 (value -> BOOL .)
+    EQUAL_EQUAL     reduce using rule 65 (value -> BOOL .)
+    SEMICOLON       reduce using rule 65 (value -> BOOL .)
+    RPAREN          reduce using rule 65 (value -> BOOL .)
+    COMMA           reduce using rule 65 (value -> BOOL .)
+    PLUS            reduce using rule 65 (value -> BOOL .)
+    MINUS_OPERATOR  reduce using rule 65 (value -> BOOL .)
+    TIMES           reduce using rule 65 (value -> BOOL .)
+    DIVIDE          reduce using rule 65 (value -> BOOL .)
+    MODULE          reduce using rule 65 (value -> BOOL .)
+    LBRACE          reduce using rule 65 (value -> BOOL .)
+    ELSE            reduce using rule 65 (value -> BOOL .)
 
 
 state 22
 
-    (3) if_statement -> IF LPAREN . comparison_value RPAREN block_function
-    (4) if_statement -> IF LPAREN . comparison_value RPAREN block_function else_if_statement
-    (35) comparison_value -> . value comparison value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (33) statement -> CONST . ID EQUAL value
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    ID              shift and go to state 47
 
-    comparison_value               shift and go to state 44
-    value                          shift and go to state 45
 
 state 23
 
-    (5) if_statement -> IF function . comparison value block_function
-    (6) if_statement -> IF function . comparison value block_function else_if_statement
-    (45) comparison -> . LESS_THAN
-    (46) comparison -> . GREATER_THAN
-    (47) comparison -> . LESS_THAN_EQUAL
-    (48) comparison -> . GREATER_THAN_EQUAL
-    (49) comparison -> . NOT_EQUAL
-    (50) comparison -> . EQUAL_EQUAL
+    (2) principal -> body principal .
 
-    LESS_THAN       shift and go to state 26
-    GREATER_THAN    shift and go to state 27
-    LESS_THAN_EQUAL shift and go to state 28
-    GREATER_THAN_EQUAL shift and go to state 29
-    NOT_EQUAL       shift and go to state 30
-    EQUAL_EQUAL     shift and go to state 31
+    $end            reduce using rule 2 (principal -> body principal .)
 
-    comparison                     shift and go to state 47
 
 state 24
 
-    (20) function -> ID . LPAREN RPAREN
-    (21) function -> ID . LPAREN value RPAREN
-    (22) function -> ID . LPAREN arguments_production RPAREN
-    (23) function -> ID . DOT ID LPAREN RPAREN
-    (24) function -> ID . DOT ID LPAREN value RPAREN
-    (25) function -> ID . DOT ID LPAREN arguments_production RPAREN
+    (18) code_block -> code_line code_block .
 
-    LPAREN          shift and go to state 38
-    DOT             shift and go to state 39
+    IF              reduce using rule 18 (code_block -> code_line code_block .)
+    ID              reduce using rule 18 (code_block -> code_line code_block .)
+    INT             reduce using rule 18 (code_block -> code_line code_block .)
+    FLOAT           reduce using rule 18 (code_block -> code_line code_block .)
+    STRING          reduce using rule 18 (code_block -> code_line code_block .)
+    CHAR            reduce using rule 18 (code_block -> code_line code_block .)
+    BOOL            reduce using rule 18 (code_block -> code_line code_block .)
+    LET             reduce using rule 18 (code_block -> code_line code_block .)
+    CONST           reduce using rule 18 (code_block -> code_line code_block .)
+    $end            reduce using rule 18 (code_block -> code_line code_block .)
+    RBRACE          reduce using rule 18 (code_block -> code_line code_block .)
 
 
 state 25
 
-    (34) comparison_production -> comparison_value comparison . comparison_production
-    (33) comparison_production -> . comparison_value
-    (34) comparison_production -> . comparison_value comparison comparison_production
-    (35) comparison_value -> . value comparison value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (19) code_line -> code SEMICOLON .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    ID              reduce using rule 19 (code_line -> code SEMICOLON .)
+    INT             reduce using rule 19 (code_line -> code SEMICOLON .)
+    FLOAT           reduce using rule 19 (code_line -> code SEMICOLON .)
+    STRING          reduce using rule 19 (code_line -> code SEMICOLON .)
+    CHAR            reduce using rule 19 (code_line -> code SEMICOLON .)
+    BOOL            reduce using rule 19 (code_line -> code SEMICOLON .)
+    LET             reduce using rule 19 (code_line -> code SEMICOLON .)
+    CONST           reduce using rule 19 (code_line -> code SEMICOLON .)
+    IF              reduce using rule 19 (code_line -> code SEMICOLON .)
+    $end            reduce using rule 19 (code_line -> code SEMICOLON .)
+    RBRACE          reduce using rule 19 (code_line -> code SEMICOLON .)
 
-    comparison_value               shift and go to state 6
-    comparison_production          shift and go to state 48
-    value                          shift and go to state 45
 
 state 26
 
-    (45) comparison -> LESS_THAN .
+    (6) if_statement -> IF LPAREN . comparison_value RPAREN block_function
+    (7) if_statement -> IF LPAREN . comparison_value RPAREN block_function else_if_statement
+    (45) comparison_value -> . value comparison value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    INT             reduce using rule 45 (comparison -> LESS_THAN .)
-    FLOAT           reduce using rule 45 (comparison -> LESS_THAN .)
-    STRING          reduce using rule 45 (comparison -> LESS_THAN .)
-    CHAR            reduce using rule 45 (comparison -> LESS_THAN .)
-    BOOL            reduce using rule 45 (comparison -> LESS_THAN .)
-    ID              reduce using rule 45 (comparison -> LESS_THAN .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    comparison_value               shift and go to state 48
+    value                          shift and go to state 49
 
 state 27
 
-    (46) comparison -> GREATER_THAN .
+    (8) if_statement -> IF function . comparison value block_function
+    (9) if_statement -> IF function . comparison value block_function else_if_statement
+    (55) comparison -> . LESS_THAN
+    (56) comparison -> . GREATER_THAN
+    (57) comparison -> . LESS_THAN_EQUAL
+    (58) comparison -> . GREATER_THAN_EQUAL
+    (59) comparison -> . NOT_EQUAL
+    (60) comparison -> . EQUAL_EQUAL
 
-    INT             reduce using rule 46 (comparison -> GREATER_THAN .)
-    FLOAT           reduce using rule 46 (comparison -> GREATER_THAN .)
-    STRING          reduce using rule 46 (comparison -> GREATER_THAN .)
-    CHAR            reduce using rule 46 (comparison -> GREATER_THAN .)
-    BOOL            reduce using rule 46 (comparison -> GREATER_THAN .)
-    ID              reduce using rule 46 (comparison -> GREATER_THAN .)
+    LESS_THAN       shift and go to state 31
+    GREATER_THAN    shift and go to state 32
+    LESS_THAN_EQUAL shift and go to state 33
+    GREATER_THAN_EQUAL shift and go to state 34
+    NOT_EQUAL       shift and go to state 35
+    EQUAL_EQUAL     shift and go to state 36
 
+    comparison                     shift and go to state 51
 
 state 28
 
-    (47) comparison -> LESS_THAN_EQUAL .
+    (10) if_statement -> IF LET . EQUAL value block_function
+    (11) if_statement -> IF LET . EQUAL value else_if_statement
 
-    INT             reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
-    FLOAT           reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
-    STRING          reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
-    CHAR            reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
-    BOOL            reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
-    ID              reduce using rule 47 (comparison -> LESS_THAN_EQUAL .)
+    EQUAL           shift and go to state 52
 
 
 state 29
 
-    (48) comparison -> GREATER_THAN_EQUAL .
+    (25) function -> ID . LPAREN RPAREN
+    (26) function -> ID . LPAREN value RPAREN
+    (27) function -> ID . LPAREN arguments_production RPAREN
+    (28) function -> ID . DOT ID LPAREN RPAREN
+    (29) function -> ID . DOT ID LPAREN value RPAREN
+    (30) function -> ID . DOT ID LPAREN arguments_production RPAREN
 
-    INT             reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
-    FLOAT           reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
-    STRING          reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
-    CHAR            reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
-    BOOL            reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
-    ID              reduce using rule 48 (comparison -> GREATER_THAN_EQUAL .)
+    LPAREN          shift and go to state 44
+    DOT             shift and go to state 45
 
 
 state 30
 
-    (49) comparison -> NOT_EQUAL .
+    (44) comparison_production -> comparison_value comparison . comparison_production
+    (43) comparison_production -> . comparison_value
+    (44) comparison_production -> . comparison_value comparison comparison_production
+    (45) comparison_value -> . value comparison value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    INT             reduce using rule 49 (comparison -> NOT_EQUAL .)
-    FLOAT           reduce using rule 49 (comparison -> NOT_EQUAL .)
-    STRING          reduce using rule 49 (comparison -> NOT_EQUAL .)
-    CHAR            reduce using rule 49 (comparison -> NOT_EQUAL .)
-    BOOL            reduce using rule 49 (comparison -> NOT_EQUAL .)
-    ID              reduce using rule 49 (comparison -> NOT_EQUAL .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    comparison_value               shift and go to state 9
+    comparison_production          shift and go to state 53
+    value                          shift and go to state 49
 
 state 31
 
-    (50) comparison -> EQUAL_EQUAL .
+    (55) comparison -> LESS_THAN .
 
-    INT             reduce using rule 50 (comparison -> EQUAL_EQUAL .)
-    FLOAT           reduce using rule 50 (comparison -> EQUAL_EQUAL .)
-    STRING          reduce using rule 50 (comparison -> EQUAL_EQUAL .)
-    CHAR            reduce using rule 50 (comparison -> EQUAL_EQUAL .)
-    BOOL            reduce using rule 50 (comparison -> EQUAL_EQUAL .)
-    ID              reduce using rule 50 (comparison -> EQUAL_EQUAL .)
+    INT             reduce using rule 55 (comparison -> LESS_THAN .)
+    FLOAT           reduce using rule 55 (comparison -> LESS_THAN .)
+    STRING          reduce using rule 55 (comparison -> LESS_THAN .)
+    CHAR            reduce using rule 55 (comparison -> LESS_THAN .)
+    BOOL            reduce using rule 55 (comparison -> LESS_THAN .)
+    ID              reduce using rule 55 (comparison -> LESS_THAN .)
 
 
 state 32
 
-    (36) logic_value -> value logic_operator . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (56) comparison -> GREATER_THAN .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    INT             reduce using rule 56 (comparison -> GREATER_THAN .)
+    FLOAT           reduce using rule 56 (comparison -> GREATER_THAN .)
+    STRING          reduce using rule 56 (comparison -> GREATER_THAN .)
+    CHAR            reduce using rule 56 (comparison -> GREATER_THAN .)
+    BOOL            reduce using rule 56 (comparison -> GREATER_THAN .)
+    ID              reduce using rule 56 (comparison -> GREATER_THAN .)
 
-    value                          shift and go to state 49
 
 state 33
 
-    (35) comparison_value -> value comparison . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (57) comparison -> LESS_THAN_EQUAL .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    INT             reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
+    FLOAT           reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
+    STRING          reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
+    CHAR            reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
+    BOOL            reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
+    ID              reduce using rule 57 (comparison -> LESS_THAN_EQUAL .)
 
-    value                          shift and go to state 50
 
 state 34
 
-    (57) logic_operator -> AND .
+    (58) comparison -> GREATER_THAN_EQUAL .
 
-    INT             reduce using rule 57 (logic_operator -> AND .)
-    FLOAT           reduce using rule 57 (logic_operator -> AND .)
-    STRING          reduce using rule 57 (logic_operator -> AND .)
-    CHAR            reduce using rule 57 (logic_operator -> AND .)
-    BOOL            reduce using rule 57 (logic_operator -> AND .)
-    ID              reduce using rule 57 (logic_operator -> AND .)
+    INT             reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
+    FLOAT           reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
+    STRING          reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
+    CHAR            reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
+    BOOL            reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
+    ID              reduce using rule 58 (comparison -> GREATER_THAN_EQUAL .)
 
 
 state 35
 
-    (58) logic_operator -> OR .
+    (59) comparison -> NOT_EQUAL .
 
-    INT             reduce using rule 58 (logic_operator -> OR .)
-    FLOAT           reduce using rule 58 (logic_operator -> OR .)
-    STRING          reduce using rule 58 (logic_operator -> OR .)
-    CHAR            reduce using rule 58 (logic_operator -> OR .)
-    BOOL            reduce using rule 58 (logic_operator -> OR .)
-    ID              reduce using rule 58 (logic_operator -> OR .)
+    INT             reduce using rule 59 (comparison -> NOT_EQUAL .)
+    FLOAT           reduce using rule 59 (comparison -> NOT_EQUAL .)
+    STRING          reduce using rule 59 (comparison -> NOT_EQUAL .)
+    CHAR            reduce using rule 59 (comparison -> NOT_EQUAL .)
+    BOOL            reduce using rule 59 (comparison -> NOT_EQUAL .)
+    ID              reduce using rule 59 (comparison -> NOT_EQUAL .)
 
 
 state 36
 
-    (59) logic_operator -> NOT .
+    (60) comparison -> EQUAL_EQUAL .
 
-    INT             reduce using rule 59 (logic_operator -> NOT .)
-    FLOAT           reduce using rule 59 (logic_operator -> NOT .)
-    STRING          reduce using rule 59 (logic_operator -> NOT .)
-    CHAR            reduce using rule 59 (logic_operator -> NOT .)
-    BOOL            reduce using rule 59 (logic_operator -> NOT .)
-    ID              reduce using rule 59 (logic_operator -> NOT .)
+    INT             reduce using rule 60 (comparison -> EQUAL_EQUAL .)
+    FLOAT           reduce using rule 60 (comparison -> EQUAL_EQUAL .)
+    STRING          reduce using rule 60 (comparison -> EQUAL_EQUAL .)
+    CHAR            reduce using rule 60 (comparison -> EQUAL_EQUAL .)
+    BOOL            reduce using rule 60 (comparison -> EQUAL_EQUAL .)
+    ID              reduce using rule 60 (comparison -> EQUAL_EQUAL .)
 
 
 state 37
 
-    (14) code_line -> code SEMICOLON .
+    (46) logic_value -> value logic_operator . value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    ID              reduce using rule 14 (code_line -> code SEMICOLON .)
-    INT             reduce using rule 14 (code_line -> code SEMICOLON .)
-    FLOAT           reduce using rule 14 (code_line -> code SEMICOLON .)
-    STRING          reduce using rule 14 (code_line -> code SEMICOLON .)
-    CHAR            reduce using rule 14 (code_line -> code SEMICOLON .)
-    BOOL            reduce using rule 14 (code_line -> code SEMICOLON .)
-    LET             reduce using rule 14 (code_line -> code SEMICOLON .)
-    CONST           reduce using rule 14 (code_line -> code SEMICOLON .)
-    $end            reduce using rule 14 (code_line -> code SEMICOLON .)
-    RBRACE          reduce using rule 14 (code_line -> code SEMICOLON .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    value                          shift and go to state 54
 
 state 38
 
-    (20) function -> ID LPAREN . RPAREN
-    (21) function -> ID LPAREN . value RPAREN
-    (22) function -> ID LPAREN . arguments_production RPAREN
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-    (31) arguments_production -> . value
-    (32) arguments_production -> . value COMMA arguments_production
+    (45) comparison_value -> value comparison . value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    RPAREN          shift and go to state 51
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
-    value                          shift and go to state 52
-    arguments_production           shift and go to state 53
+    value                          shift and go to state 55
 
 state 39
 
-    (23) function -> ID DOT . ID LPAREN RPAREN
-    (24) function -> ID DOT . ID LPAREN value RPAREN
-    (25) function -> ID DOT . ID LPAREN arguments_production RPAREN
+    (67) logic_operator -> AND .
 
-    ID              shift and go to state 54
+    INT             reduce using rule 67 (logic_operator -> AND .)
+    FLOAT           reduce using rule 67 (logic_operator -> AND .)
+    STRING          reduce using rule 67 (logic_operator -> AND .)
+    CHAR            reduce using rule 67 (logic_operator -> AND .)
+    BOOL            reduce using rule 67 (logic_operator -> AND .)
+    ID              reduce using rule 67 (logic_operator -> AND .)
 
 
 state 40
 
-    (29) statement -> ID EQUAL . ID
-    (30) statement -> ID EQUAL . aritmetic_operation_production
-    (37) aritmetic_operation_production -> . aritmetic_operation
-    (38) aritmetic_operation_production -> . value aritmetic_operator aritmetic_operation
-    (39) aritmetic_operation -> . value aritmetic_operator value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (68) logic_operator -> OR .
 
-    ID              shift and go to state 55
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
+    INT             reduce using rule 68 (logic_operator -> OR .)
+    FLOAT           reduce using rule 68 (logic_operator -> OR .)
+    STRING          reduce using rule 68 (logic_operator -> OR .)
+    CHAR            reduce using rule 68 (logic_operator -> OR .)
+    BOOL            reduce using rule 68 (logic_operator -> OR .)
+    ID              reduce using rule 68 (logic_operator -> OR .)
 
-    aritmetic_operation_production shift and go to state 56
-    aritmetic_operation            shift and go to state 57
-    value                          shift and go to state 58
 
 state 41
 
-    (26) statement -> LET ID . EQUAL value
+    (69) logic_operator -> NOT .
 
-    EQUAL           shift and go to state 59
+    INT             reduce using rule 69 (logic_operator -> NOT .)
+    FLOAT           reduce using rule 69 (logic_operator -> NOT .)
+    STRING          reduce using rule 69 (logic_operator -> NOT .)
+    CHAR            reduce using rule 69 (logic_operator -> NOT .)
+    BOOL            reduce using rule 69 (logic_operator -> NOT .)
+    ID              reduce using rule 69 (logic_operator -> NOT .)
 
 
 state 42
 
-    (27) statement -> LET MUT . ID EQUAL value
+    (31) statement -> LET ID . EQUAL value
+    (36) statement -> LET ID . EQUAL data_structures
 
-    ID              shift and go to state 60
+    EQUAL           shift and go to state 56
 
 
 state 43
 
-    (28) statement -> CONST ID . EQUAL value
+    (32) statement -> LET MUT . ID EQUAL value
+    (38) statement -> LET MUT . ID EQUAL data_structures
 
-    EQUAL           shift and go to state 61
+    ID              shift and go to state 57
 
 
 state 44
 
-    (3) if_statement -> IF LPAREN comparison_value . RPAREN block_function
-    (4) if_statement -> IF LPAREN comparison_value . RPAREN block_function else_if_statement
+    (25) function -> ID LPAREN . RPAREN
+    (26) function -> ID LPAREN . value RPAREN
+    (27) function -> ID LPAREN . arguments_production RPAREN
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (41) arguments_production -> . value
+    (42) arguments_production -> . value COMMA arguments_production
 
-    RPAREN          shift and go to state 62
+    RPAREN          shift and go to state 58
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    value                          shift and go to state 59
+    arguments_production           shift and go to state 60
 
 state 45
 
-    (35) comparison_value -> value . comparison value
-    (45) comparison -> . LESS_THAN
-    (46) comparison -> . GREATER_THAN
-    (47) comparison -> . LESS_THAN_EQUAL
-    (48) comparison -> . GREATER_THAN_EQUAL
-    (49) comparison -> . NOT_EQUAL
-    (50) comparison -> . EQUAL_EQUAL
+    (28) function -> ID DOT . ID LPAREN RPAREN
+    (29) function -> ID DOT . ID LPAREN value RPAREN
+    (30) function -> ID DOT . ID LPAREN arguments_production RPAREN
 
-    LESS_THAN       shift and go to state 26
-    GREATER_THAN    shift and go to state 27
-    LESS_THAN_EQUAL shift and go to state 28
-    GREATER_THAN_EQUAL shift and go to state 29
-    NOT_EQUAL       shift and go to state 30
-    EQUAL_EQUAL     shift and go to state 31
+    ID              shift and go to state 61
 
-    comparison                     shift and go to state 33
 
 state 46
 
-    (56) value -> ID .
+    (34) statement -> ID EQUAL . ID
+    (35) statement -> ID EQUAL . aritmetic_operation_production
+    (37) statement -> ID EQUAL . data_structures
+    (47) aritmetic_operation_production -> . aritmetic_operation
+    (48) aritmetic_operation_production -> . value aritmetic_operator aritmetic_operation
+    (39) data_structures -> . tuple
+    (49) aritmetic_operation -> . value aritmetic_operator value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (40) tuple -> . LPAREN arguments_production RPAREN
 
-    LESS_THAN       reduce using rule 56 (value -> ID .)
-    GREATER_THAN    reduce using rule 56 (value -> ID .)
-    LESS_THAN_EQUAL reduce using rule 56 (value -> ID .)
-    GREATER_THAN_EQUAL reduce using rule 56 (value -> ID .)
-    NOT_EQUAL       reduce using rule 56 (value -> ID .)
-    EQUAL_EQUAL     reduce using rule 56 (value -> ID .)
-    SEMICOLON       reduce using rule 56 (value -> ID .)
-    RPAREN          reduce using rule 56 (value -> ID .)
-    COMMA           reduce using rule 56 (value -> ID .)
-    LBRACE          reduce using rule 56 (value -> ID .)
-    PLUS            reduce using rule 56 (value -> ID .)
-    MINUS           reduce using rule 56 (value -> ID .)
-    TIMES           reduce using rule 56 (value -> ID .)
-    DIVIDE          reduce using rule 56 (value -> ID .)
-    MODULE          reduce using rule 56 (value -> ID .)
+    ID              shift and go to state 62
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    LPAREN          shift and go to state 68
 
+    aritmetic_operation_production shift and go to state 63
+    data_structures                shift and go to state 64
+    aritmetic_operation            shift and go to state 65
+    value                          shift and go to state 66
+    tuple                          shift and go to state 67
 
 state 47
 
-    (5) if_statement -> IF function comparison . value block_function
-    (6) if_statement -> IF function comparison . value block_function else_if_statement
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (33) statement -> CONST ID . EQUAL value
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    EQUAL           shift and go to state 69
 
-    value                          shift and go to state 63
 
 state 48
 
-    (34) comparison_production -> comparison_value comparison comparison_production .
+    (6) if_statement -> IF LPAREN comparison_value . RPAREN block_function
+    (7) if_statement -> IF LPAREN comparison_value . RPAREN block_function else_if_statement
 
-    SEMICOLON       reduce using rule 34 (comparison_production -> comparison_value comparison comparison_production .)
+    RPAREN          shift and go to state 70
 
 
 state 49
 
-    (36) logic_value -> value logic_operator value .
+    (45) comparison_value -> value . comparison value
+    (55) comparison -> . LESS_THAN
+    (56) comparison -> . GREATER_THAN
+    (57) comparison -> . LESS_THAN_EQUAL
+    (58) comparison -> . GREATER_THAN_EQUAL
+    (59) comparison -> . NOT_EQUAL
+    (60) comparison -> . EQUAL_EQUAL
 
-    SEMICOLON       reduce using rule 36 (logic_value -> value logic_operator value .)
+    LESS_THAN       shift and go to state 31
+    GREATER_THAN    shift and go to state 32
+    LESS_THAN_EQUAL shift and go to state 33
+    GREATER_THAN_EQUAL shift and go to state 34
+    NOT_EQUAL       shift and go to state 35
+    EQUAL_EQUAL     shift and go to state 36
 
+    comparison                     shift and go to state 38
 
 state 50
 
-    (35) comparison_value -> value comparison value .
+    (66) value -> ID .
 
-    LESS_THAN       reduce using rule 35 (comparison_value -> value comparison value .)
-    GREATER_THAN    reduce using rule 35 (comparison_value -> value comparison value .)
-    LESS_THAN_EQUAL reduce using rule 35 (comparison_value -> value comparison value .)
-    GREATER_THAN_EQUAL reduce using rule 35 (comparison_value -> value comparison value .)
-    NOT_EQUAL       reduce using rule 35 (comparison_value -> value comparison value .)
-    EQUAL_EQUAL     reduce using rule 35 (comparison_value -> value comparison value .)
-    SEMICOLON       reduce using rule 35 (comparison_value -> value comparison value .)
-    RPAREN          reduce using rule 35 (comparison_value -> value comparison value .)
+    LESS_THAN       reduce using rule 66 (value -> ID .)
+    GREATER_THAN    reduce using rule 66 (value -> ID .)
+    LESS_THAN_EQUAL reduce using rule 66 (value -> ID .)
+    GREATER_THAN_EQUAL reduce using rule 66 (value -> ID .)
+    NOT_EQUAL       reduce using rule 66 (value -> ID .)
+    EQUAL_EQUAL     reduce using rule 66 (value -> ID .)
+    SEMICOLON       reduce using rule 66 (value -> ID .)
+    RPAREN          reduce using rule 66 (value -> ID .)
+    COMMA           reduce using rule 66 (value -> ID .)
+    LBRACE          reduce using rule 66 (value -> ID .)
+    ELSE            reduce using rule 66 (value -> ID .)
+    PLUS            reduce using rule 66 (value -> ID .)
+    MINUS_OPERATOR  reduce using rule 66 (value -> ID .)
+    TIMES           reduce using rule 66 (value -> ID .)
+    DIVIDE          reduce using rule 66 (value -> ID .)
+    MODULE          reduce using rule 66 (value -> ID .)
 
 
 state 51
 
-    (20) function -> ID LPAREN RPAREN .
+    (8) if_statement -> IF function comparison . value block_function
+    (9) if_statement -> IF function comparison . value block_function else_if_statement
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    SEMICOLON       reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    LESS_THAN       reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    GREATER_THAN    reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    NOT_EQUAL       reduce using rule 20 (function -> ID LPAREN RPAREN .)
-    EQUAL_EQUAL     reduce using rule 20 (function -> ID LPAREN RPAREN .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    value                          shift and go to state 71
 
 state 52
 
-    (21) function -> ID LPAREN value . RPAREN
-    (31) arguments_production -> value .
-    (32) arguments_production -> value . COMMA arguments_production
+    (10) if_statement -> IF LET EQUAL . value block_function
+    (11) if_statement -> IF LET EQUAL . value else_if_statement
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-  ! shift/reduce conflict for RPAREN resolved as shift
-    RPAREN          shift and go to state 64
-    COMMA           shift and go to state 65
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
-  ! RPAREN          [ reduce using rule 31 (arguments_production -> value .) ]
-
+    value                          shift and go to state 72
 
 state 53
 
-    (22) function -> ID LPAREN arguments_production . RPAREN
+    (44) comparison_production -> comparison_value comparison comparison_production .
 
-    RPAREN          shift and go to state 66
+    SEMICOLON       reduce using rule 44 (comparison_production -> comparison_value comparison comparison_production .)
 
 
 state 54
 
-    (23) function -> ID DOT ID . LPAREN RPAREN
-    (24) function -> ID DOT ID . LPAREN value RPAREN
-    (25) function -> ID DOT ID . LPAREN arguments_production RPAREN
+    (46) logic_value -> value logic_operator value .
 
-    LPAREN          shift and go to state 67
+    SEMICOLON       reduce using rule 46 (logic_value -> value logic_operator value .)
 
 
 state 55
 
-    (29) statement -> ID EQUAL ID .
-    (56) value -> ID .
+    (45) comparison_value -> value comparison value .
 
-    SEMICOLON       reduce using rule 29 (statement -> ID EQUAL ID .)
-    PLUS            reduce using rule 56 (value -> ID .)
-    MINUS           reduce using rule 56 (value -> ID .)
-    TIMES           reduce using rule 56 (value -> ID .)
-    DIVIDE          reduce using rule 56 (value -> ID .)
-    MODULE          reduce using rule 56 (value -> ID .)
+    LESS_THAN       reduce using rule 45 (comparison_value -> value comparison value .)
+    GREATER_THAN    reduce using rule 45 (comparison_value -> value comparison value .)
+    LESS_THAN_EQUAL reduce using rule 45 (comparison_value -> value comparison value .)
+    GREATER_THAN_EQUAL reduce using rule 45 (comparison_value -> value comparison value .)
+    NOT_EQUAL       reduce using rule 45 (comparison_value -> value comparison value .)
+    EQUAL_EQUAL     reduce using rule 45 (comparison_value -> value comparison value .)
+    SEMICOLON       reduce using rule 45 (comparison_value -> value comparison value .)
+    RPAREN          reduce using rule 45 (comparison_value -> value comparison value .)
 
 
 state 56
 
-    (30) statement -> ID EQUAL aritmetic_operation_production .
+    (31) statement -> LET ID EQUAL . value
+    (36) statement -> LET ID EQUAL . data_structures
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (39) data_structures -> . tuple
+    (40) tuple -> . LPAREN arguments_production RPAREN
 
-    SEMICOLON       reduce using rule 30 (statement -> ID EQUAL aritmetic_operation_production .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
+    LPAREN          shift and go to state 68
 
+    value                          shift and go to state 73
+    data_structures                shift and go to state 74
+    tuple                          shift and go to state 67
 
 state 57
 
-    (37) aritmetic_operation_production -> aritmetic_operation .
-
-    SEMICOLON       reduce using rule 37 (aritmetic_operation_production -> aritmetic_operation .)
-
-
-state 58
-
-    (38) aritmetic_operation_production -> value . aritmetic_operator aritmetic_operation
-    (39) aritmetic_operation -> value . aritmetic_operator value
-    (40) aritmetic_operator -> . PLUS
-    (41) aritmetic_operator -> . MINUS
-    (42) aritmetic_operator -> . TIMES
-    (43) aritmetic_operator -> . DIVIDE
-    (44) aritmetic_operator -> . MODULE
-
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 70
-    TIMES           shift and go to state 71
-    DIVIDE          shift and go to state 72
-    MODULE          shift and go to state 73
-
-    aritmetic_operator             shift and go to state 68
-
-state 59
-
-    (26) statement -> LET ID EQUAL . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
-
-    value                          shift and go to state 74
-
-state 60
-
-    (27) statement -> LET MUT ID . EQUAL value
+    (32) statement -> LET MUT ID . EQUAL value
+    (38) statement -> LET MUT ID . EQUAL data_structures
 
     EQUAL           shift and go to state 75
 
 
+state 58
+
+    (25) function -> ID LPAREN RPAREN .
+
+    SEMICOLON       reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    LESS_THAN       reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    GREATER_THAN    reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    NOT_EQUAL       reduce using rule 25 (function -> ID LPAREN RPAREN .)
+    EQUAL_EQUAL     reduce using rule 25 (function -> ID LPAREN RPAREN .)
+
+
+state 59
+
+    (26) function -> ID LPAREN value . RPAREN
+    (41) arguments_production -> value .
+    (42) arguments_production -> value . COMMA arguments_production
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 76
+    COMMA           shift and go to state 77
+
+  ! RPAREN          [ reduce using rule 41 (arguments_production -> value .) ]
+
+
+state 60
+
+    (27) function -> ID LPAREN arguments_production . RPAREN
+
+    RPAREN          shift and go to state 78
+
+
 state 61
 
-    (28) statement -> CONST ID EQUAL . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (28) function -> ID DOT ID . LPAREN RPAREN
+    (29) function -> ID DOT ID . LPAREN value RPAREN
+    (30) function -> ID DOT ID . LPAREN arguments_production RPAREN
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    LPAREN          shift and go to state 79
 
-    value                          shift and go to state 76
 
 state 62
 
-    (3) if_statement -> IF LPAREN comparison_value RPAREN . block_function
-    (4) if_statement -> IF LPAREN comparison_value RPAREN . block_function else_if_statement
-    (10) block_function -> . LBRACE RBRACE
-    (11) block_function -> . LBRACE code_block RBRACE
+    (34) statement -> ID EQUAL ID .
+    (66) value -> ID .
 
-    LBRACE          shift and go to state 78
+    SEMICOLON       reduce using rule 34 (statement -> ID EQUAL ID .)
+    PLUS            reduce using rule 66 (value -> ID .)
+    MINUS_OPERATOR  reduce using rule 66 (value -> ID .)
+    TIMES           reduce using rule 66 (value -> ID .)
+    DIVIDE          reduce using rule 66 (value -> ID .)
+    MODULE          reduce using rule 66 (value -> ID .)
 
-    block_function                 shift and go to state 77
 
 state 63
 
-    (5) if_statement -> IF function comparison value . block_function
-    (6) if_statement -> IF function comparison value . block_function else_if_statement
-    (10) block_function -> . LBRACE RBRACE
-    (11) block_function -> . LBRACE code_block RBRACE
+    (35) statement -> ID EQUAL aritmetic_operation_production .
 
-    LBRACE          shift and go to state 78
+    SEMICOLON       reduce using rule 35 (statement -> ID EQUAL aritmetic_operation_production .)
 
-    block_function                 shift and go to state 79
 
 state 64
 
-    (21) function -> ID LPAREN value RPAREN .
+    (37) statement -> ID EQUAL data_structures .
 
-    SEMICOLON       reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    LESS_THAN       reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    GREATER_THAN    reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    NOT_EQUAL       reduce using rule 21 (function -> ID LPAREN value RPAREN .)
-    EQUAL_EQUAL     reduce using rule 21 (function -> ID LPAREN value RPAREN .)
+    SEMICOLON       reduce using rule 37 (statement -> ID EQUAL data_structures .)
 
 
 state 65
 
-    (32) arguments_production -> value COMMA . arguments_production
-    (31) arguments_production -> . value
-    (32) arguments_production -> . value COMMA arguments_production
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (47) aritmetic_operation_production -> aritmetic_operation .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    SEMICOLON       reduce using rule 47 (aritmetic_operation_production -> aritmetic_operation .)
 
-    value                          shift and go to state 80
-    arguments_production           shift and go to state 81
 
 state 66
 
-    (22) function -> ID LPAREN arguments_production RPAREN .
+    (48) aritmetic_operation_production -> value . aritmetic_operator aritmetic_operation
+    (49) aritmetic_operation -> value . aritmetic_operator value
+    (50) aritmetic_operator -> . PLUS
+    (51) aritmetic_operator -> . MINUS_OPERATOR
+    (52) aritmetic_operator -> . TIMES
+    (53) aritmetic_operator -> . DIVIDE
+    (54) aritmetic_operator -> . MODULE
 
-    SEMICOLON       reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    LESS_THAN       reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    GREATER_THAN    reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    NOT_EQUAL       reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
-    EQUAL_EQUAL     reduce using rule 22 (function -> ID LPAREN arguments_production RPAREN .)
+    PLUS            shift and go to state 81
+    MINUS_OPERATOR  shift and go to state 82
+    TIMES           shift and go to state 83
+    DIVIDE          shift and go to state 84
+    MODULE          shift and go to state 85
 
+    aritmetic_operator             shift and go to state 80
 
 state 67
 
-    (23) function -> ID DOT ID LPAREN . RPAREN
-    (24) function -> ID DOT ID LPAREN . value RPAREN
-    (25) function -> ID DOT ID LPAREN . arguments_production RPAREN
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-    (31) arguments_production -> . value
-    (32) arguments_production -> . value COMMA arguments_production
+    (39) data_structures -> tuple .
 
-    RPAREN          shift and go to state 82
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    SEMICOLON       reduce using rule 39 (data_structures -> tuple .)
 
-    value                          shift and go to state 83
-    arguments_production           shift and go to state 84
 
 state 68
 
-    (38) aritmetic_operation_production -> value aritmetic_operator . aritmetic_operation
-    (39) aritmetic_operation -> value aritmetic_operator . value
-    (39) aritmetic_operation -> . value aritmetic_operator value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (40) tuple -> LPAREN . arguments_production RPAREN
+    (41) arguments_production -> . value
+    (42) arguments_production -> . value COMMA arguments_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
-    value                          shift and go to state 85
-    aritmetic_operation            shift and go to state 86
+    arguments_production           shift and go to state 86
+    value                          shift and go to state 87
 
 state 69
 
-    (40) aritmetic_operator -> PLUS .
+    (33) statement -> CONST ID EQUAL . value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    INT             reduce using rule 40 (aritmetic_operator -> PLUS .)
-    FLOAT           reduce using rule 40 (aritmetic_operator -> PLUS .)
-    STRING          reduce using rule 40 (aritmetic_operator -> PLUS .)
-    CHAR            reduce using rule 40 (aritmetic_operator -> PLUS .)
-    BOOL            reduce using rule 40 (aritmetic_operator -> PLUS .)
-    ID              reduce using rule 40 (aritmetic_operator -> PLUS .)
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    value                          shift and go to state 88
 
 state 70
 
-    (41) aritmetic_operator -> MINUS .
+    (6) if_statement -> IF LPAREN comparison_value RPAREN . block_function
+    (7) if_statement -> IF LPAREN comparison_value RPAREN . block_function else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
 
-    INT             reduce using rule 41 (aritmetic_operator -> MINUS .)
-    FLOAT           reduce using rule 41 (aritmetic_operator -> MINUS .)
-    STRING          reduce using rule 41 (aritmetic_operator -> MINUS .)
-    CHAR            reduce using rule 41 (aritmetic_operator -> MINUS .)
-    BOOL            reduce using rule 41 (aritmetic_operator -> MINUS .)
-    ID              reduce using rule 41 (aritmetic_operator -> MINUS .)
+    LBRACE          shift and go to state 90
 
+    block_function                 shift and go to state 89
 
 state 71
 
-    (42) aritmetic_operator -> TIMES .
+    (8) if_statement -> IF function comparison value . block_function
+    (9) if_statement -> IF function comparison value . block_function else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
 
-    INT             reduce using rule 42 (aritmetic_operator -> TIMES .)
-    FLOAT           reduce using rule 42 (aritmetic_operator -> TIMES .)
-    STRING          reduce using rule 42 (aritmetic_operator -> TIMES .)
-    CHAR            reduce using rule 42 (aritmetic_operator -> TIMES .)
-    BOOL            reduce using rule 42 (aritmetic_operator -> TIMES .)
-    ID              reduce using rule 42 (aritmetic_operator -> TIMES .)
+    LBRACE          shift and go to state 90
 
+    block_function                 shift and go to state 91
 
 state 72
 
-    (43) aritmetic_operator -> DIVIDE .
+    (10) if_statement -> IF LET EQUAL value . block_function
+    (11) if_statement -> IF LET EQUAL value . else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
+    (12) else_if_statement -> . ELSE block_function
+    (13) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
 
-    INT             reduce using rule 43 (aritmetic_operator -> DIVIDE .)
-    FLOAT           reduce using rule 43 (aritmetic_operator -> DIVIDE .)
-    STRING          reduce using rule 43 (aritmetic_operator -> DIVIDE .)
-    CHAR            reduce using rule 43 (aritmetic_operator -> DIVIDE .)
-    BOOL            reduce using rule 43 (aritmetic_operator -> DIVIDE .)
-    ID              reduce using rule 43 (aritmetic_operator -> DIVIDE .)
+    LBRACE          shift and go to state 90
+    ELSE            shift and go to state 94
 
+    block_function                 shift and go to state 92
+    else_if_statement              shift and go to state 93
 
 state 73
 
-    (44) aritmetic_operator -> MODULE .
+    (31) statement -> LET ID EQUAL value .
 
-    INT             reduce using rule 44 (aritmetic_operator -> MODULE .)
-    FLOAT           reduce using rule 44 (aritmetic_operator -> MODULE .)
-    STRING          reduce using rule 44 (aritmetic_operator -> MODULE .)
-    CHAR            reduce using rule 44 (aritmetic_operator -> MODULE .)
-    BOOL            reduce using rule 44 (aritmetic_operator -> MODULE .)
-    ID              reduce using rule 44 (aritmetic_operator -> MODULE .)
+    SEMICOLON       reduce using rule 31 (statement -> LET ID EQUAL value .)
 
 
 state 74
 
-    (26) statement -> LET ID EQUAL value .
+    (36) statement -> LET ID EQUAL data_structures .
 
-    SEMICOLON       reduce using rule 26 (statement -> LET ID EQUAL value .)
+    SEMICOLON       reduce using rule 36 (statement -> LET ID EQUAL data_structures .)
 
 
 state 75
 
-    (27) statement -> LET MUT ID EQUAL . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (32) statement -> LET MUT ID EQUAL . value
+    (38) statement -> LET MUT ID EQUAL . data_structures
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (39) data_structures -> . tuple
+    (40) tuple -> . LPAREN arguments_production RPAREN
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
+    LPAREN          shift and go to state 68
 
-    value                          shift and go to state 87
+    value                          shift and go to state 95
+    data_structures                shift and go to state 96
+    tuple                          shift and go to state 67
 
 state 76
 
-    (28) statement -> CONST ID EQUAL value .
+    (26) function -> ID LPAREN value RPAREN .
 
-    SEMICOLON       reduce using rule 28 (statement -> CONST ID EQUAL value .)
+    SEMICOLON       reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    LESS_THAN       reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    GREATER_THAN    reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    NOT_EQUAL       reduce using rule 26 (function -> ID LPAREN value RPAREN .)
+    EQUAL_EQUAL     reduce using rule 26 (function -> ID LPAREN value RPAREN .)
 
 
 state 77
 
-    (3) if_statement -> IF LPAREN comparison_value RPAREN block_function .
-    (4) if_statement -> IF LPAREN comparison_value RPAREN block_function . else_if_statement
-    (7) else_if_statement -> . ELSE block_function
-    (8) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+    (42) arguments_production -> value COMMA . arguments_production
+    (41) arguments_production -> . value
+    (42) arguments_production -> . value COMMA arguments_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    $end            reduce using rule 3 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
-    ELSE            shift and go to state 89
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
-    else_if_statement              shift and go to state 88
+    value                          shift and go to state 87
+    arguments_production           shift and go to state 97
 
 state 78
 
-    (10) block_function -> LBRACE . RBRACE
-    (11) block_function -> LBRACE . code_block RBRACE
-    (12) code_block -> . code_line
-    (13) code_block -> . code_line code_block
-    (14) code_line -> . code SEMICOLON
-    (15) code -> . function
-    (16) code -> . comparison_production
-    (17) code -> . value
-    (18) code -> . logic_value
-    (19) code -> . statement
-    (20) function -> . ID LPAREN RPAREN
-    (21) function -> . ID LPAREN value RPAREN
-    (22) function -> . ID LPAREN arguments_production RPAREN
-    (23) function -> . ID DOT ID LPAREN RPAREN
-    (24) function -> . ID DOT ID LPAREN value RPAREN
-    (25) function -> . ID DOT ID LPAREN arguments_production RPAREN
-    (33) comparison_production -> . comparison_value
-    (34) comparison_production -> . comparison_value comparison comparison_production
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
-    (36) logic_value -> . value logic_operator value
-    (26) statement -> . LET ID EQUAL value
-    (27) statement -> . LET MUT ID EQUAL value
-    (28) statement -> . CONST ID EQUAL value
-    (29) statement -> . ID EQUAL ID
-    (30) statement -> . ID EQUAL aritmetic_operation_production
-    (35) comparison_value -> . value comparison value
+    (27) function -> ID LPAREN arguments_production RPAREN .
 
-    RBRACE          shift and go to state 90
-    ID              shift and go to state 13
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    LET             shift and go to state 19
-    CONST           shift and go to state 20
+    SEMICOLON       reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    LESS_THAN       reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    GREATER_THAN    reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    NOT_EQUAL       reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
+    EQUAL_EQUAL     reduce using rule 27 (function -> ID LPAREN arguments_production RPAREN .)
 
-    code_block                     shift and go to state 91
-    code_line                      shift and go to state 4
-    code                           shift and go to state 9
-    function                       shift and go to state 7
-    comparison_production          shift and go to state 10
-    value                          shift and go to state 8
-    logic_value                    shift and go to state 11
-    statement                      shift and go to state 12
-    comparison_value               shift and go to state 6
 
 state 79
 
-    (5) if_statement -> IF function comparison value block_function .
-    (6) if_statement -> IF function comparison value block_function . else_if_statement
-    (7) else_if_statement -> . ELSE block_function
-    (8) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+    (28) function -> ID DOT ID LPAREN . RPAREN
+    (29) function -> ID DOT ID LPAREN . value RPAREN
+    (30) function -> ID DOT ID LPAREN . arguments_production RPAREN
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (41) arguments_production -> . value
+    (42) arguments_production -> . value COMMA arguments_production
 
-    $end            reduce using rule 5 (if_statement -> IF function comparison value block_function .)
-    ELSE            shift and go to state 89
+    RPAREN          shift and go to state 98
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
-    else_if_statement              shift and go to state 92
+    value                          shift and go to state 99
+    arguments_production           shift and go to state 100
 
 state 80
 
-    (31) arguments_production -> value .
-    (32) arguments_production -> value . COMMA arguments_production
+    (48) aritmetic_operation_production -> value aritmetic_operator . aritmetic_operation
+    (49) aritmetic_operation -> value aritmetic_operator . value
+    (49) aritmetic_operation -> . value aritmetic_operator value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
 
-    RPAREN          reduce using rule 31 (arguments_production -> value .)
-    COMMA           shift and go to state 65
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
 
+    value                          shift and go to state 101
+    aritmetic_operation            shift and go to state 102
 
 state 81
 
-    (32) arguments_production -> value COMMA arguments_production .
+    (50) aritmetic_operator -> PLUS .
 
-    RPAREN          reduce using rule 32 (arguments_production -> value COMMA arguments_production .)
+    INT             reduce using rule 50 (aritmetic_operator -> PLUS .)
+    FLOAT           reduce using rule 50 (aritmetic_operator -> PLUS .)
+    STRING          reduce using rule 50 (aritmetic_operator -> PLUS .)
+    CHAR            reduce using rule 50 (aritmetic_operator -> PLUS .)
+    BOOL            reduce using rule 50 (aritmetic_operator -> PLUS .)
+    ID              reduce using rule 50 (aritmetic_operator -> PLUS .)
 
 
 state 82
 
-    (23) function -> ID DOT ID LPAREN RPAREN .
+    (51) aritmetic_operator -> MINUS_OPERATOR .
 
-    SEMICOLON       reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    LESS_THAN       reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    GREATER_THAN    reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    NOT_EQUAL       reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
-    EQUAL_EQUAL     reduce using rule 23 (function -> ID DOT ID LPAREN RPAREN .)
+    INT             reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
+    FLOAT           reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
+    STRING          reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
+    CHAR            reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
+    BOOL            reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
+    ID              reduce using rule 51 (aritmetic_operator -> MINUS_OPERATOR .)
 
 
 state 83
 
-    (24) function -> ID DOT ID LPAREN value . RPAREN
-    (31) arguments_production -> value .
-    (32) arguments_production -> value . COMMA arguments_production
+    (52) aritmetic_operator -> TIMES .
 
-  ! shift/reduce conflict for RPAREN resolved as shift
-    RPAREN          shift and go to state 93
-    COMMA           shift and go to state 65
-
-  ! RPAREN          [ reduce using rule 31 (arguments_production -> value .) ]
+    INT             reduce using rule 52 (aritmetic_operator -> TIMES .)
+    FLOAT           reduce using rule 52 (aritmetic_operator -> TIMES .)
+    STRING          reduce using rule 52 (aritmetic_operator -> TIMES .)
+    CHAR            reduce using rule 52 (aritmetic_operator -> TIMES .)
+    BOOL            reduce using rule 52 (aritmetic_operator -> TIMES .)
+    ID              reduce using rule 52 (aritmetic_operator -> TIMES .)
 
 
 state 84
 
-    (25) function -> ID DOT ID LPAREN arguments_production . RPAREN
+    (53) aritmetic_operator -> DIVIDE .
 
-    RPAREN          shift and go to state 94
+    INT             reduce using rule 53 (aritmetic_operator -> DIVIDE .)
+    FLOAT           reduce using rule 53 (aritmetic_operator -> DIVIDE .)
+    STRING          reduce using rule 53 (aritmetic_operator -> DIVIDE .)
+    CHAR            reduce using rule 53 (aritmetic_operator -> DIVIDE .)
+    BOOL            reduce using rule 53 (aritmetic_operator -> DIVIDE .)
+    ID              reduce using rule 53 (aritmetic_operator -> DIVIDE .)
 
 
 state 85
 
-    (39) aritmetic_operation -> value aritmetic_operator value .
-    (39) aritmetic_operation -> value . aritmetic_operator value
-    (40) aritmetic_operator -> . PLUS
-    (41) aritmetic_operator -> . MINUS
-    (42) aritmetic_operator -> . TIMES
-    (43) aritmetic_operator -> . DIVIDE
-    (44) aritmetic_operator -> . MODULE
+    (54) aritmetic_operator -> MODULE .
 
-    SEMICOLON       reduce using rule 39 (aritmetic_operation -> value aritmetic_operator value .)
-    PLUS            shift and go to state 69
-    MINUS           shift and go to state 70
-    TIMES           shift and go to state 71
-    DIVIDE          shift and go to state 72
-    MODULE          shift and go to state 73
+    INT             reduce using rule 54 (aritmetic_operator -> MODULE .)
+    FLOAT           reduce using rule 54 (aritmetic_operator -> MODULE .)
+    STRING          reduce using rule 54 (aritmetic_operator -> MODULE .)
+    CHAR            reduce using rule 54 (aritmetic_operator -> MODULE .)
+    BOOL            reduce using rule 54 (aritmetic_operator -> MODULE .)
+    ID              reduce using rule 54 (aritmetic_operator -> MODULE .)
 
-    aritmetic_operator             shift and go to state 95
 
 state 86
 
-    (38) aritmetic_operation_production -> value aritmetic_operator aritmetic_operation .
+    (40) tuple -> LPAREN arguments_production . RPAREN
 
-    SEMICOLON       reduce using rule 38 (aritmetic_operation_production -> value aritmetic_operator aritmetic_operation .)
+    RPAREN          shift and go to state 103
 
 
 state 87
 
-    (27) statement -> LET MUT ID EQUAL value .
+    (41) arguments_production -> value .
+    (42) arguments_production -> value . COMMA arguments_production
 
-    SEMICOLON       reduce using rule 27 (statement -> LET MUT ID EQUAL value .)
+    RPAREN          reduce using rule 41 (arguments_production -> value .)
+    COMMA           shift and go to state 77
 
 
 state 88
 
-    (4) if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .
+    (33) statement -> CONST ID EQUAL value .
 
-    $end            reduce using rule 4 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    SEMICOLON       reduce using rule 33 (statement -> CONST ID EQUAL value .)
 
 
 state 89
 
-    (7) else_if_statement -> ELSE . block_function
-    (8) else_if_statement -> ELSE . IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> ELSE . IF function comparison value block_function else_if_statement
-    (10) block_function -> . LBRACE RBRACE
-    (11) block_function -> . LBRACE code_block RBRACE
+    (6) if_statement -> IF LPAREN comparison_value RPAREN block_function .
+    (7) if_statement -> IF LPAREN comparison_value RPAREN block_function . else_if_statement
+    (12) else_if_statement -> . ELSE block_function
+    (13) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
 
-    IF              shift and go to state 97
-    LBRACE          shift and go to state 78
+    IF              reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    ID              reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    INT             reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    FLOAT           reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    STRING          reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    CHAR            reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    BOOL            reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    LET             reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    CONST           reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    $end            reduce using rule 6 (if_statement -> IF LPAREN comparison_value RPAREN block_function .)
+    ELSE            shift and go to state 94
 
-    block_function                 shift and go to state 96
+    else_if_statement              shift and go to state 104
 
 state 90
 
-    (10) block_function -> LBRACE RBRACE .
+    (15) block_function -> LBRACE . RBRACE
+    (16) block_function -> LBRACE . code_block RBRACE
+    (17) code_block -> . code_line
+    (18) code_block -> . code_line code_block
+    (19) code_line -> . code SEMICOLON
+    (20) code -> . function
+    (21) code -> . comparison_production
+    (22) code -> . value
+    (23) code -> . logic_value
+    (24) code -> . statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (43) comparison_production -> . comparison_value
+    (44) comparison_production -> . comparison_value comparison comparison_production
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+    (46) logic_value -> . value logic_operator value
+    (31) statement -> . LET ID EQUAL value
+    (32) statement -> . LET MUT ID EQUAL value
+    (33) statement -> . CONST ID EQUAL value
+    (34) statement -> . ID EQUAL ID
+    (35) statement -> . ID EQUAL aritmetic_operation_production
+    (36) statement -> . LET ID EQUAL data_structures
+    (37) statement -> . ID EQUAL data_structures
+    (38) statement -> . LET MUT ID EQUAL data_structures
+    (45) comparison_value -> . value comparison value
 
-    ELSE            reduce using rule 10 (block_function -> LBRACE RBRACE .)
-    $end            reduce using rule 10 (block_function -> LBRACE RBRACE .)
+    RBRACE          shift and go to state 105
+    ID              shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    LET             shift and go to state 12
+    CONST           shift and go to state 22
 
+    code_block                     shift and go to state 106
+    code_line                      shift and go to state 5
+    code                           shift and go to state 7
+    function                       shift and go to state 10
+    comparison_production          shift and go to state 13
+    value                          shift and go to state 11
+    logic_value                    shift and go to state 14
+    statement                      shift and go to state 15
+    comparison_value               shift and go to state 9
 
 state 91
 
-    (11) block_function -> LBRACE code_block . RBRACE
+    (8) if_statement -> IF function comparison value block_function .
+    (9) if_statement -> IF function comparison value block_function . else_if_statement
+    (12) else_if_statement -> . ELSE block_function
+    (13) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
 
-    RBRACE          shift and go to state 98
+    IF              reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    ID              reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    INT             reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    FLOAT           reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    STRING          reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    CHAR            reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    BOOL            reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    LET             reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    CONST           reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    $end            reduce using rule 8 (if_statement -> IF function comparison value block_function .)
+    ELSE            shift and go to state 94
 
+    else_if_statement              shift and go to state 107
 
 state 92
 
-    (6) if_statement -> IF function comparison value block_function else_if_statement .
+    (10) if_statement -> IF LET EQUAL value block_function .
 
-    $end            reduce using rule 6 (if_statement -> IF function comparison value block_function else_if_statement .)
+    IF              reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    ID              reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    INT             reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    FLOAT           reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    STRING          reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    CHAR            reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    BOOL            reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    LET             reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    CONST           reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
+    $end            reduce using rule 10 (if_statement -> IF LET EQUAL value block_function .)
 
 
 state 93
 
-    (24) function -> ID DOT ID LPAREN value RPAREN .
+    (11) if_statement -> IF LET EQUAL value else_if_statement .
 
-    SEMICOLON       reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    LESS_THAN       reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    GREATER_THAN    reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    NOT_EQUAL       reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
-    EQUAL_EQUAL     reduce using rule 24 (function -> ID DOT ID LPAREN value RPAREN .)
+    IF              reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    ID              reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    INT             reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    FLOAT           reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    STRING          reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    CHAR            reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    BOOL            reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    LET             reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    CONST           reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
+    $end            reduce using rule 11 (if_statement -> IF LET EQUAL value else_if_statement .)
 
 
 state 94
 
-    (25) function -> ID DOT ID LPAREN arguments_production RPAREN .
+    (12) else_if_statement -> ELSE . block_function
+    (13) else_if_statement -> ELSE . IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> ELSE . IF function comparison value block_function else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
 
-    SEMICOLON       reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    LESS_THAN       reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    GREATER_THAN    reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    LESS_THAN_EQUAL reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    GREATER_THAN_EQUAL reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    NOT_EQUAL       reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
-    EQUAL_EQUAL     reduce using rule 25 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    IF              shift and go to state 109
+    LBRACE          shift and go to state 90
 
+    block_function                 shift and go to state 108
 
 state 95
 
-    (39) aritmetic_operation -> value aritmetic_operator . value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (32) statement -> LET MUT ID EQUAL value .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    SEMICOLON       reduce using rule 32 (statement -> LET MUT ID EQUAL value .)
 
-    value                          shift and go to state 99
 
 state 96
 
-    (7) else_if_statement -> ELSE block_function .
+    (38) statement -> LET MUT ID EQUAL data_structures .
 
-    $end            reduce using rule 7 (else_if_statement -> ELSE block_function .)
+    SEMICOLON       reduce using rule 38 (statement -> LET MUT ID EQUAL data_structures .)
 
 
 state 97
 
-    (8) else_if_statement -> ELSE IF . LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> ELSE IF . function comparison value block_function else_if_statement
-    (20) function -> . ID LPAREN RPAREN
-    (21) function -> . ID LPAREN value RPAREN
-    (22) function -> . ID LPAREN arguments_production RPAREN
-    (23) function -> . ID DOT ID LPAREN RPAREN
-    (24) function -> . ID DOT ID LPAREN value RPAREN
-    (25) function -> . ID DOT ID LPAREN arguments_production RPAREN
+    (42) arguments_production -> value COMMA arguments_production .
 
-    LPAREN          shift and go to state 100
-    ID              shift and go to state 24
+    RPAREN          reduce using rule 42 (arguments_production -> value COMMA arguments_production .)
 
-    function                       shift and go to state 101
 
 state 98
 
-    (11) block_function -> LBRACE code_block RBRACE .
+    (28) function -> ID DOT ID LPAREN RPAREN .
 
-    ELSE            reduce using rule 11 (block_function -> LBRACE code_block RBRACE .)
-    $end            reduce using rule 11 (block_function -> LBRACE code_block RBRACE .)
+    SEMICOLON       reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    LESS_THAN       reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    GREATER_THAN    reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    NOT_EQUAL       reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
+    EQUAL_EQUAL     reduce using rule 28 (function -> ID DOT ID LPAREN RPAREN .)
 
 
 state 99
 
-    (39) aritmetic_operation -> value aritmetic_operator value .
+    (29) function -> ID DOT ID LPAREN value . RPAREN
+    (41) arguments_production -> value .
+    (42) arguments_production -> value . COMMA arguments_production
 
-    SEMICOLON       reduce using rule 39 (aritmetic_operation -> value aritmetic_operator value .)
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 110
+    COMMA           shift and go to state 77
+
+  ! RPAREN          [ reduce using rule 41 (arguments_production -> value .) ]
 
 
 state 100
 
-    (8) else_if_statement -> ELSE IF LPAREN . comparison_value RPAREN block_function else_if_statement
-    (35) comparison_value -> . value comparison value
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (30) function -> ID DOT ID LPAREN arguments_production . RPAREN
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    RPAREN          shift and go to state 111
 
-    comparison_value               shift and go to state 102
-    value                          shift and go to state 45
 
 state 101
 
-    (9) else_if_statement -> ELSE IF function . comparison value block_function else_if_statement
-    (45) comparison -> . LESS_THAN
-    (46) comparison -> . GREATER_THAN
-    (47) comparison -> . LESS_THAN_EQUAL
-    (48) comparison -> . GREATER_THAN_EQUAL
-    (49) comparison -> . NOT_EQUAL
-    (50) comparison -> . EQUAL_EQUAL
+    (49) aritmetic_operation -> value aritmetic_operator value .
+    (49) aritmetic_operation -> value . aritmetic_operator value
+    (50) aritmetic_operator -> . PLUS
+    (51) aritmetic_operator -> . MINUS_OPERATOR
+    (52) aritmetic_operator -> . TIMES
+    (53) aritmetic_operator -> . DIVIDE
+    (54) aritmetic_operator -> . MODULE
 
-    LESS_THAN       shift and go to state 26
-    GREATER_THAN    shift and go to state 27
-    LESS_THAN_EQUAL shift and go to state 28
-    GREATER_THAN_EQUAL shift and go to state 29
-    NOT_EQUAL       shift and go to state 30
-    EQUAL_EQUAL     shift and go to state 31
+    SEMICOLON       reduce using rule 49 (aritmetic_operation -> value aritmetic_operator value .)
+    PLUS            shift and go to state 81
+    MINUS_OPERATOR  shift and go to state 82
+    TIMES           shift and go to state 83
+    DIVIDE          shift and go to state 84
+    MODULE          shift and go to state 85
 
-    comparison                     shift and go to state 103
+    aritmetic_operator             shift and go to state 112
 
 state 102
 
-    (8) else_if_statement -> ELSE IF LPAREN comparison_value . RPAREN block_function else_if_statement
+    (48) aritmetic_operation_production -> value aritmetic_operator aritmetic_operation .
 
-    RPAREN          shift and go to state 104
+    SEMICOLON       reduce using rule 48 (aritmetic_operation_production -> value aritmetic_operator aritmetic_operation .)
 
 
 state 103
 
-    (9) else_if_statement -> ELSE IF function comparison . value block_function else_if_statement
-    (51) value -> . INT
-    (52) value -> . FLOAT
-    (53) value -> . STRING
-    (54) value -> . CHAR
-    (55) value -> . BOOL
-    (56) value -> . ID
+    (40) tuple -> LPAREN arguments_production RPAREN .
 
-    INT             shift and go to state 14
-    FLOAT           shift and go to state 15
-    STRING          shift and go to state 16
-    CHAR            shift and go to state 17
-    BOOL            shift and go to state 18
-    ID              shift and go to state 46
+    SEMICOLON       reduce using rule 40 (tuple -> LPAREN arguments_production RPAREN .)
 
-    value                          shift and go to state 105
 
 state 104
 
-    (8) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN . block_function else_if_statement
-    (10) block_function -> . LBRACE RBRACE
-    (11) block_function -> . LBRACE code_block RBRACE
+    (7) if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .
 
-    LBRACE          shift and go to state 78
+    IF              reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    ID              reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    INT             reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    FLOAT           reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    STRING          reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    CHAR            reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    BOOL            reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    LET             reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    CONST           reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    $end            reduce using rule 7 (if_statement -> IF LPAREN comparison_value RPAREN block_function else_if_statement .)
 
-    block_function                 shift and go to state 106
 
 state 105
 
-    (9) else_if_statement -> ELSE IF function comparison value . block_function else_if_statement
-    (10) block_function -> . LBRACE RBRACE
-    (11) block_function -> . LBRACE code_block RBRACE
+    (15) block_function -> LBRACE RBRACE .
 
-    LBRACE          shift and go to state 78
+    ELSE            reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    IF              reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    ID              reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    INT             reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    FLOAT           reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    STRING          reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    CHAR            reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    BOOL            reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    LET             reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    CONST           reduce using rule 15 (block_function -> LBRACE RBRACE .)
+    $end            reduce using rule 15 (block_function -> LBRACE RBRACE .)
 
-    block_function                 shift and go to state 107
 
 state 106
 
-    (8) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function . else_if_statement
-    (7) else_if_statement -> . ELSE block_function
-    (8) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+    (16) block_function -> LBRACE code_block . RBRACE
 
-    ELSE            shift and go to state 89
+    RBRACE          shift and go to state 113
 
-    else_if_statement              shift and go to state 108
 
 state 107
 
-    (9) else_if_statement -> ELSE IF function comparison value block_function . else_if_statement
-    (7) else_if_statement -> . ELSE block_function
-    (8) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
-    (9) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+    (9) if_statement -> IF function comparison value block_function else_if_statement .
 
-    ELSE            shift and go to state 89
+    IF              reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    ID              reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    INT             reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    FLOAT           reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    STRING          reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    CHAR            reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    BOOL            reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    LET             reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    CONST           reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
+    $end            reduce using rule 9 (if_statement -> IF function comparison value block_function else_if_statement .)
 
-    else_if_statement              shift and go to state 109
 
 state 108
 
-    (8) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .
+    (12) else_if_statement -> ELSE block_function .
 
-    $end            reduce using rule 8 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    IF              reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    ID              reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    INT             reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    FLOAT           reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    STRING          reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    CHAR            reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    BOOL            reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    LET             reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    CONST           reduce using rule 12 (else_if_statement -> ELSE block_function .)
+    $end            reduce using rule 12 (else_if_statement -> ELSE block_function .)
 
 
 state 109
 
-    (9) else_if_statement -> ELSE IF function comparison value block_function else_if_statement .
+    (13) else_if_statement -> ELSE IF . LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> ELSE IF . function comparison value block_function else_if_statement
+    (25) function -> . ID LPAREN RPAREN
+    (26) function -> . ID LPAREN value RPAREN
+    (27) function -> . ID LPAREN arguments_production RPAREN
+    (28) function -> . ID DOT ID LPAREN RPAREN
+    (29) function -> . ID DOT ID LPAREN value RPAREN
+    (30) function -> . ID DOT ID LPAREN arguments_production RPAREN
 
-    $end            reduce using rule 9 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    LPAREN          shift and go to state 114
+    ID              shift and go to state 29
+
+    function                       shift and go to state 115
+
+state 110
+
+    (29) function -> ID DOT ID LPAREN value RPAREN .
+
+    SEMICOLON       reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    LESS_THAN       reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    GREATER_THAN    reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    NOT_EQUAL       reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+    EQUAL_EQUAL     reduce using rule 29 (function -> ID DOT ID LPAREN value RPAREN .)
+
+
+state 111
+
+    (30) function -> ID DOT ID LPAREN arguments_production RPAREN .
+
+    SEMICOLON       reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    LESS_THAN       reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    GREATER_THAN    reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    LESS_THAN_EQUAL reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    GREATER_THAN_EQUAL reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    NOT_EQUAL       reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+    EQUAL_EQUAL     reduce using rule 30 (function -> ID DOT ID LPAREN arguments_production RPAREN .)
+
+
+state 112
+
+    (49) aritmetic_operation -> value aritmetic_operator . value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
+
+    value                          shift and go to state 116
+
+state 113
+
+    (16) block_function -> LBRACE code_block RBRACE .
+
+    ELSE            reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    IF              reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    ID              reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    INT             reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    FLOAT           reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    STRING          reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    CHAR            reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    BOOL            reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    LET             reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    CONST           reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+    $end            reduce using rule 16 (block_function -> LBRACE code_block RBRACE .)
+
+
+state 114
+
+    (13) else_if_statement -> ELSE IF LPAREN . comparison_value RPAREN block_function else_if_statement
+    (45) comparison_value -> . value comparison value
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
+
+    comparison_value               shift and go to state 117
+    value                          shift and go to state 49
+
+state 115
+
+    (14) else_if_statement -> ELSE IF function . comparison value block_function else_if_statement
+    (55) comparison -> . LESS_THAN
+    (56) comparison -> . GREATER_THAN
+    (57) comparison -> . LESS_THAN_EQUAL
+    (58) comparison -> . GREATER_THAN_EQUAL
+    (59) comparison -> . NOT_EQUAL
+    (60) comparison -> . EQUAL_EQUAL
+
+    LESS_THAN       shift and go to state 31
+    GREATER_THAN    shift and go to state 32
+    LESS_THAN_EQUAL shift and go to state 33
+    GREATER_THAN_EQUAL shift and go to state 34
+    NOT_EQUAL       shift and go to state 35
+    EQUAL_EQUAL     shift and go to state 36
+
+    comparison                     shift and go to state 118
+
+state 116
+
+    (49) aritmetic_operation -> value aritmetic_operator value .
+
+    SEMICOLON       reduce using rule 49 (aritmetic_operation -> value aritmetic_operator value .)
+
+
+state 117
+
+    (13) else_if_statement -> ELSE IF LPAREN comparison_value . RPAREN block_function else_if_statement
+
+    RPAREN          shift and go to state 119
+
+
+state 118
+
+    (14) else_if_statement -> ELSE IF function comparison . value block_function else_if_statement
+    (61) value -> . INT
+    (62) value -> . FLOAT
+    (63) value -> . STRING
+    (64) value -> . CHAR
+    (65) value -> . BOOL
+    (66) value -> . ID
+
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 19
+    CHAR            shift and go to state 20
+    BOOL            shift and go to state 21
+    ID              shift and go to state 50
+
+    value                          shift and go to state 120
+
+state 119
+
+    (13) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN . block_function else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
+
+    LBRACE          shift and go to state 90
+
+    block_function                 shift and go to state 121
+
+state 120
+
+    (14) else_if_statement -> ELSE IF function comparison value . block_function else_if_statement
+    (15) block_function -> . LBRACE RBRACE
+    (16) block_function -> . LBRACE code_block RBRACE
+
+    LBRACE          shift and go to state 90
+
+    block_function                 shift and go to state 122
+
+state 121
+
+    (13) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function . else_if_statement
+    (12) else_if_statement -> . ELSE block_function
+    (13) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+
+    ELSE            shift and go to state 94
+
+    else_if_statement              shift and go to state 123
+
+state 122
+
+    (14) else_if_statement -> ELSE IF function comparison value block_function . else_if_statement
+    (12) else_if_statement -> . ELSE block_function
+    (13) else_if_statement -> . ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement
+    (14) else_if_statement -> . ELSE IF function comparison value block_function else_if_statement
+
+    ELSE            shift and go to state 94
+
+    else_if_statement              shift and go to state 124
+
+state 123
+
+    (13) else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .
+
+    IF              reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    ID              reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    INT             reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    FLOAT           reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    STRING          reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    CHAR            reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    BOOL            reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    LET             reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    CONST           reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+    $end            reduce using rule 13 (else_if_statement -> ELSE IF LPAREN comparison_value RPAREN block_function else_if_statement .)
+
+
+state 124
+
+    (14) else_if_statement -> ELSE IF function comparison value block_function else_if_statement .
+
+    IF              reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    ID              reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    INT             reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    FLOAT           reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    STRING          reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    CHAR            reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    BOOL            reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    LET             reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    CONST           reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
+    $end            reduce using rule 14 (else_if_statement -> ELSE IF function comparison value block_function else_if_statement .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for RPAREN in state 52 resolved as shift
-WARNING: shift/reduce conflict for RPAREN in state 83 resolved as shift
+WARNING: shift/reduce conflict for ID in state 5 resolved as shift
+WARNING: shift/reduce conflict for INT in state 5 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 5 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 5 resolved as shift
+WARNING: shift/reduce conflict for CHAR in state 5 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 5 resolved as shift
+WARNING: shift/reduce conflict for LET in state 5 resolved as shift
+WARNING: shift/reduce conflict for CONST in state 5 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 59 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 99 resolved as shift

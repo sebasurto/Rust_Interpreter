@@ -13,11 +13,19 @@ precedence = (
 )
 errores=[]
 
+def p_principal (p):
+    """
+    principal : body 
+              | body principal
+    """
+
 def p_body (p):
     """body : code_block
-            | if_statement
+            | control_structure
     """
-    print ("body")
+
+def p_control_structure(p):
+    "control_structure : if_statement"
 
 def p_if_statement(p):
     """
@@ -25,6 +33,8 @@ def p_if_statement(p):
                  | IF LPAREN comparison_value RPAREN block_function else_if_statement
                  | IF function comparison value block_function
                  | IF function comparison value block_function else_if_statement
+                 | IF LET EQUAL value block_function
+                 | IF LET EQUAL value else_if_statement
     """
 
 def p_else_if_statement(p):
@@ -40,18 +50,17 @@ def p_block_function(p):
                    | LBRACE code_block RBRACE 
 
     """
+
 def p_code_block(p):
     """
     code_block : code_line
                | code_line code_block
     """
-    print("code_block")
 
 def p_code_line(p):
     """
     code_line : code SEMICOLON
     """
-    print("code_line")
 
 def p_code(p):
     """code : function
@@ -60,7 +69,6 @@ def p_code(p):
             | logic_value
             | statement
     """
-    print("code")
 
 def p_function (p):
     """function : ID LPAREN RPAREN
@@ -70,7 +78,7 @@ def p_function (p):
                 | ID DOT ID LPAREN value RPAREN
                 | ID DOT ID LPAREN arguments_production RPAREN
     """
-    print("function")
+
 
 def p_statement (p):
     """
@@ -79,15 +87,22 @@ def p_statement (p):
               | CONST ID EQUAL value
               | ID EQUAL ID
               | ID EQUAL aritmetic_operation_production
+              | LET ID EQUAL data_structures
+              | ID EQUAL data_structures
+              | LET MUT ID EQUAL data_structures
     """
-    print ("statement")
+
+def p_data_structures (p):
+    "data_structures : tuple"
+
+def p_tuple (p):
+    "tuple : LPAREN arguments_production RPAREN"
 
 def p_arguments_production (p):
     """
     arguments_production : value
                          | value COMMA arguments_production
     """
-    print ("arguments_production")
 
 
 def p_comparison_production (p):
@@ -95,15 +110,12 @@ def p_comparison_production (p):
     comparison_production : comparison_value
                           | comparison_value comparison comparison_production
     """
-    print ("comparison_production")
 
 def p_comparison_value (p):
     "comparison_value : value comparison value"
-    print ("comparison_value")
 
 def p_logic_value (p):
     "logic_value : value logic_operator value"
-    print ("logic_value")
 
 def p_aritmetic_operation_production (p):
     """
@@ -117,7 +129,7 @@ def p_aritmetic_operation (p):
 def p_aritmetic_operator (p):
     """
     aritmetic_operator : PLUS
-                       | MINUS
+                       | MINUS_OPERATOR
                        | TIMES
                        | DIVIDE
                        | MODULE
@@ -131,7 +143,6 @@ def p_comparison(p):
                | NOT_EQUAL
                | EQUAL_EQUAL
     """
-    print ("comparison")
 
 def p_value(p):
     """
@@ -142,7 +153,6 @@ def p_value(p):
           | BOOL
           | ID
     """
-    print ("value")
 
 def p_logic_operator(p):
     """
@@ -150,7 +160,6 @@ def p_logic_operator(p):
                    | OR
                    | NOT
     """
-    print("logic operators")
 
 def p_error(p):
     syntax_errors = []
