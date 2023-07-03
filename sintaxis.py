@@ -79,6 +79,11 @@ def p_function (p):
                 | ID DOT ID LPAREN arguments_production RPAREN
     """
 
+def p_print (p):
+    """
+    print : PRINT LPAREN value RPAREN
+          | PRINT LPAREN STRING DOT ID RPAREN 
+    """
 
 def p_statement (p):
     """

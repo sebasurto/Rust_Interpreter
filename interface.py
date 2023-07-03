@@ -4,7 +4,7 @@ import lex as lxc
 import sintaxis as sntx
 
 
-def create_interface():
+def create_interface(code_text):
     def print_text ():
         texto = text_your_code.get("1.0", tk.END)
         lexic = lxc.test_lex(texto)
@@ -71,7 +71,7 @@ def create_interface():
         text_your_code.tag_configure(simbol, foreground="purple")
     text_your_code.tag_configure("\"", foreground="#CE9178")
     text_your_code.tag_configure("'", foreground="#CE9178")
-    
+
     def resaltar_palabras_reservadas(event):
         simbols = ["(",")", "{","}","[","]","\"", "'"]
         reserve =[]
@@ -97,7 +97,7 @@ def create_interface():
 
 # Enlazar evento de teclado para resaltar las palabras reservadas
     text_your_code.bind("<KeyRelease>", resaltar_palabras_reservadas)
-    
+    text_your_code.insert(tk.END, code_text)
     text_lex = tk.Text(window, state="disabled", width=75, height=15, foreground="green")
     text_lex.grid(row=2, column=1)
 

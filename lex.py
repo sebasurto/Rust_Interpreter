@@ -47,7 +47,8 @@ tokens = (
     'ID',
     'COMMENS',
     'NAME_FUNCTION',
-    'DOUBLE_QUOTE'
+    'DOUBLE_QUOTE',
+    'PRINT'
 ) + tuple(reserved.values())
 
 # Expresiones regulares para los tokens de símbolos
@@ -89,6 +90,7 @@ t_FLOAT = r'-?\d\.\d*'
 t_STRING = r'\"[a-zA-Z0-9\s]*\"'
 t_CHAR = r'\'[a-zA-Z0-9]\''
 t_DOUBLE_QUOTE = r'\"'
+
 # Para contabilizar nro de líneas
 def t_newline(t):
     r'\n+'
@@ -96,6 +98,10 @@ def t_newline(t):
 
 def t_BOOL (t):
     r'true|false'
+    return t
+
+def t_PRINT (t):
+    r'println!|print!|eprintln!'
     return t
 
 def t_ID(t):
