@@ -74,10 +74,7 @@ def create_interface(code_text):
 
     def resaltar_palabras_reservadas(event):
         simbols = ["(",")", "{","}","[","]","\"", "'"]
-        reserve =[]
-        for word in reserved.keys ():
-            reserve.append(word)
-        reserve_and_simbols = reserve + simbols
+        reserve_and_simbols = list(reserved.keys()) + simbols
         for word in reserve_and_simbols:
             posicion = "1.0"  # Inicio del texto
             while True:
