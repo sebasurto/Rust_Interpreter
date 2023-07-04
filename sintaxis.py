@@ -1,6 +1,10 @@
 import ply.yacc as yacc
 from lex import tokens
 import lex
+# Ramon Macias y Sergio Basurto
+# Ramón Macías: Reglas semánticas aritméticas, estructura de datos array y estructura de control match
+# Sergio Basurto: Reglas semánticas de comparación, estructura de datos tupla y estructura de control if
+
 precedence = (
     ('left', 'NOT'),
     ('left', 'OR'),
@@ -25,8 +29,42 @@ def p_body (p):
     """
 
 def p_control_structure(p):
-    "control_structure : if_statement"
+    """
+    control_structure : if_statement
+                        | match_statement
+    """
 
+# Ramon Macias
+def p_match_body_line(p):
+    """match_body_line : match_cases"""
+
+
+def p_match_pattern(p):
+    """match_pattern : value
+    | value PIPE match_pattern"""
+
+
+def p_match_body(p):
+    """match_body : match_body_line
+    | match_body_line match_body match_case_default"""
+
+
+def p_match_statement(p):
+    """match_statement : MATCH ID LBRACE match_body RBRACE"""
+
+
+def p_match_cases(p):
+    """match_cases : match_case
+    | match_case match_cases """
+
+
+def p_match_case(p):
+    """match_case : match_pattern FAT_ARROW block_function"""
+
+
+def p_match_case_default(p):
+    """match_case_default : UNDERSCORE FAT_ARROW block_function"""
+    
 def p_if_statement(p):
     """
     if_statement : IF LPAREN comparison_value RPAREN block_function
@@ -98,7 +136,18 @@ def p_statement (p):
     """
 
 def p_data_structures (p):
-    "data_structures : tuple"
+    """
+    data_structures : tuple
+                    | array
+    """
+
+
+def p_array_i32(p):
+    "array : LBRACKET array_elements RBRACKET"
+
+def p_array_elements_i32(p):
+    """array_elements : INT
+    | array_elements COMMA INT"""
 
 def p_tuple (p):
     "tuple : LPAREN arguments_production RPAREN"
@@ -118,18 +167,64 @@ def p_comparison_production (p):
 
 def p_comparison_value (p):
     "comparison_value : value comparison value"
+    if p[2] == "<":
+        p[0] = p[1] < p[3]
+    elif p[2] == ">":
+        p[0] = p[1] > p[3]
+    elif p[2] == "<=":
+        p[0] = p[1] <= p[3]
+    elif p[2] == ">=":
+        p[0] = p[1] >= p[3]
+    elif p[2] == "!=":
+        p[0] = p[1] != p[3]
+    elif p[2] == "==":
+        p[0] = p[1] == p[3]
 
 def p_logic_value (p):
     "logic_value : value logic_operator value"
+    if p[2] == "&&":
+        p[0] = p[1] and p[3]
+    elif p[2] == "||":
+        p[0] = p[1] or p[3]
+    elif p[2] == "!":
+        p[0] = not p[1]
 
 def p_aritmetic_operation_production (p):
     """
     aritmetic_operation_production : aritmetic_operation
                                    | value aritmetic_operator aritmetic_operation
     """
+    p[0] = 0
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        operations = len(p)//2
+        for i in range(1, operations+1):
+            if p[2*i-1] == "+":
+                p[0] += p[2*i]
+            elif p[2*i-1] == "-":
+                p[0] -= p[2*i]
+            elif p[2*i-1] == "*":
+                p[0] *= p[2*i]
+            elif p[2*i-1] == "/":
+                p[0] /= p[2*i]
+            elif p[2*i-1] == "%":
+                p[0] %= p[2*i]
+
+
 
 def p_aritmetic_operation (p):
     "aritmetic_operation : value aritmetic_operator value"
+    if p[2] == "+":
+        p[0] = p[1] + p[3]
+    elif p[2] == "-":
+        p[0] = p[1] - p[3]
+    elif p[2] == "*":
+        p[0] = p[1] * p[3]
+    elif p[2] == "/":
+        p[0] = p[1] / p[3]
+    elif p[2] == "%":
+        p[0] = p[1] % p[3]
 
 def p_aritmetic_operator (p):
     """
@@ -149,6 +244,8 @@ def p_comparison(p):
                | EQUAL_EQUAL
     """
 
+
+
 def p_value(p):
     """
     value : INT
@@ -157,6 +254,7 @@ def p_value(p):
           | CHAR
           | BOOL
           | ID
+          | array
     """
 
 def p_logic_operator(p):
