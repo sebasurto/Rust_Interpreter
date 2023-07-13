@@ -92,7 +92,6 @@ let n = -7.5;
 fn main() {
     // Variables
     let mut counter = 0;
-    let my_string = String::from("Hola, mundo!");
     let my_float = 3.14;
 
     // While loop

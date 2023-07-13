@@ -32,6 +32,7 @@ def p_control_structure(p):
     """
     control_structure : if_statement
                         | match_statement
+                        | fn_statement
     """
 
 # Ramon Macias
@@ -74,7 +75,10 @@ def p_if_statement(p):
                  | IF LET EQUAL value block_function
                  | IF LET EQUAL value else_if_statement
     """
-
+def p_fn_statement (p):
+    """
+    fn_statement : FN MAIN LPAREN RPAREN block_function
+    """
 def p_else_if_statement(p):
     """
     else_if_statement : ELSE block_function
@@ -115,6 +119,7 @@ def p_function (p):
                 | ID DOT ID LPAREN RPAREN
                 | ID DOT ID LPAREN value RPAREN
                 | ID DOT ID LPAREN arguments_production RPAREN
+                
     """
 
 def p_print (p):
